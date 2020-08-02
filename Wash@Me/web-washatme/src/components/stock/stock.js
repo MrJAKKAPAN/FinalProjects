@@ -1,23 +1,34 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import * as actions from "./../../actions/stock.action";
 import { imageUrl } from "./../../constants";
 import _ from "lodash";
+
 import Moment from "react-moment";
 import NumberFormat from "react-number-format";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "./stock.css";
 
+
 // const MySwal = withReactContent(Swal);
 
 class Stock extends Component {
+
+  // componentDidMount(){
+  //   this.props.getProducts()
+  //   // ค้นหา Delay
+  //   this.debounceSearch = _.debounce(this.props.getProductByKeyword,500);
+  // }
+
  dummyData = [
       {p1:"001",p2:"potato",p3:"20",p4:"30",p5:"9"},
       {p1:"001",p2:"potato",p3:"20",p4:"30",p5:"9"},
       {p1:"001",p2:"potato",p3:"20",p4:"30",p5:"9"},
       {p1:"001",p2:"potato",p3:"20",p4:"30",p5:"9"},
       {p1:"001",p2:"potato",p3:"20",p4:"30",p5:"9"}
+
     ];
 
   renderRows = () =>{
@@ -28,6 +39,7 @@ class Stock extends Component {
         <td>{item.p3}</td>
         <td>{item.p4}</td>
         <td>{item.p5}</td>
+
       </tr>
     ))
 }

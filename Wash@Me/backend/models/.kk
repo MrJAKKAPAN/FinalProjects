@@ -9,11 +9,11 @@ const product = sequelize.define(
       autoIncrement: true,
       primaryKey: true
     },
-    // pro_id: {
-    //   type: Sequelize.TEXT,
-    //   allowNull: false,
-    //   // primaryKey: true
-    // },
+    pro_id: {
+      type: Sequelize.NUMBER,
+      allowNull: false,
+      // primaryKey: true
+    },
     pro_name: {
       type: Sequelize.TEXT,
       allowNull: false,
@@ -30,17 +30,17 @@ const product = sequelize.define(
     pro_number: {
       type: Sequelize.NUMBER,
       allowNull: false,
-    }
     },
-    {
-      // options
-    }
-  );
-
+    
+  
+  },
+  {
+    //options
+  }
+);
 
 (async () => {
-  await product.sync({ force: false });    
+  await user.sync({ force: false });
 })();
 
-  
 module.exports = product;
