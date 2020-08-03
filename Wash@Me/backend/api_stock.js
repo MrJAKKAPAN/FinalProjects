@@ -14,7 +14,7 @@ router.get("/product", async (req, res) => {
   res.json(result);
 });
 
-// Update Products
+// Add Products
 router.post("/product", async (req, res) => {
   try {
     const form = new formidable.IncomingForm();
@@ -33,7 +33,7 @@ router.post("/product", async (req, res) => {
 // Update Product
 router.put("/product", async (req, res) => {
   try {
-    var form = new formidable.IncomingForm();
+    const form = new formidable.IncomingForm();
     form.parse(req, async (error, fields, files) => {
       let result = await product.update(fields, { where: { id: fields.id } });
       // result = await uploadImage(files, fields);
