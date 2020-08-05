@@ -12,12 +12,16 @@ class StockCreate extends Component {
     isSubmitting,
   }) => {
     return (
-      <form className="form-horizontal" onSubmit={handleSubmit} style={{border:'2px solid red'}}>
+      <form
+        className="form-horizontal"
+        onSubmit={handleSubmit}
+        // style={{border:'2px solid red'}}
+      >
         <div className="form-group">
           <label className="col-sm-2 control-label" htmlFor="name">
             Product Name
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm">
             <input
               name="productName"
               value={values.pro_name}
@@ -34,7 +38,7 @@ class StockCreate extends Component {
           <label className="col-sm-2 control-label" htmlFor="stock">
             Stock
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm">
             <div className="input-group">
               <input
                 name="stock"
@@ -43,6 +47,7 @@ class StockCreate extends Component {
                 value={values.pro_original}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                placeholder="โปรดระบุ"
               />
               {/* <span className="input-group-addon input-group-addon_custom">
               </span> */}
@@ -53,7 +58,7 @@ class StockCreate extends Component {
           <label className="col-sm-2 control-label" htmlFor="price">
             Price
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm">
             <div className="input-group">
               <input
                 name="price"
@@ -63,6 +68,7 @@ class StockCreate extends Component {
                 className="form-control"
                 type="number"
                 id="price"
+                placeholder="โปรดระบุ"
               />
               {/* <span className="input-group-addon input-group-addon_custom">
                 ฿
@@ -74,7 +80,7 @@ class StockCreate extends Component {
           <label className="col-sm-2 control-label" htmlFor="price">
             Price
           </label>
-          <div className="col-sm-10">
+          <div className="col-sm">
             <div className="input-group">
               <input
                 name="price"
@@ -84,6 +90,7 @@ class StockCreate extends Component {
                 className="form-control"
                 type="number"
                 id="price"
+                placeholder="โปรดระบุ"
               />
               {/* <span className="input-group-addon input-group-addon_custom">
                 ฿
@@ -92,13 +99,14 @@ class StockCreate extends Component {
           </div>
         </div>
 
-        <div className="box-footer" style={{ marginTop: 50 }}>
+        <div className="box-footer" style={{ marginTop: 30 }}>
           <button
             type="submit"
-            className="btn btn-primary pull-right"
+            className="btn btn-success pull-right"
             disabled={isSubmitting}
+            style={{ margin: "10px", float: "right" }}
           >
-            Submit
+            Save
           </button>
           <a
             onClick={() => {
@@ -106,7 +114,7 @@ class StockCreate extends Component {
             }}
             type="Button"
             className="btn btn-default pull-right"
-            style={{ marginRight: 10 }}
+            style={{ marginRight: 10, margin: "10px", float: "right" }}
           >
             Cancel
           </a>
@@ -118,62 +126,76 @@ class StockCreate extends Component {
   render() {
     return (
       <div className="content-wrapper">
-         <section className="content-header">
-                  <div className="container-fluid">
-                    <div className="row mb-2">
-                      <div className="col-sm-6">
-                        <h1>สินค้า</h1>
-                      </div>
-                      <div className="col-sm-6">
-                        <ol className="breadcrumb float-sm-right">
-                          <li className="breadcrumb-item">
-                            <a href="#">Home</a>
-                          </li>
-                          <li className="breadcrumb-item active">Product</li>
-                        </ol>
-                      </div>
-                    </div>
-                  </div>
-                  {/* /.container-fluid */}
-                </section>
+        <section className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6">
+                <h1>สินค้า</h1>
+              </div>
+              <div className="col-sm-6">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item">
+                    <a href="#">Home</a>
+                  </li>
+                  <li className="breadcrumb-item active">Product</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          {/* /.container-fluid */}
+        </section>
         <section className="content">
           <div className="row">
-          <div className="col-1"></div>
+            <div className="col-1"></div>
             <div className="col-10">
               <div className="card">
                 <div className="card-body">
                   {/* Main content */}
-                  <section className="content" style={{ maxWidth: "80%" }}>
+                  <section className="content" style={{ maxWidth: "100%" }}>
                     <div className="box box-primary">
                       <div className="box-header with-border">
-                        <p className="box-title" style={{ fontSize: 30 }}>
+                        <p
+                          className="box-title"
+                          style={{ fontSize: 30, marginLeft: "9%" }}
+                        >
                           Add Product
                         </p>
                       </div>
                       <div className="box-body" style={{ marginTop: 30 }}>
-                        <Formik
-                          initialValues={{
-                            pro_name: "",
-                            pro_original: "",
-                            pro_price: "",
-                            pro_number: "",
-                          }}
-                          onSubmit={(values, { setSubmitting }) => {
-                            //sub for backend/node
-                            let formData = new FormData();
-                            formData.append("pro_name", values.pro_name);
-                            formData.append(
-                              "pro_original",
-                              values.pro_original
-                            );
-                            formData.append("pro_price", values.pro_price);
-                            formData.append("pro_number", values.pro_number);
-                            this.props.addProduct(this.props.history, formData);
-                            setSubmitting(false); //button submit ไม่สามารถกดได้ถ้าไม่ใส่ข้อมูล
-                          }}
-                        >
-                          {(props) => this.showForm(props)}
-                        </Formik>
+                        <div className="row">
+                          <div className="col-1"></div>
+                          <div className="col-10">
+                            <Formik
+                              initialValues={{
+                                pro_name: "",
+                                pro_original: "",
+                                pro_price: "",
+                                pro_number: "",
+                              }}
+                              onSubmit={(values, { setSubmitting }) => {
+                                //sub for backend/node
+                                let formData = new FormData();
+                                formData.append("pro_name", values.pro_name);
+                                formData.append(
+                                  "pro_original",
+                                  values.pro_original
+                                );
+                                formData.append("pro_price", values.pro_price);
+                                formData.append(
+                                  "pro_number",
+                                  values.pro_number
+                                );
+                                this.props.addProduct(
+                                  this.props.history,
+                                  formData
+                                );
+                                setSubmitting(false); //button submit ไม่สามารถกดได้ถ้าไม่ใส่ข้อมูล
+                              }}
+                            >
+                              {(props) => this.showForm(props)}
+                            </Formik>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </section>
@@ -184,7 +206,7 @@ class StockCreate extends Component {
               </div>
             </div>
           </div>
-      </section>
+        </section>
       </div>
     );
   }
