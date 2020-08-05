@@ -20,20 +20,19 @@ import { server, YES } from "./constants";
 import { connect } from "react-redux";
 import { setApp } from "./actions/app.action";
 
+// function ถ้าไม่ login ให้ซ่อนบาง menu
 const isLoggedIn = () => {
-  return localStorage.getItem(server.LOGIN_PASSED) == YES;
+  return localStorage.getItem(server.LOGIN_PASSED) === YES;
 };
-// ใช้กับ route ที่ต้องใช้การ login
-const SecuredRoute = ({ component: Component, ...rest }) => (
+// กำหนดถ้าไม่ login ไม่สามารถเข้าได้ ความปลอดภัยของเว็บ
+const SecuredRoute = ({component: Component, ...rest}) => (
   <Route
     {...rest}
-    render={props =>
-      isLoggedIn() === true ? 
-      (
-        <Component {...props} />
-      ) : (
-        <Redirect to="/login" />
-      )
+    render = {props => isLoggedIn() === true ? (
+      <Component {...props} />
+    ) : (
+      <Redirect to="/login" />
+    )
     }
   />
 );
@@ -43,7 +42,7 @@ class App extends Component {
     this.props.setApp(this);
   }
 
-  redirectToHome = () => {
+  RedirectToLogin = () => {
     return <Redirect to="/home" />;
   };
 
@@ -60,8 +59,8 @@ class App extends Component {
               <SecuredRoute path="/register" component={Register} />
               <SecuredRoute path="/report" component={Report} />
               <SecuredRoute path="/stock" component={Stock} />
-              <SecuredRoute path="/stockCreate" component={StockCreate} />
-              <SecuredRoute path="/stockEdit/:id" component={StockEdit} />
+              <SecuredRoute path="/stock-create" component={StockCreate} />
+              <SecuredRoute path="/stock-edit/:id" component={StockEdit} />
               {/* redirect to home */}
               <Route exact={true} path="/" component={this.redirectToHome} />
               <Route exact={true} path="*" component={this.redirectToHome} />

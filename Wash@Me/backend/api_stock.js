@@ -63,4 +63,10 @@ router.delete("/product/:id", async (req, res) => {
   }
 });
 
+// Get Product By keyword 
+router.get("/product/keyword/:keyword", async (req, res) => {
+  const { keyword } = req.params;
+  let result = await product.findAll({ where: { pro_name: {[Op.like]: `%${keyword}%`} }  });
+  res.json(result);
+});
 module.exports = router;

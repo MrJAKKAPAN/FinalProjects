@@ -17,7 +17,7 @@ axios.interceptors.request.use(async (config) => {
 axios.interceptors.response.use((response) => {
     return response
 }, error => { 
-    debugger
+    // debugger
     console.log(JSON.stringify(error, undefined, 2))
     if (axios.isCancel(error)) {
         return Promise.reject(error)
