@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
-import "./stockCreate.css";
+import { connect } from "react-redux";
+import * as actions from "./../../actions/stock.action";
+import Moment from "react-moment";
+import NumberFormat from "react-number-format";
+// import "./stockCreate.css";
 
 class StockCreate extends Component {
+
   showForm = ({
     values,
     handleChange,
     handleSubmit,
-    setFieldValue,
+    // setFieldValue,
     handleBlur,
     isSubmitting,
   }) => {
@@ -23,7 +28,7 @@ class StockCreate extends Component {
           </label>
           <div className="col-sm">
             <input
-              name="productName"
+              name="pro_name"
               value={values.pro_name}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -31,26 +36,28 @@ class StockCreate extends Component {
               className="form-control"
               type="text"
               id="name"
+ 
             />
           </div>
         </div>
         <div className="form-group" style={{ marginBottom: 10 }}>
           <label className="col-sm-2 control-label" htmlFor="stock">
-            Stock
+          Price
           </label>
           <div className="col-sm">
             <div className="input-group">
               <input
-                name="stock"
+                name="pro_original"
+                value={values.pro_original}
                 className="form-control"
                 type="number"
-                value={values.pro_original}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 placeholder="โปรดระบุ"
               />
-              {/* <span className="input-group-addon input-group-addon_custom">
-              </span> */}
+              <span className="input-group-addon input-group-addon_custom">
+                ฿
+              </span>
             </div>
           </div>
         </div>
@@ -61,13 +68,13 @@ class StockCreate extends Component {
           <div className="col-sm">
             <div className="input-group">
               <input
-                name="price"
+                name="pro_price"
                 value={values.pro_price}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 className="form-control"
                 type="number"
-                id="price"
+                id="pro_price"
                 placeholder="โปรดระบุ"
               />
               {/* <span className="input-group-addon input-group-addon_custom">
@@ -78,18 +85,18 @@ class StockCreate extends Component {
         </div>
         <div className="form-group">
           <label className="col-sm-2 control-label" htmlFor="price">
-            Price
+            Count
           </label>
           <div className="col-sm">
             <div className="input-group">
               <input
-                name="price"
+                name="pro_number"
                 value={values.pro_number}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 className="form-control"
                 type="number"
-                id="price"
+                id="pro_number"
                 placeholder="โปรดระบุ"
               />
               {/* <span className="input-group-addon input-group-addon_custom">
@@ -101,9 +108,9 @@ class StockCreate extends Component {
 
         <div className="box-footer" style={{ marginTop: 30 }}>
           <button
+            disabled={isSubmitting}
             type="submit"
             className="btn btn-success pull-right"
-            disabled={isSubmitting}
             style={{ margin: "10px", float: "right" }}
           >
             Save
@@ -167,10 +174,10 @@ class StockCreate extends Component {
                           <div className="col-10">
                             <Formik
                               initialValues={{
-                                pro_name: "",
-                                pro_original: "",
-                                pro_price: "",
-                                pro_number: "",
+                                pro_name: "test",
+                                pro_original: "99",
+                                pro_price: "100",
+                                pro_number: "10",
                               }}
                               onSubmit={(values, { setSubmitting }) => {
                                 //sub for backend/node
@@ -212,4 +219,11 @@ class StockCreate extends Component {
   }
 }
 
-export default StockCreate;
+// export default StockCreate;
+const mapStateToProps = () => ({ })
+
+const mapDispatchToProps = {
+  ...actions
+}
+export default connect(mapStateToProps, mapDispatchToProps)(StockCreate);
+
