@@ -26,7 +26,7 @@ export const register = (history, credentail)=>{
     try {
         // debugger
         let results =  await httpClient.post(server.REGISTER_URL, credentail)
-        if (results.data.result == OK) {
+        if (results.data.result === OK) {
             // success
             dispatch(setRegisterStateToSuccess(results.data.result))
             history.goBack();

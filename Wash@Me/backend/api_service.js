@@ -8,7 +8,7 @@ const path = require("path");
 const fs = require("fs-extra");
 const Op = Sequelize.Op;
 
-// Get Products
+// Get service
 router.get("/service", async (req, res) => {
   let result = await service.findAll({ order: Sequelize.literal("id DESC") });
   res.json(result);
@@ -70,12 +70,7 @@ router.get ("/service/:id", async (req, res) => {
   }else{
     res.json( {} );
   }
-
-
-
-  
 })
-
 
 // Get serviceByKeyword
 router.get("/service/keyword/:keyword", async(req, res) => {
@@ -83,4 +78,5 @@ router.get("/service/keyword/:keyword", async(req, res) => {
   let result = await service.findAll({where: {sv_name:{[Op.like]: `%${keyword}%`} } });
   res.json(result);
 });
+
 module.exports = router;

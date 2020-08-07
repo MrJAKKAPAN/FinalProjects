@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import * as action from "../../actions/login.action";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link} from "react-router-dom";
 import { server } from "../../constants";
 
 class Menu extends Component {
@@ -14,17 +13,12 @@ class Menu extends Component {
   }
   
   render() {
+      const {pathname} = this.props.location;
     return (
       <div>
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
           {/* Brand Logo */}
-          <a href="index3.html" className="brand-link">
-            <img
-              src="dist/img/AdminLTELogo.png"
-              alt="AdminLTE Logo"
-              className="brand-image img-circle elevation-3"
-              style={{ opacity: ".8" }}
-            />
+          <a href="index3.html" className="brand-link" style={{textAlign:'center'}}>
             <span className="brand-text font-weight-light">Wash@Me</span>
           </a>
           {/* Sidebar */}
@@ -36,46 +30,46 @@ class Menu extends Component {
                 role="menu"
                 data-accordion="false"
               >
-                <li className="nav-item">
-                  <a href="pages/widgets.html" className="nav-link">
+                <li className={pathname == '/report' ? 'nav-item' : null}>
+                  <Link to="/report" className="nav-link">
                     <i className="nav-icon fas fa-th" />
                     <p>
-                      Dashbord
+                    &nbsp; Dashbord
                       <span className="right badge badge-danger">New</span>
                     </p>
-                  </a>
+                  </Link>
                 </li>
-                <li className="nav-item">
-                  <a href="pages/widgets.html" className="nav-link">
+                <li className={pathname == '/revenue' ? 'nav-item' : null}>
+                  <Link to="/revenue" className="nav-link">
                     <i className="nav-icon fas fa-th" />
-                    <p>รายรับ-รายจ่าย</p>
-                  </a>
+                    <p>&nbsp; รายรับ / รายจ่าย</p>
+                  </Link>
                 </li>
 
                 {/* <li className="nav-header">EXAMPLES</li> */}
-                <li className="nav-item">
-                  <a href="pages/gallery.html" className="nav-link">
-                    <i className="nav-icon fas fa-users" />
-                    <p>ลูกค้า / Customer</p>
-                  </a>
+                <li className={pathname == '/customer' ? 'nav-item' : null}>
+                  <Link to="/customer" className="nav-link">
+                    <i className="nav-icon fas fa-id-badge" />
+                    <p>&nbsp; ลูกค้า / Customer</p>
+                  </Link>
                 </li>
-                <li className="nav-item">
-                  <a href="pages/gallery.html" className="nav-link">
-                    <i className="nav-icon far fa-image" />
-                    <p>สินค้า / Product</p>
-                  </a>
+                <li className={pathname == '/stock' ? 'nav-item' : null}>
+                  <Link to="/stock" className="nav-link">
+                    <i className="nav-icon fas fa-clipboard-list" />
+                    <p>&nbsp; สินค้า / Product</p>
+                  </Link>
                 </li>
-                <li className="nav-item">
-                  <a href="pages/gallery.html" className="nav-link">
+                <li className={pathname == '/member' ? 'nav-item' : null}>
+                  <Link to="/member" className="nav-link">
                     <i className="nav-icon fas fa-user-circle" />
-                    <p>พนักงาน / Member</p>
-                  </a>
+                    <p>&nbsp; พนักงาน / Member</p>
+                  </Link>
                 </li>
-                <li className="nav-item">
-                  <a href="pages/gallery.html" className="nav-link">
+                <li className={pathname == '/service' ? 'nav-item' : null}>
+                  <Link to="/service" className="nav-link">
                     <i className="nav-icon fas fa-money-check" />
-                    <p>อัตราบริการ / Service</p>
-                  </a>
+                    <p>&nbsp; อัตราบริการ / Service</p>
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <div
@@ -104,13 +98,13 @@ class Menu extends Component {
   }
 }
 
-// export default withRouter(Menu);
-const mapStateToProps = ({appReducer}) => ({
-  appReducer
-})
+export default withRouter(Menu);
+// const mapStateToProps = ({appReducer}) => ({
+//   appReducer
+// })
 
-const mapDispatchToProps = {
-  // action
-}
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu))
+// const mapDispatchToProps = {
+//   // action
+// }
+// export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu))
 

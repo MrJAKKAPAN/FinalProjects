@@ -24,7 +24,7 @@ export const setLoginStateToFailed = () => ({
 
 export const autoLogin = (history) => {
     return () => {
-        if (localStorage.getItem(server.LOGIN_PASSED) == YES){
+        if (localStorage.getItem(server.LOGIN_PASSED) === YES){
             setTimeout(()=>history.push("/report"),200)
         }
     }

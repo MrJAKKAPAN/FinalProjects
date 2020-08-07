@@ -37,7 +37,6 @@ class Stock extends Component {
     try {
     const{result, isFetching} = this.props.stockReducer; 
     return (
-      
       !isFetching &&
       result != null &&
       // ตรวจสอบค่าว่าโหลอยู่และไม่เป็นค่าว่างเสด

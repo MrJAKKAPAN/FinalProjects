@@ -7,7 +7,7 @@ import {
 } from "../constants";
 // import { setLoginStateToFailed } from "./login.action";
 
-const setStateStockToSuccess = payload => ({
+const setStateStockToSuccess = (payload) => ({
   type: HTTP_STOCK_SUCCESS,
   payload: payload
 });
@@ -19,6 +19,7 @@ const setStateStockToFetching = () => ({
 const setStateStockToFailed = () => ({
   type: HTTP_STOCK_FAILED
 });
+
 
 export const updateProduct = (history, formData)=>{
   return dispatch=>{
@@ -34,8 +35,7 @@ export const getProductById = (id)=>{
   return dispatch=>{
     // dispatch(finishInitialization(false))
     dispatch(setStateStockToFetching())
-    httpClient
-    .get(`${server.PRODUCT_URL}/${id}`)
+    httpClient.get(`${server.PRODUCT_URL}/${id}`)
     .then(result => {
       dispatch(setStateStockToSuccess(result.data));
     })
@@ -45,6 +45,7 @@ export const getProductById = (id)=>{
     });
   }
 }
+
 
 
 // ค้นหา
@@ -79,6 +80,7 @@ export const deleteProduct = id => {
     await doGetProducts(dispatch);
   };
 };
+
 
 
 export const getProducts = () => {

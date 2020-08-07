@@ -61,5 +61,22 @@ router.delete("/customer/:id", async (req, res) => {
     }
 });
 
+// Get service ById
+router.get ("/customer/:id", async (req, res) => {
+  let result = await customer.findOne({where: {id: req.params.id}})
+  if(result){
+    res.json(result);
+  }else{
+    res.json( {} );
+  }
+})
+
+// Get serviceByKeyword
+router.get("/customer/keyword/:keyword", async(req, res) => {
+  const {keyword} = req.params;
+  let result = await customer.findAll({where: {sv_name:{[Op.like]: `%${keyword}%`} } });
+  res.json(result);
+});
+
 
 module.exports = router;

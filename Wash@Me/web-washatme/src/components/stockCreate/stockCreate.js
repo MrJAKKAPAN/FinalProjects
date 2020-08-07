@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { Formik } from "formik";
 import { connect } from "react-redux";
 import * as actions from "./../../actions/stock.action";
-import Moment from "react-moment";
-import NumberFormat from "react-number-format";
-// import "./stockCreate.css";
+
 
 class StockCreate extends Component {
 
@@ -12,7 +10,6 @@ class StockCreate extends Component {
     values,
     handleChange,
     handleSubmit,
-    // setFieldValue,
     handleBlur,
     isSubmitting,
   }) => {
@@ -20,7 +17,6 @@ class StockCreate extends Component {
       <form
         className="form-horizontal"
         onSubmit={handleSubmit}
-        // style={{border:'2px solid red'}}
       >
         <div className="form-group">
           <label className="col-sm-2 control-label" htmlFor="name">
@@ -77,9 +73,9 @@ class StockCreate extends Component {
                 id="pro_price"
                 placeholder="โปรดระบุ"
               />
-              {/* <span className="input-group-addon input-group-addon_custom">
-                ฿
-              </span> */}
+              
+              <span className="input-group-text">.00</span>
+  
             </div>
           </div>
         </div>
@@ -183,10 +179,7 @@ class StockCreate extends Component {
                                 //sub for backend/node
                                 let formData = new FormData();
                                 formData.append("pro_name", values.pro_name);
-                                formData.append(
-                                  "pro_original",
-                                  values.pro_original
-                                );
+                                formData.append("pro_original",values.pro_original);
                                 formData.append("pro_price", values.pro_price);
                                 formData.append(
                                   "pro_number",
