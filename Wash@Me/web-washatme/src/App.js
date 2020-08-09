@@ -19,7 +19,7 @@ import Member from "./components/member/member";
 import MemberCreate from "./components/member/member";
 import MemberEdit from "./components/memberEdit/memberEdit";
 
-import ServicePage from "./components/servicePage/servicePage";
+import Service from "./components/service/service";
 import ServiceCreate from "./components/servicesCreate/servicesCreate";
 import ServiceEdit from "./components/servicesEdit/servicesEdit";
 
@@ -85,7 +85,7 @@ class App extends Component {
               <SecuredRoute path="/customer-create" component={CustomerCreate} />
               <SecuredRoute path="/customer-edit/:id" component={CustomerEdit} />
 
-              <SecuredRoute path="/service" component={ServicePage} />
+              <SecuredRoute path="/service" component={Service} />
               <SecuredRoute path="/service-create" component={ServiceCreate} />
               <SecuredRoute path="/service-edit/:id" component={ServiceEdit} />
 

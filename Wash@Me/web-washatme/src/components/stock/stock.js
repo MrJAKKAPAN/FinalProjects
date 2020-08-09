@@ -38,11 +38,12 @@ class Stock extends Component {
     const{result, isFetching} = this.props.stockReducer; 
     return (
       !isFetching &&
-      result != null &&
+      result !== null &&
       // ตรวจสอบค่าว่าโหลอยู่และไม่เป็นค่าว่างเสด
       result.map((item) => (
         // ใน Jsx ของ react อะไรก็ตามที่ถูกเจนใน Array นั้นจะต้อง Key เพื่อป้องกันไม่ให้มัน duplicate หรือว่ามันทำซ้ำกันนั้นเอง
-        <tr key={item.id}>
+       
+       <tr key={item.id}>
           <td>{item.id}</td>
           <td><Moment format="DD/MM/YYYY">{item.createdAt}</Moment></td>
           <td>{item.pro_name}</td>

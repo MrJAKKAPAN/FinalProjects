@@ -30,7 +30,7 @@ class Menu extends Component {
                 role="menu"
                 data-accordion="false"
               >
-                <li className={pathname == '/report' ? 'nav-item' : null}>
+                <li className={pathname === '/report' ? 'nav-item' : null}>
                   <Link to="/report" className="nav-link">
                     <i className="nav-icon fas fa-th" />
                     <p>
@@ -39,7 +39,7 @@ class Menu extends Component {
                     </p>
                   </Link>
                 </li>
-                <li className={pathname == '/revenue' ? 'nav-item' : null}>
+                <li className={pathname === '/revenue' ? 'nav-item' : null}>
                   <Link to="/revenue" className="nav-link">
                     <i className="nav-icon fas fa-th" />
                     <p>&nbsp; รายรับ / รายจ่าย</p>
@@ -47,25 +47,25 @@ class Menu extends Component {
                 </li>
 
                 {/* <li className="nav-header">EXAMPLES</li> */}
-                <li className={pathname == '/customer' ? 'nav-item' : null}>
+                <li className={pathname === '/customer' ? 'nav-item' : null}>
                   <Link to="/customer" className="nav-link">
                     <i className="nav-icon fas fa-id-badge" />
                     <p>&nbsp; ลูกค้า / Customer</p>
                   </Link>
                 </li>
-                <li className={pathname == '/stock' ? 'nav-item' : null}>
+                <li className={pathname === '/stock' ? 'nav-item' : null}>
                   <Link to="/stock" className="nav-link">
                     <i className="nav-icon fas fa-clipboard-list" />
                     <p>&nbsp; สินค้า / Product</p>
                   </Link>
                 </li>
-                <li className={pathname == '/member' ? 'nav-item' : null}>
+                <li className={pathname === '/member' ? 'nav-item' : null}>
                   <Link to="/member" className="nav-link">
                     <i className="nav-icon fas fa-user-circle" />
                     <p>&nbsp; พนักงาน / Member</p>
                   </Link>
                 </li>
-                <li className={pathname == '/service' ? 'nav-item' : null}>
+                <li className={pathname === '/service' ? 'nav-item' : null}>
                   <Link to="/service" className="nav-link">
                     <i className="nav-icon fas fa-money-check" />
                     <p>&nbsp; อัตราบริการ / Service</p>
