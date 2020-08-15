@@ -70,6 +70,7 @@ class App extends Component {
           {isLoggedIn() && <Header />}
           {isLoggedIn() && <Menu />}
           <Switch>
+              {/* <Route component={NotFount} /> */}
               <Route path="/stock" component={Stock} />
               <Route path="/login" component={Login} />
               <Route path="/home" component={Home} />

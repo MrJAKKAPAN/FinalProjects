@@ -46,8 +46,6 @@ export const getProductById = (id)=>{
   }
 }
 
-
-
 // ค้นหา
 export const getProductByKeyword = event => {
   return dispatch => {
@@ -65,23 +63,36 @@ export const getProductByKeyword = event => {
 };
 
 
+// ลบข้อมูล
+export const deleteProduct = id => {
+  return dispatch => {
+    dispatch(setStateStockToFetching());
+    httpClient.delete(`${server.PRODUCT_URL}/${id}`)
+    .then(result => {
+      dispatch(setStateStockToSuccess(result.data));
+          doGetProducts(dispatch);
+    })
+    .catch(err => {
+      console.log(err);
+      
+    })
+  }
+}
+// ลบข้อมูล
+// export const deleteProduct = id => {
+//   return async dispatch => {
+//     dispatch(setStateStockToFetching());
+//     await httpClient.delete(`${server.PRODUCT_URL}/${id}`)
+//     await doGetProducts(dispatch);
+//   };
+// };
+
 export const addProduct = (history, formData) => {
   return async dispatch => {
     await httpClient.post(server.PRODUCT_URL, formData);
     history.goBack();
   };
 };
-
-//ลบข้อมูล
-export const deleteProduct = id => {
-  return async dispatch => {
-    dispatch(setStateStockToFetching());
-    await httpClient.delete(`${server.PRODUCT_URL}/${id}`)
-    await doGetProducts(dispatch);
-  };
-};
-
-
 
 export const getProducts = () => {
   return dispatch => {

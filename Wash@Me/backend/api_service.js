@@ -14,7 +14,7 @@ router.get("/service", async (req, res) => {
   res.json(result);
 });
 
-// Add Products
+// Add service
 router.post("/service", async (req, res) => {
   try {
     const form = new formidable.IncomingForm();
@@ -30,7 +30,7 @@ router.post("/service", async (req, res) => {
   }
 });
 
-// Update Product
+// Update service
 router.put("/service", async (req, res) => {
   try {
     const form = new formidable.IncomingForm();
@@ -47,9 +47,9 @@ router.put("/service", async (req, res) => {
   }
 });
 
-// Delete Product
+// Delete service
 router.delete("/service/:id", async (req, res) => {
-  // router.delete("/product/:id-:option", (req, res) =>{
+  // router.delete("/service/:id-:option", (req, res) =>{
   // res.json({id: req.params.id, option:req.params.option})
   try {
     const { id } = req.params;
