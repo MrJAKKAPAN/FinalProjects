@@ -1,0 +1,36 @@
+.boxContent{
+    width: 100%;
+    // background-color: white;
+    display: block;
+    // height: 10vh;
+    // margin-top: 10px;
+    .contentService { 
+        // height: 100vh;
+        // border-radius: 3rem;
+        padding: 40px;
+        margin: 30px;
+        background-color: white; 
+
+        // .ant-table {
+        //     border-radius: 1em;
+        // }
+        // .ant-spin-container {
+        //     border-radius: 1em;
+        // }
+        .ant-spin-nested-loading {
+            border-radius: 1em;
+        }
+        .ant-table-thead {
+            // background-color: yellow;
+        }
+        // .ant-table-cell {
+        //     background-color: yellowgreen;
+        // }
+        // tr {
+        //     background-color: yellowgreen;
+        // }
+        .thead {
+            // background-color: yellowgreen;
+        }
+    }
+}

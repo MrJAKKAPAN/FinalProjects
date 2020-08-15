@@ -1,82 +1,111 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import * as actions from "./../../actions/service.action";
+import { httpClient } from "./../../utils/HttpClient";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import _ from "lodash";
+import _, { result } from "lodash";
 import Sweetalerts from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import ReactDOM from 'react-dom';
-import 'antd/dist/antd.css';
-// import './index.css';
-import { Table } from 'antd';
+import { Table, Tag, Space, Popconfirm } from "antd";
+import "antd/dist/antd.css";
+import "./service.scss";
 
-const mySweetalerts = withReactContent(Sweetalerts);
+
+const mySweetAlerts = withReactContent(Sweetalerts);
 
 
 class Service extends Component {
-
-
-  createRow = () => {
-    try {
-    const{result, isFetching} = this.props.serviceReducer; 
-    return (
-      !isFetching &&
-      result !== null &&
-      // ตรวจสอบค่าว่าโหลอยู่และไม่เป็นค่าว่างเสด
-      result.map((item) => {
-        // ใน Jsx ของ react อะไรก็ตามที่ถูกเจนใน Array นั้นจะต้อง Key เพื่อป้องกันไม่ให้มัน duplicate หรือว่ามันทำซ้ำกันนั้นเอง
-            return {
-              name:item.sv_name,
-              detail:item.sv_detail,
-              member:item.sv_member,
-              price:item.sv_price,
-
-            }
-          })
-    )
-  } catch (e) {}
+  constructor(props) {
+    super(props);
+    {
+      this.state = {
+        result: [],
+        pagination: {
+          current: 1,
+          pageSize: 10,
+        },
+        loading: false,
+      };
+    }
   }
 
-  render() {
-    const columns = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      width: 150,
-    },
-    {
-      title: 'Detail',
-      dataIndex: 'detail',
-      width: 150,
-    },
-    {
-      title: 'Member',
-      dataIndex: 'member',
-      width: 150,
-    },
-    {
-      title: 'Price',
-      dataIndex: 'price',
-    },
-  ];
+async  componentDidMount() {
+  httpClient.get('http://localhost:8085/api/v1/service/service/').then(e => this.setState({result:e.data}))
+  // this.debounceSearch = _.debounce(this.props.getServiceByKeyword, 500);
+  }
+onDelete =  async (id) => {
+    console.log(id);
+    await httpClient.delete(`http://localhost:8085/api/v1/service/service/${id}`)
+    await this.componentDidMount()
 
+  }
 
-    return (
   
+    render() {
+      const columns = [
+        {
+          title: "ID",
+          dataIndex: "id",
+        },
+        {
+          title: "รหัสรายการบริการ",
+          // dataIndex: "sv_name",
+        },
+        {
+          title: "ชื่อรายการ",
+          dataIndex: "sv_name",
+        },
+        {
+          title: "Price",
+          dataIndex: "sv_price",
+        },
+        {
+          title: "Member",
+          dataIndex: "sv_member",
+        },
+        {
+          title: "Detail",
+          dataIndex: "sv_detail",
+        },
+        {
+          title: 'Action',
+          render: (text , record) => (
+                  <Space size="middle">
+                    <a onClick={()=> this.onDelete(record.id)}>
+                      Delete
+                    </a>
+                  </Space>
+                  
+              
+          ),
+        },
+      ];
+    const { pagination } = this.props;
+    return (
       <div className="content-wrapper">
-           <Table columns={columns} dataSource={this.createRow()} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />,
-        Service
+        <div className="boxContent">
+          <div className="contentService">
+            <Table  
+              // {...this.props}
+              dataSource={this.state.result} 
+              columns={columns} 
+              pagination={pagination}
+              >
+              </Table>
+          </div>
+        </div>
       </div>
-      );
+    );
   }
 }
 
-// export default Service;
-const mapStateToProps = ({serviceReducer}) => ({
-  serviceReducer
+
+
+const mapStateToProps = ({ serviceReducer }) => ({
+  serviceReducer,
 });
 
 const mapDispatchToProps = {
-  ...actions
-}
+  ...actions,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Service);

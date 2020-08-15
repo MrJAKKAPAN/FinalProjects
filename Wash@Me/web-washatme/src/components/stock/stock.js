@@ -5,122 +5,126 @@ import { Link } from "react-router-dom";
 import _ from "lodash";
 import Moment from "react-moment";
 import NumberFormat from "react-number-format";
-import Sweetalerts from "sweetalert2";
+import SweetAlerts from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "./stock.css";
 
-const mySweetalerts = withReactContent(Sweetalerts);
+const mySweetAlerts = withReactContent(SweetAlerts);
+
+
 
 class Stock extends Component {
 
-  componentDidMount(){
-    this.props.getProducts()
+  
+    componentDidMount () {
+        this.props.getProducts();
+        this.debounceSearch = _.debounce(this.props.getProductByKeyword, 500);
     // ค้นหา Delay
-    this.debounceSearch = _.debounce(this.props.getProductByKeyword,500);
+      
+      // const script = document.createElement("script");
+      // script.src = `js/pagination.js`;
+      // script.async = true;
+      // document.body.appendChild(script);
   }
+
+
 
   onChange = (e) => {
     //e ไม่ถูกทำลาย กรณีหา value ไม่เจอ  ให้ใช้คำสั่ง e.persist();
     e.persist();
-    this.debounceSearch(e)
-  }
-  // dummyData = [
-  //   { p1: "001", p2: "potato", p3: "20", p4: "30", p5: "9", p6: "9", p7: "9" },
-  //   { p1: "001", p2: "potato", p3: "20", p4: "30", p5: "9", p6: "9", p7: "9" },
-  //   { p1: "001", p2: "potato", p3: "20", p4: "30", p5: "9", p6: "9", p7: "9" },
-  //   { p1: "001", p2: "potato", p3: "20", p4: "30", p5: "9", p6: "9", p7: "9" },
-  //   { p1: "001", p2: "potato", p3: "20", p4: "30", p5: "9", p6: "9", p7: "9" },
-  //   { p1: "001", p2: "potato", p3: "20", p4: "30", p5: "9", p6: "9", p7: "9" },
-  // ];
+    this.debounceSearch(e);
+  };
 
   createRow = () => {
     try {
-    const{result, isFetching} = this.props.stockReducer; 
-    return (
-      !isFetching &&
-      result !== null &&
-      // ตรวจสอบค่าว่าโหลอยู่และไม่เป็นค่าว่างเสด
-      result.map((item) => (
-        // ใน Jsx ของ react อะไรก็ตามที่ถูกเจนใน Array นั้นจะต้อง Key เพื่อป้องกันไม่ให้มัน duplicate หรือว่ามันทำซ้ำกันนั้นเอง
-       
-       <tr key={item.id}>
-          <td>{item.id}</td>
-          <td><Moment format="DD/MM/YYYY">{item.createdAt}</Moment></td>
-          <td>{item.pro_name}</td>
-          <td>
-            <NumberFormat
-              value={item.pro_original}
-              displayType={"text"}
-              thousandSeparator={true}
-              decimalScale={2}
-              fixedDecimalScale={true}
-              suffix={"฿."}
-            /> 
-          </td>
-          <td>
-            <NumberFormat
-              value={item.pro_price}
-              displayType={"text"}
-              thousandSeparator={true}
-              decimalScale={2}
-              fixedDecimalScale={true}
-              suffix={"฿."}
-            /> 
+      const { result, isFetching } = this.props.stockReducer;
+      return (
+        !isFetching &&
+        result !== null && // ตรวจสอบค่าว่าโหลอยู่และไม่เป็นค่าว่างเสด
+        result.map((item) => (
+          // ใน Jsx ของ react อะไรก็ตามที่ถูกเจนใน Array นั้นจะต้อง Key เพื่อป้องกันไม่ให้มัน duplicate หรือว่ามันทำซ้ำกันนั้นเอง
+          <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>
+              <Moment format="DD/MM/YYYY">{item.createdAt}</Moment>
             </td>
-          <td>
-            <NumberFormat
-              value={item.pro_number}
-              displayType={"text"}
-              thousandSeparator={true}
-              decimalScale={0}
-              fixedDecimalScale={true}
-              suffix={" pcs"}
-            />
+            <td>{item.pro_name}</td>
+            <td>
+              <NumberFormat
+                value={item.pro_original}
+                displayType={"text"}
+                thousandSeparator={true}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                suffix={"฿."}
+              />
             </td>
-          
-          <td style={{ textAlign: "center", }}>
-            <button
-              onClick={() =>
-                this.props.history.push(`/stock-edit/${item.id}`)
-              }
-              type="button"
-              className="btn btn-info"
-            >
-              แก้ไข
-            </button>
-            <span style={{ color: "grey" }}> | </span>
-            <button
-              onClick={() => {
-                mySweetalerts.fire({
-                  title: 'Are you sure to delete?',
-                  text: "You won't be able to revert this!",
-                  type: 'warning',
-                  showCancelButton: true,
-                  confirmButtonText: 'Yes, delete it!',
-                  cancelButtonText: 'No, cancel!',                                
-                }).then((result) => {
-                  if (result.value){
-                    // ยิงมาจาก stockProduct
-                    this.props.deleteProduct(item.id)
-                  }                 
-                })                
-              }}
-              type="button"
-              className="btn btn-danger"
-            >
-              ลบ
-            </button>
-          </td>
-        </tr>
-      ))
-    )
-  } catch (e) {}
-  }
+            <td>
+              <NumberFormat
+                value={item.pro_price}
+                displayType={"text"}
+                thousandSeparator={true}
+                decimalScale={2}
+                fixedDecimalScale={true}
+                suffix={"฿."}
+              />
+            </td>
+            <td>
+              <NumberFormat
+                value={item.pro_number}
+                displayType={"text"}
+                thousandSeparator={true}
+                decimalScale={0}
+                fixedDecimalScale={true}
+                suffix={" pcs"}
+              />
+            </td>
 
+            <td style={{ textAlign: "center" }}>
+              <button
+                onClick={() =>
+                  this.props.history.push(`/stock-edit/${item.id}`)
+                }
+                type="button"
+                className="btn btn-info"
+              >
+                แก้ไข
+              </button>
+              <span style={{ color: "grey" }}> | </span>
+              <button
+                onClick={() => {
+                  mySweetAlerts
+                    .fire({
+                      title: "คุณต้องการลบหรือไม่",
+                      text: "You won't be able to revert this!",
+                      type: "warning",
+                      showCancelButton: true,
+                      confirmButtonText: "ใช่",
+                      cancelButtonText: "ไม่",
+                    })
+                    .then((result) => {
+                      if (result.value) {
+                        // ยิงมาจาก stockProduct
+                        this.props.deleteProduct(item.id);
+                      }
+                    });
+                }}
+                type="button"
+                className="btn btn-danger"
+              >
+                ลบ
+              </button>
+            </td>
+          </tr>
+        ))
+      );
+    } catch (e) {}
+  };
 
   render() {
+    
     return (
-      <div className="content-wrapper">
+      <div className="content-wrapper" >
         <section className="content-header">
           <div className="container-fluid">
             <div className="row mb-2">
@@ -148,7 +152,7 @@ class Stock extends Component {
                   <div className="row">
                     <div className="col-6 col-md-4">
                       <input
-                        onChange={this.onChange} 
+                        onChange={this.onChange}
                         type="search"
                         className="form-control input-lg"
                         placeholder="Enter search keyword"
@@ -169,7 +173,7 @@ class Stock extends Component {
 
                   <table
                     id="example2"
-                    className="table table-bordered table-striped table-hover"
+                    className="table table-bordered table-striped table-hover table-sm"
                     style={{ border: "2px", marginTop: "10px" }}
                   >
                     <thead className="thead-dark">
@@ -198,7 +202,7 @@ class Stock extends Component {
           </div>
           {/* /.row */}
         </section>
-        {/* /.content */}
+       
       </div>
     );
   }
@@ -206,12 +210,11 @@ class Stock extends Component {
 
 // export default Stock;
 
-const mapStateToProps = ({stockReducer}) => ({
-  stockReducer
+const mapStateToProps = ({ stockReducer }) => ({
+  stockReducer,
 });
 
 const mapDispatchToProps = {
-  ...actions
-}
+  ...actions,
+};
 export default connect(mapStateToProps, mapDispatchToProps)(Stock);
-
