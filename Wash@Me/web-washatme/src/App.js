@@ -98,7 +98,7 @@ class App extends Component {
               <Route exact={true} path="/" component={this.redirectToHome} />
               <Route exact={true} path="*" component={this.redirectToHome} />
           </Switch>
-          {isLoggedIn() && <Footer />}
+          {/* {isLoggedIn() && <Footer />} */}
         </div>
       </Router>
     );
