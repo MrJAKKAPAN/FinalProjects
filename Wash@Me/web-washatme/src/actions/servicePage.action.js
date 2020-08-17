@@ -1,4 +1,4 @@
-import { httpClient } from "./../utils/HttpClient";
+import { httpClient } from "../utils/HttpClient";
 import {
   HTTP_SERVICE_SUCCESS,
   HTTP_SERVICE_FETCHING,

@@ -65,8 +65,8 @@ class Menu extends Component {
                     <p>&nbsp; พนักงาน / Member</p>
                   </Link>
                 </li>
-                <li className={pathname === '/service' ? 'nav-item' : null}>
-                  <Link to="/service" className="nav-link">
+                <li className={pathname === '/servicePaged' ? 'nav-item' : null}>
+                  <Link to="/servicePaged" className="nav-link" >
                     <i className="nav-icon fas fa-money-check" />
                     <p>&nbsp; อัตราบริการ / Service</p>
                   </Link>

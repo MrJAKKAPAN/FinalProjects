@@ -5,7 +5,7 @@ import loginReducer from './login.reducer'
 import appReducer from './app.reducer'
 import stockReducer from './stock.reducer'
 import customerReducer from './customer.reducer'
-import serviceReducer from './service.reducer'
+import servicePageReducer from './servicePage.reducer'
 import revenueReducer from './revenue.reducer'
 
 
@@ -16,7 +16,7 @@ export default combineReducers({
     appReducer,
     stockReducer,
     customerReducer,
-    serviceReducer,
+    servicePageReducer,
     revenueReducer
     
 })

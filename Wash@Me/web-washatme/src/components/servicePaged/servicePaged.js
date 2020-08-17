@@ -1,17 +1,13 @@
 import React, { Component } from "react";
-import * as actions from "./../../actions/service.action";
-import { httpClient } from "./../../utils/HttpClient";
-import { connect } from "react-redux";
+import { httpClient } from "../../utils/HttpClient";
 import { Link } from "react-router-dom";
-import _, { result } from "lodash";
+import _ from "lodash";
 import Sweetalerts from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import {
   Table,
-  Tag,
   Space,
   Popconfirm,
-  message,
   Button,
   Layout,
   Menu,
@@ -20,17 +16,16 @@ import {
   Row,
   Col,
 } from "antd";
+
 import { DeleteOutlined, EditOutlined, AudioOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
-import "./service.scss";
-
+import "./servicePaged.scss";
 
 const mySweetAlerts = withReactContent(Sweetalerts);
 const { Content } = Layout;
 const { Search } = Input;
 
-
-class Service extends Component {
+class ServicePaged extends Component {
   constructor(props) {
     super(props);
     {
@@ -44,31 +39,33 @@ class Service extends Component {
       };
     }
   }
-
+  
   async componentDidMount() {
-    httpClient
-      .get("http://localhost:8085/api/v1/service/service/")
-      .then((e) => this.setState({ result: e.data }));
+      httpClient
+        .get("http://localhost:8085/api/v1/service/service/")
+        .then((e) => this.setState({ result: e.data }));
+        console.log(this.state);
+    };
 
-    // this.debounceSearch = _.debounce(console.log(this.props.getServiceByKeyword));
-  }
-  onChange = async (id) => {
-    console.log(id);
-    httpClient.get(`http://localhost:8085/api/v1/service/service/${id}`);
-    await this.componentDidMount();
+    onChange = (sv_name) => {
+      // console.log(sv_name);
+      if(sv_name === "") {
+        this.componentDidMount()
+      }else{
+        httpClient.get(
+          `http://localhost:8085/api/v1/service/service/keyword/${sv_name}`)
+          .then((e) => this.setState({ result: e.data}));
+      }
+          
+    };
 
-    //e ไม่ถูกทำลาย กรณีหา value ไม่เจอ  ให้ใช้คำสั่ง e.persist();
-    // e.persist();
-    // this.debounceSearch(e);
-  };
-
-  onDelete = async (id) => {
-    console.log(id);
-    await httpClient.delete(
-      `http://localhost:8085/api/v1/service/service/${id}`
-    );
-    await this.componentDidMount();
-  };
+    onDelete = async (id) => {
+      console.log(id);
+      await httpClient.delete(
+        `http://localhost:8085/api/v1/service/service/${id}`
+      );
+      await this.componentDidMount();
+    };
 
   render() {
     const { pagination } = this.props;
@@ -78,17 +75,17 @@ class Service extends Component {
         dataIndex: "id",
         align: "center",
         width: "60px",
-        height:"30px"
+        height: "30px",
       },
       {
         title: "รหัสรายการบริการ",
         // dataIndex: "sv_name",
         align: "center",
         width: 200,
-        sorter: {
-          compare: (a, b) => a.english - b.english,
-          multiple: 1,
-        },
+        // sorter: {
+        //   compare: (a, b) => a.english - b.english,
+        //   multiple: 1,
+        // },
       },
       {
         title: "ชื่อรายการ",
@@ -97,12 +94,19 @@ class Service extends Component {
         width: 200,
       },
       {
-        title: "Detail",
+        title: "รายละเอียด",
         dataIndex: "sv_detail",
         align: "center",
       },
       {
-        title: "Price",
+        title: "ประเภท",
+        // dataIndex: "sv_price",
+        // thousandSeparator:true,
+        align: "center",
+        width: 100,
+      },
+      {
+        title: "ราคา",
         dataIndex: "sv_price",
         // thousandSeparator:true,
         align: "center",
@@ -149,7 +153,6 @@ class Service extends Component {
       },
     ];
 
-    // if(this.state.result !== null && this.state.result !== undefined) {
     return (
       <div className="content-wrapper">
         <Layout>
@@ -157,7 +160,6 @@ class Service extends Component {
             style={{
               paddingLeft: "24px",
               paddingRight: "24px",
-              // marginTop: "5px",
             }}
           >
             <Content
@@ -167,34 +169,36 @@ class Service extends Component {
               }}
             >
               <Row>
-                <Col span={8}>
-                  <Search
-                    placeholder="input search text"
-                    onSearch={this.state.onChange}
-                    style={{ width: 300 ,float: "left"}}
-                    enterButton
-                  />
-                </Col>
-                <Col span={12}></Col>
                 <Col span={4}>
                   <Button
                     type="success"
                     onClick={() => this.props.history.push(`/service-create/`)}
-                    style={{ float: "right" , 
-                              backgroundColor:'limegreen', 
-                              color:'white',
-                              border:'limegreen',
-                              width:'100px'
-                            }}
+                    style={{
+                      float: "left",
+                      backgroundColor: "green",
+                      color: "white",
+                      border: "green",
+                      width: "100px",
+                    }}
                   >
                     เพิ่ม
                   </Button>
+                </Col>
+
+                <Col span={12}></Col>
+                <Col span={8}>
+                  <Search
+                    placeholder="input search text"
+                    onChange={(e)=>this.onChange(e.target.value)}
+                    style={{ width: 300, float: "right" }}
+                    enterButton
+                  />
                 </Col>
               </Row>
 
               <Link
                 to="/service-create"
-                style={{ float: "right",  width: 100 }}
+                style={{ float: "right", width: 100 }}
               ></Link>
 
               <Table
@@ -203,20 +207,17 @@ class Service extends Component {
                 columns={columns}
                 pagination={pagination}
                 style={{ marginTop: "5px" }}
-              ></Table>
+              />
             </Content>
           </Layout>
         </Layout>
       </div>
-    );
-    // }else{
-    //   return (
-    //   <Spin />
-    //   )
-    // }
+    ); 
   }
 }
 
-const mapStateToProps = ({ serviceReducer }) => ({ serviceReducer });
-const mapDispatchToProps = { ...actions };
-export default connect(mapStateToProps, mapDispatchToProps)(Service);
+export default  ServicePaged ;
+// const mapStateToProps = ({ servicesReducer }) => ({ servicesReducer });
+// const mapDispatchToProps = { ...actions };
+// export default connect(mapStateToProps, mapDispatchToProps)(ServicePaged);
+
