@@ -19,7 +19,7 @@ import Member from "./components/member/member";
 import MemberCreate from "./components/member/member";
 import MemberEdit from "./components/memberEdit/memberEdit";
 
-import Service from "./components/service/service";
+import servicePaged from "./components/servicePaged/servicePaged";
 import ServiceCreate from "./components/servicesCreate/servicesCreate";
 import ServiceEdit from "./components/servicesEdit/servicesEdit";
 
@@ -36,6 +36,7 @@ import {
 import { server, YES } from "./constants";
 import { connect } from "react-redux";
 import { setApp } from "./actions/app.action";
+
 
 // function ถ้าไม่ login ให้ซ่อนบาง menu
 const isLoggedIn = () => {
@@ -86,7 +87,7 @@ class App extends Component {
               <SecuredRoute path="/customer-create" component={CustomerCreate} />
               <SecuredRoute path="/customer-edit/:id" component={CustomerEdit} />
 
-              <SecuredRoute path="/service" component={Service} />
+              <SecuredRoute path="/servicePaged" component={servicePaged} />
               <SecuredRoute path="/service-create" component={ServiceCreate} />
               <SecuredRoute path="/service-edit/:id" component={ServiceEdit} />
 
@@ -98,7 +99,7 @@ class App extends Component {
               <Route exact={true} path="/" component={this.redirectToHome} />
               <Route exact={true} path="*" component={this.redirectToHome} />
           </Switch>
-          {/* {isLoggedIn() && <Footer />} */}
+          {isLoggedIn() && <Footer />}
         </div>
       </Router>
     );

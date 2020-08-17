@@ -11,20 +11,19 @@ import "./stock.css";
 
 const mySweetAlerts = withReactContent(SweetAlerts);
 
-
-
+// const script = document.createElement("script");
+//       script.src = `js/pagination.js`;
+//       script.async = true;
+//       document.body.appendChild(script);
 class Stock extends Component {
 
   
-    componentDidMount () {
+  async  componentDidMount () {
         this.props.getProducts();
         this.debounceSearch = _.debounce(this.props.getProductByKeyword, 500);
     // ค้นหา Delay
+
       
-      // const script = document.createElement("script");
-      // script.src = `js/pagination.js`;
-      // script.async = true;
-      // document.body.appendChild(script);
   }
 
 

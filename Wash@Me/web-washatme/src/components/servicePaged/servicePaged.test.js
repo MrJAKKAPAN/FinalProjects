@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import ServicesPages from './servicesPages';
+import ServicePaged from './servicePaged';
 
-describe('ServicesPages', () => {
+describe('ServicePaged', () => {
   test('matches snapshot', () => {
-    const wrapper = shallow(<ServicesPages />);
+    const wrapper = shallow(<ServicePaged />);
     expect(wrapper).toMatchSnapshot();
   });
 });
