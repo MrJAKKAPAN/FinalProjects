@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { httpClient } from "../../utils/HttpClient";
 import { Link } from "react-router-dom";
-import _ from "lodash";
-import Sweetalerts from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+// import _ from "lodash";
+// import Sweetalerts from "sweetalert2";
+// import withReactContent from "sweetalert2-react-content";
 import {
   Table,
   Space,
@@ -21,7 +21,7 @@ import { DeleteOutlined, EditOutlined, AudioOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./servicePaged.scss";
 
-const mySweetAlerts = withReactContent(Sweetalerts);
+// const mySweetAlerts = withReactContent(Sweetalerts);
 const { Content } = Layout;
 const { Search } = Input;
 
@@ -207,6 +207,7 @@ class ServicePaged extends Component {
                 columns={columns}
                 pagination={pagination}
                 style={{ marginTop: "5px" }}
+                size="small"
               />
             </Content>
           </Layout>

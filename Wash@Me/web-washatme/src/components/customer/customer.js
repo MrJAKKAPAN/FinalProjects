@@ -11,7 +11,6 @@ import {
   Row,
   Col,
 } from "antd";
-
 import { DeleteOutlined, EditOutlined, AudioOutlined } from "@ant-design/icons";
 import "./customer.scss";
 import { httpClient } from "../../utils/HttpClient";
@@ -19,6 +18,8 @@ import { httpClient } from "../../utils/HttpClient";
 const { Content } = Layout;
 const { Column, ColumnGroup } = Table;
 const { Search } = Input;
+
+
 class Customer extends Component {
   constructor(props) {
     super(props);
@@ -49,6 +50,7 @@ class Customer extends Component {
     .then((e) => this.setState({ result: e.data}));
     }
 };
+
 onDelete = async(id) => {
     console.log(id);
     await httpClient.delete(
@@ -135,6 +137,7 @@ onDelete = async(id) => {
                       dataIndex="cus_tel"
                       align="center"
                       width="200"
+                      style={{backgroundColor:'black'}}
                     />
                     <Column
                       title="เลขป้ายทะเบียนรถ"
@@ -165,7 +168,7 @@ onDelete = async(id) => {
                             type="primary"
                             onClick={() =>
                               this.props.history.push(
-                                `/service-edit/${record.id}`
+                                `/customer-edit/${record.id}`
                               )
                             }
                           >

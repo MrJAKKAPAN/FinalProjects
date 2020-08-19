@@ -9,13 +9,13 @@ const fs = require("fs-extra");
 const Op = Sequelize.Op;
 
 
-// Get Products
+// Get Customer
 router.get("/customer", async (req, res) => {
     let result = await customer.findAll({ order: Sequelize.literal("id DESC") });
     res.json(result);
   });
   
-// Add Products
+// Add Customer
 router.post("/customer", async (req, res) => {
     try {
         const form = new formidable.IncomingForm();
@@ -31,7 +31,7 @@ router.post("/customer", async (req, res) => {
     }
 });
 
-// Update Product
+// Update Customer
 router.put("/customer", async (req, res) => {
     try {
       const form = new formidable.IncomingForm();
@@ -48,7 +48,7 @@ router.put("/customer", async (req, res) => {
     }
   });
 
-// Delete Product
+// Delete Customer
 router.delete("/customer/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -61,7 +61,7 @@ router.delete("/customer/:id", async (req, res) => {
     }
 });
 
-// Get service ById
+// Get Customer ById
 router.get ("/customer/:id", async (req, res) => {
   let result = await customer.findOne({where: {id: req.params.id}})
   if(result){
@@ -71,12 +71,12 @@ router.get ("/customer/:id", async (req, res) => {
   }
 })
 
-// Get serviceByKeyword
+// Get CustomerByKeyword
 router.get("/customer/keyword/:keyword", async(req, res) => {
   const {keyword} = req.params;
   let result = await customer.findAll({where: {cus_fname:{[Op.like]: `%${keyword}%`}},
-                                              
-                                            });
+  // {[Op.all]:`%${keyword}%`}
+  });
   res.json(result);
 });
 
