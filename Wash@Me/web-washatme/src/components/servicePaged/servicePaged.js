@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { httpClient } from "../../utils/HttpClient";
 import { Link } from "react-router-dom";
 // import _ from "lodash";
-// import Sweetalerts from "sweetalert2";
-// import withReactContent from "sweetalert2-react-content";
 import {
   Table,
   Space,
@@ -21,7 +19,6 @@ import { DeleteOutlined, EditOutlined, AudioOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./servicePaged.scss";
 
-// const mySweetAlerts = withReactContent(Sweetalerts);
 const { Content } = Layout;
 const { Search } = Input;
 
@@ -39,33 +36,32 @@ class ServicePaged extends Component {
       };
     }
   }
-  
+
   async componentDidMount() {
+    httpClient
+      .get("http://localhost:8085/api/v1/service/service/")
+      .then((e) => this.setState({ result: e.data }));
+    console.log(this.state);
+  }
+
+  onChange = (sv_name) => {
+    // console.log(sv_name);
+    if (sv_name === "") {
+      this.componentDidMount();
+    } else {
       httpClient
-        .get("http://localhost:8085/api/v1/service/service/")
+        .get(`http://localhost:8085/api/v1/service/service/keyword/${sv_name}`)
         .then((e) => this.setState({ result: e.data }));
-        console.log(this.state);
-    };
+    }
+  };
 
-    onChange = (sv_name) => {
-      // console.log(sv_name);
-      if(sv_name === "") {
-        this.componentDidMount()
-      }else{
-        httpClient.get(
-          `http://localhost:8085/api/v1/service/service/keyword/${sv_name}`)
-          .then((e) => this.setState({ result: e.data}));
-      }
-          
-    };
-
-    onDelete = async (id) => {
-      console.log(id);
-      await httpClient.delete(
-        `http://localhost:8085/api/v1/service/service/${id}`
-      );
-      await this.componentDidMount();
-    };
+  onDelete = async (id) => {
+    console.log(id);
+    await httpClient.delete(
+      `http://localhost:8085/api/v1/service/service/${id}`
+    );
+    await this.componentDidMount();
+  };
 
   render() {
     const { pagination } = this.props;
@@ -101,14 +97,12 @@ class ServicePaged extends Component {
       {
         title: "ประเภท",
         // dataIndex: "sv_price",
-        // thousandSeparator:true,
         align: "center",
         width: 100,
       },
       {
         title: "ราคา",
         dataIndex: "sv_price",
-        // thousandSeparator:true,
         align: "center",
         width: 100,
       },
@@ -155,70 +149,66 @@ class ServicePaged extends Component {
 
     return (
       <div className="content-wrapper">
-        <Layout>
-          <Layout
-            style={{
-              paddingLeft: "24px",
-              paddingRight: "24px",
-            }}
-          >
-            <Content
-              className="site-layout-background"
-              style={{
-                padding: 14,
-              }}
-            >
-              <Row>
-                <Col span={4}>
-                  <Button
-                    type="success"
-                    onClick={() => this.props.history.push(`/service-create/`)}
-                    style={{
-                      float: "left",
-                      backgroundColor: "green",
-                      color: "white",
-                      border: "green",
-                      width: "100px",
-                    }}
-                  >
-                    เพิ่ม
-                  </Button>
-                </Col>
+        <div className="content">
+          <div className="row">
+            <div className="col-12">
+              sdsdsds
+              <div className="card">
+                <div className="card-body">
+                  <Row>
+                    <Col span={4}>
+                      <Button
+                        type="success"
+                        onClick={() =>
+                          this.props.history.push(`/service-create/`)
+                        }
+                        style={{
+                          float: "left",
+                          backgroundColor: "green",
+                          color: "white",
+                          border: "green",
+                          width: "100px",
+                        }}
+                      >
+                        เพิ่ม
+                      </Button>
+                    </Col>
 
-                <Col span={12}></Col>
-                <Col span={8}>
-                  <Search
-                    placeholder="input search text"
-                    onChange={(e)=>this.onChange(e.target.value)}
-                    style={{ width: 300, float: "right" }}
-                    enterButton
+                    <Col span={12}></Col>
+                    <Col span={8}>
+                      <Search
+                        placeholder="ค้นหา ชื่อรายการบริาการ"
+                        onChange={(e) => this.onChange(e.target.value)}
+                        style={{ width: 300, float: "right" }}
+                        enterButton
+                      />
+                    </Col>
+                  </Row>
+
+                  <Link
+                    to="/service-create"
+                    style={{ float: "right", width: 100 }}
+                  ></Link>
+
+                  <Table
+                    bordered
+                    dataSource={this.state.result}
+                    columns={columns}
+                    pagination={pagination}
+                    style={{ marginTop: "5px" }}
+                    size="small"
                   />
-                </Col>
-              </Row>
-
-              <Link
-                to="/service-create"
-                style={{ float: "right", width: 100 }}
-              ></Link>
-
-              <Table
-                bordered
-                dataSource={this.state.result}
-                columns={columns}
-                pagination={pagination}
-                style={{ marginTop: "5px" }}
-                size="small"
-              />
-            </Content>
-          </Layout>
-        </Layout>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    ); 
+    );
   }
 }
 
-export default  ServicePaged ;
+export default ServicePaged;
 // const mapStateToProps = ({ servicesReducer }) => ({ servicesReducer });
 // const mapDispatchToProps = { ...actions };
 // export default connect(mapStateToProps, mapDispatchToProps)(ServicePaged);
-
