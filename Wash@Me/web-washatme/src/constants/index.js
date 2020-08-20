@@ -95,6 +95,7 @@ export const NOK = 'notOk'
 export const server = {   
     LOGIN_URL : `authen/login`,
     REGISTER_URL : `authen/register`,
+    USER_URL : `authen/user`,
     PRODUCT_URL : `stock/product`, 
     CUSTOMER_URL : `customer/customer`,
     SERVICE_URL : `service/service`, 

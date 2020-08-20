@@ -23,16 +23,4 @@ router.post("/login", async (req, res) => {
     }
 });
 
-
-router.post("/register", async (req, res) => {
-try {
-    req.body.password = bcrypt.hashSync(req.body.password, 8);
-    let result = await user.create(req.body);
-    res.json({ result: constants.kResultOk, message: JSON.stringify(result) });
-} catch (error) {
-    res.json({
-        result: constants.kResultNotOk,message: JSON.stringify(error),
-    });
-    }
-});
 module.exports = router;

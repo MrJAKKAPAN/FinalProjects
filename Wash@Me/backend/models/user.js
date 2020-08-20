@@ -10,12 +10,12 @@ const user = sequelize.define(
       primaryKey: true
     },
     username: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
       // primaryKey: true
     },
     password: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     fname: {
@@ -27,11 +27,11 @@ const user = sequelize.define(
       allowNull: false,
     },
     tel: {
-      type: Sequelize.FLOAT(10) ,
+      type: Sequelize.TEXT ,
       allowNull: false,
     },
     cardNumber: {
-      type: Sequelize.FLOAT(13) ,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     email: {
@@ -43,13 +43,13 @@ const user = sequelize.define(
       allowNull: false,
     },
     status: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
-    // level: {
-    //   type: Sequelize.STRING,
-    //   defaultValue: "normal",
-    // },
+    level: {
+      type: Sequelize.STRING,
+      defaultValue: "normal",
+    },
   },
   {
     //options

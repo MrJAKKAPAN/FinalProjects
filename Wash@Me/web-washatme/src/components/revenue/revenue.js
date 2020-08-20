@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
+import { httpClient } from "../../utils/HttpClient";
 import { Link } from "react-router-dom";
-import _, { result } from "lodash";
-// import moment from "react-moment";
 import moment from "moment-timezone";
-import numeral from "numeral";
-import NumberFormat from "react-number-format";
-
+import "./revenue.scss";
+import _ from "lodash";
+import { DeleteOutlined, EditOutlined, AudioOutlined } from "@ant-design/icons";
 import {
   Table,
   Space,
@@ -18,14 +17,11 @@ import {
   Row,
   Col,
 } from "antd";
-import { DeleteOutlined, EditOutlined, AudioOutlined } from "@ant-design/icons";
-import "./revenue.scss";
-import { httpClient } from "../../utils/HttpClient";
+
 
 const { Content } = Layout;
 const { Column, ColumnGroup } = Table;
 const { Search } = Input;
-
 
 
 class Revenue extends Component {
@@ -50,30 +46,26 @@ class Revenue extends Component {
         console.log(this.state);
   }
 
-  // onChange = (cus_fname) => {
-    // if(cus_fname === "" ) {
-    //     this.componentDidMount()
-    // }else{
-    // httpClient.get(`http://localhost:8085/api/v1/customer/customer/keyword/${cus_fname}`)
-    // .then((e) => this.setState({ result: e.data}));
-    // }
-// };
+  onChange = (re_date) => {
+    if(re_date === "" ) {
+        this.componentDidMount()
+    }else{
+    httpClient.get(`http://localhost:8085/api/v1/revenue/revenue/keyword/${re_date}`)
+    .then((e) => this.setState({ result: e.data}));
+    }
+};
 
-// onDelete = async(id) => {
-//   console.log(id);
-//   await httpClient.delete(
-//       `http://localhost:8085/api/v1/customer/customer/${id}`
-//       );
-//       await this.componentDidMount();
-// };
+  onDelete = async(id) => {
+  console.log(id);
+  await httpClient.delete(
+      `http://localhost:8085/api/v1/revenue/revenue/${id}`
+      );
+      await this.componentDidMount();
+};
 
-render() {
-  
+  render() {
+
       const timeConverter = rawDate => moment(rawDate).tz("Thai/Bangkok").format('L');
-    
-      // const num = new Number();
-      // return("$" + num.toFixed(2));
-
       const { pagination } = this.props;
       const columns = [
         {
@@ -125,21 +117,21 @@ render() {
           dataIndex:"re_price",
           align:"center",
           width:"300",
-          render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
         {
           title:"จำนวน",
           dataIndex:"re_number",
           align:"center",
           width:"300",
-          render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
         {
           title:"หน่วยนับ", 
           dataIndex:"re_number",
           align:"center",
           width:"300",
-          render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+          render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
         {
           title:"รหัสพนักงาน",
@@ -171,7 +163,7 @@ render() {
 
               <Popconfirm
                 title="คุณต้องการลบข้อมูลหรือไม่"
-                // onConfirm={() => this.onDelete(record.id)}
+                onConfirm={() => this.onDelete(record.id)}
                 okText="ใช่"
                 cancelText="ไม่"
               >
@@ -183,7 +175,8 @@ render() {
           ),
         },
       ];
-        return (
+
+    return (
       <div className="content-wrapper">
         <div className="content">
           <div className="row">
@@ -212,7 +205,7 @@ render() {
                     <Col span={12}></Col>
                     <Col span={8}>
                       <Search
-                        placeholder="ค้นหาชื่อลูกค้า "
+                        placeholder="ค้นหาวันที่บันทึก "
                         onChange={(e) => this.onChange(e.target.value)}
                         style={{ width: 300, float: "right" }}
                         enterButton
@@ -228,7 +221,6 @@ render() {
                     size="small"
                     style={{ marginTop: "10px" }}
                   />
-
                 </div>
               </div>
             </div>
@@ -238,8 +230,5 @@ render() {
     );
   }
 }
-// export const timeConverter = rawDate =>
-//   moment(rawDate)
-//     .tz("America/Chicago")
-//     .format("MMM DD YYYY, h:mm:ss a z");
+
 export default Revenue;

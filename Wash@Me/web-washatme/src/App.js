@@ -95,11 +95,15 @@ class App extends Component {
               <SecuredRoute path="/revenue-create" component={RevenueCreate} />
               <SecuredRoute path="/revenue-edit/:id" component={RevenueEdit} />
 
+              <SecuredRoute path="/member" component={Member} />
+              <SecuredRoute path="/member-create" component={MemberCreate} />
+              <SecuredRoute path="/member-edit/:id" component={MemberEdit} />
+
               {/* redirect to home */}
               <Route exact={true} path="/" component={this.redirectToHome} />
               <Route exact={true} path="*" component={this.redirectToHome} />
           </Switch>
-          {isLoggedIn() && <Footer />}
+          {/* {isLoggedIn() && <Footer />} */}
         </div>
       </Router>
     );
