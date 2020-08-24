@@ -46,11 +46,11 @@ class Revenue extends Component {
         console.log(this.state);
   }
 
-  onChange = (re_date) => {
-    if(re_date === "" ) {
+  onChange = (createdAt) => {
+    if(createdAt === "" ) {
         this.componentDidMount()
     }else{
-    httpClient.get(`http://localhost:8085/api/v1/revenue/revenue/keyword/${re_date}`)
+    httpClient.get(`http://localhost:8085/api/v1/revenue/revenue/keyword/${createdAt}`)
     .then((e) => this.setState({ result: e.data}));
     }
 };
@@ -84,7 +84,7 @@ class Revenue extends Component {
         },
         {
           title:"อ้างอิงใบเสร็จเลขที่ ",
-          dataIndex:"re_reference",
+          dataIndex:"re_receipt",
           align:"center",
           width:"200"
         },
@@ -128,14 +128,14 @@ class Revenue extends Component {
         },
         {
           title:"หน่วยนับ", 
-          dataIndex:"re_number",
+          dataIndex:"re_unit",
           align:"center",
           width:"300",
           render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
         {
-          title:"รหัสพนักงาน",
-          dataIndex:"ad_id",
+          title:"พนักงานผู้บันทึก",
+          dataIndex:"re_ad_name",
           align:"center",
           width:"300",
         },

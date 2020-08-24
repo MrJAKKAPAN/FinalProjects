@@ -20,7 +20,7 @@ router.post("/customer", async (req, res) => {
     try {
         const form = new formidable.IncomingForm();
         form.parse(req, async (error, fields, files) => {
-        let result = await customer.create(fields);
+        let result = await customer.create(fields, files);
         res.json({
             result: constants.kResultOk,
             message: JSON.stringify(result),

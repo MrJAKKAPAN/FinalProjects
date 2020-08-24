@@ -2,56 +2,55 @@ const Sequelize = require("sequelize");
 const sequelize = require("../db_instance");
 
 const revenue = sequelize.define(
-    "revenue",
-    {
+  "revenue",
+  {
     id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     re_type: {
-        type: Sequelize.NUMBER,
-        allowNull: false,
+      type: Sequelize.TEXT,
+      allowNull: false,
       // primaryKey: true
     },
     re_detail: {
-        type: Sequelize.TEXT,
-        allowNull: false,
+      type: Sequelize.TEXT,
+      allowNull: false,
       // primaryKey: true
     },
     re_pro_name: {
-        type: Sequelize.TEXT,
-        allowNull: false,
+      type: Sequelize.TEXT,
+      allowNull: false,
     },
     re_cus_name: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    },
+    re_receipt: {
         type: Sequelize.TEXT,
         allowNull: false,
-    },
-    re_reference: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-    },
+      },
     re_price: {
-        type: Sequelize.NUMBER,
-        allowNull: false,
+      type: Sequelize.TEXT,
+      allowNull: false,
     },
     re_number: {
-        type: Sequelize.NUMBER,
-        allowNull: false,
+      type: Sequelize.TEXT,
+      allowNull: false,
     },
     re_unit: {
-        type: Sequelize.NUMBER,
-        allowNull: false,
+      type: Sequelize.TEXT,
+      allowNull: false,
     },
-    ad_id: {
-        type:Sequelize.TEXT,
-        allowNull: false,
-    }
-
+    re_ad_name: {
+      type: Sequelize.TEXT,
+      allowNull: false,
     },
-    {
+  },
+  {
     // options
-    }
+  }
 );
 
 (async () => {

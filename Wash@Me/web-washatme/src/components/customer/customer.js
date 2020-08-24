@@ -102,6 +102,7 @@ onDelete = async(id) => {
 
                   <Table
                     bordered
+                    title={() => 'ตารางข้อมูลลูกค้า'}
                     dataSource={this.state.result}
                     // columns={columns}
                     pagination={pagination}
@@ -114,12 +115,12 @@ onDelete = async(id) => {
                       align="center"
                       width="60px"
                     />
-                    <Column
+                    {/* <Column
                       title="รหัสลูกค้า"
                       dataIndex=""
                       align="center"
                       width="200"
-                    />
+                    /> */}
                     <Column
                       title="ชื่อลูกค้า"
                       dataIndex="cus_fname"

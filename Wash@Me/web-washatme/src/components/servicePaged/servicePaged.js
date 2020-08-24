@@ -192,6 +192,7 @@ class ServicePaged extends Component {
 
                   <Table
                     bordered
+                    title={() => 'ตารางอัตรบริการ'}
                     dataSource={this.state.result}
                     columns={columns}
                     pagination={pagination}
