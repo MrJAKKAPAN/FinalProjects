@@ -12,92 +12,74 @@ import {
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
-import Axios from 'axios'
+import Axios from "axios";
 import "./customerEdit.css";
-import { UserOutlined, LaptopOutlined, NotificationOutlined} from "@ant-design/icons";
+import {
+  UserOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
+} from "@ant-design/icons";
 
 const { Option } = Select;
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 const FormItem = Form.Item;
 
-
 class CustomerEdit extends Component {
-//create instance
-formRef = React.createRef();
+  //create instance
+  formRef = React.createRef();
+  state = {
+    id: "",
+    cus_fname: "",
+    cus_lname: "",
+    cus_email: "",
+    cus_tel: "",
+    cus_car_number: "",
+    cus_band: "",
+    cus_address: "",
+  };
 
-  constructor(props) {
-    super(props);
-      this.state = {
-        id:'',
-        cus_fname:'',
-        cus_lname:'',
-        cus_email:'',
-        cus_tel:'',
-        cus_car_number:'',
-        cus_band:'',
-        cus_address:'',
-      }
-}
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    // alert(id)
+    httpClient
+      .get(`http://localhost:8085/api/v1/customer/customer/${id}`)
+      .then((e) => {
+        this.formRef.current.setFieldsValue({
+          id: e.data.id,
+          cus_fname: e.data.cus_fname,
+          cus_lname: e.data.cus_lname,
+          cus_email: e.data.cus_email,
+          cus_tel: e.data.cus_tel,
+          cus_car_number: e.data.cus_car_number,
+          cus_band: e.data.cus_band,
+          cus_address: e.data.cus_address,
+        });
+      });
+  }
 
-
-componentDidMount () {
-  const id = this.props.match.params.id;
-  // alert(id)
-  httpClient
-        .get(`http://localhost:8085/api/v1/customer/customer/${id}`)
-        .then((e) => {
-            this.formRef.current.setFieldsValue({
-                cus_fname: e.data.cus_fname,
-                cus_lname: e.data.cus_lname,
-                cus_email: e.data.cus_email,
-                cus_tel: e.data.cus_tel,
-                cus_car_number: e.data.cus_car_number,
-                cus_band: e.data.cus_band,
-                cus_address: e.data.cus_address,
-            });
-             this.setState({ 
-                cus_fname: e.data.cus_fname,
-                cus_lname: e.data.cus_lname,
-                cus_email: e.data.cus_email,
-                cus_tel: e.data.cus_tel,
-                cus_car_number: e.data.cus_car_number,
-                cus_band: e.data.cus_band,
-                cus_address: e.data.cus_address,
-          });
-})}
-
-
-updateCustomer = values => {
-  // event.preventDefault();
-  // console.log("ค่า e ที่มาจาก form: ", values);
+  updateCustomer = async (values) => {
     const customerUpdate = {
-        id: this.state.id,  
-        cus_fname: this.state.cus_fname,
-        cus_lname: this.state.cus_lname,
-        cus_email: this.state.cus_email,
-        cus_tel: this.state.cus_tel,
-        cus_car_number: this.state.cus_car_number,
-        cus_band: this.state.cus_band,
-        cus_address: this.state.cus_address,
+      id: this.props.match.params.id,
+      cus_fname: values.cus_fname,
+      cus_lname: values.cus_lname,
+      cus_email: values.cus_email,
+      cus_tel: values.cus_tel,
+      cus_car_number: values.cus_car_number,
+      cus_band: values.cus_band,
+      cus_address: values.cus_address,
     };
-    
-    console.log(customerUpdate);
-
-    Axios.put("http://localhost:8085/api/v1/customer/customer", customerUpdate)
-    .then(res => { 
-      console.log(res);
-      // console.log(res.data);
-    })
-          // .then((res) => {
-          //   console.log(res);
-          //   if(res.status === 200) {
-          //       console.log("Update Success",res.data);
-          //   }
-          //     }).catch((res) => {
-          //       console.log(res);
-          //     })
-    // await this.props.history.goBack();
+    let result = await httpClient.put(
+      "http://localhost:8085/api/v1/customer/customer",
+      customerUpdate
+    );
+    console.log(result)
+    await this.props.history.goBack();
+    if (result.code !== 0 || result.status > 399) {
+      return console.log("Cannot update customer data.");
+    }
+    result = result.data;
+    // console.log(result);
   };
 
   render() {
@@ -108,7 +90,7 @@ updateCustomer = values => {
       wrapperCol: {
         span: 12,
       },
-};
+    };
     const prefixSelector = (
       <Form.Item name="prefix" noStyle>
         <Select
@@ -123,7 +105,7 @@ updateCustomer = values => {
         </Select>
       </Form.Item>
     );
-    
+
     return (
       <div className="content-wrapper">
         <Layout>
@@ -133,13 +115,19 @@ updateCustomer = values => {
                 className="site-layout-background"
                 style={{ padding: 24, margin: 0, minHeight: 450 }}
               >
-                <Form ref={this.formRef} {...layout} name="nest-messages" onFinish={this.updateCustomer}  onValuesChange={(changedValues, allValues) => {}}>
+                <Form
+                  ref={this.formRef}
+                  {...layout}
+                  name="nest-messages"
+                  onFinish={this.updateCustomer}
+                  onValuesChange={(changedValues, allValues) => {}}
+                >
                   <Form.Item
                     label="ชื่อ"
                     name="cus_fname"
-                    rules={[{ required: true, message: "โปรดระบุชื่อ ", }]}
-                  > 
-                    <Input  />
+                    rules={[{ required: true, message: "โปรดระบุชื่อ " }]}
+                  >
+                    <Input />
                   </Form.Item>
                   <Form.Item
                     label="นามสกุล"
@@ -236,6 +224,5 @@ updateCustomer = values => {
     );
   }
 }
-
 
 export default CustomerEdit;
