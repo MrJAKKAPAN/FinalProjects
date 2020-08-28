@@ -36,8 +36,7 @@ class CustomerCreate extends Component {
   };
 
   onFinish = async(values) => {
-    console.log("ค่า values ที่มาจาก form: ", values);
-
+    // console.log("ค่า values ที่มาจาก form: ", values);
     const formData = new FormData();
       formData.append("cus_fname", values.cus_fname);
       formData.append("cus_lname", values.cus_lname);
@@ -56,7 +55,7 @@ class CustomerCreate extends Component {
         console.log("Error :", error);
       });
 
-     await this.props.history.goBack();
+    await this.props.history.goBack();
 
   };
 
