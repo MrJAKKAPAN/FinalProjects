@@ -1,0 +1,278 @@
+import React, { Component, useState } from "react";
+import { Formik } from "formik";
+import { connect } from "react-redux";
+import * as actions from "./../../actions/customer.action";
+import { getCustomerById } from "./../../actions/customer.action";
+import { HTTP_ACCOUNT_EDIT_SUCCESS, server } from "./../../constants";
+import { httpClient } from "./../../utils/HttpClient";
+import "./customerEdit.css";
+import { Button, Form, Col, InputGroup, Card } from "react-bootstrap";
+
+class CustomerEdit extends Component {
+  constructor(props) {
+    super(props);
+      this.state = this.initialState;
+      this.customerChange = this.customerChange.bind(this);
+
+  }
+  initialState = {
+    id:'',
+    fname:'',
+    lname:'',
+    email:'',
+    phone:'',
+    car_number:'',
+    band:'',
+    cus_address:'',
+  }
+  
+  componentDidMount() {
+     let customerId = this.props.match.params.id;
+    if(customerId) {
+        this.findCustomerById(customerId);
+    }
+  }
+  findCustomerById = (customerId) => {
+      httpClient.get("http://localhost:8085/api/v1/customer/customer/"+customerId)
+      .then(res => {
+        if(res.data !== null) {
+          this.setState({
+            id: res.data.id,
+            fname: res.data.cus_fname,
+            lname: res.data.cus_lname,
+            email: res.data.cus_email,
+            phone: res.data.cus_tel,
+            car_number: res.data.cus_car_number,
+            band: res.data.cus_band,
+            cus_address: res.data.cus_address,
+          })
+        }
+      }).catch((error) => {
+        console.error("Error - "+error);
+      })
+  }
+  updateCustomer = event => {
+    event.preventDefault();
+    const customer = {
+      id: this.state.id, 
+      fname: this.state.cus_fname,
+      lname: this.state.cus_lname,
+      email: this.state.cus_email,
+      phone: this.state.cus_tel,
+      car_number: this.state.cus_car_number,
+      band:this.state.cus_band,
+      cus_address: this.state.cus_address,
+    };
+    httpClient.put("http://localhost:8085/api/v1/customer/customer/", customer)
+          .then(e => {
+            // if(res.data !== null) {
+                this.setState(e.data);
+                console.log(e.data);
+                setTimeout(() => this.setState({"show":false}),3000);
+            // }else{
+              // this.setState({"show": false})
+            // }
+          }
+          );
+        this.setState(this.initialState);
+  };
+  customerChange = event => {
+    console.log(this.state);
+    this.setState({
+      [event.target.fname]: event.target.value,
+      [event.target.lname]: event.target.value,
+      [event.target.email]: event.target.value,
+      [event.target.phone]: event.target.value,
+      [event.target.car_number]: event.target.value,
+      [event.target.band]: event.target.value,
+      [event.target.cus_address]: event.target.value,
+    })
+  }
+  customerList = event => {
+    return (
+      alert("Update Success...")
+    )
+  }
+
+  render() {
+    const { fname, lname, email, phone, band, cus_address, car_number} = this.state;
+    console.log(this.state);
+    // const { result } = this.props.customerReducer;
+    return (
+      <div className="content-wrapper">
+        <section className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6">
+                <h1>สินค้า</h1>
+              </div>
+              <div className="col-sm-6">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item">
+                    <a href="#">Home</a>
+                  </li>
+                  <li className="breadcrumb-item active">Customer</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          {/* /.container-fluid */}
+        </section>
+        <section className="content">
+          <div className="row">
+            <div className="col-2"></div>
+            <div className="col-8">
+              <div className="card">
+                <div className="card-body">
+                  {/* Main content */}
+                  <section className="content" style={{ maxWidth: "100%" }}>
+                    <div className="box box-primary">
+                      <div className="box-header with-border">
+                        <p
+                          className="box-title"
+                          style={{ fontSize: 30, marginLeft: "9%" }}
+                        >
+                          Edit Customer
+                        </p>
+                      </div>
+                      <div className="box-body" style={{ marginTop: 30 }}>
+                        <div className="row">
+                          <div className="col-1"></div>
+                          <div className="col-10">
+                            <Form noValidate onSubmit={this.updateCustomer}>
+                              <Form.Row>
+                                <Form.Group as={Col} md="6" controlId="validationCustom01">
+                                  <Form.Label>First name</Form.Label>
+                                  <Form.Control
+                                    required
+                                    type="text"
+                                    name="fname"
+                                    placeholder="First name"
+                                    defaultValue={fname}
+                                    onChange={this.customerChange}
+                                  />
+                                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                  <Form.Label>Last name</Form.Label>
+                                  <Form.Control
+                                    required
+                                    type="text"
+                                    name="lname"
+                                    placeholder="Last name"
+                                    defaultValue={lname}
+                                    onChange={this.customerChange}
+                                  />
+                                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                              </Form.Group>
+                              </Form.Row>
+                              <Form.Row> 
+                              <Form.Group as={Col} md="12" controlId="validationCustom02">
+                                  <Form.Label>Email</Form.Label>
+                                  <Form.Control
+                                    required
+                                    type="text"
+                                    name="email"
+                                    placeholder="email"
+                                    defaultValue={email}
+                                    onChange={this.customerChange}
+                                  />
+                                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                              </Form.Group>
+                              </Form.Row>
+                              <Form.Row> 
+                                <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                    <Form.Label>phone</Form.Label>
+                                    <Form.Control
+                                      required
+                                      type="text"
+                                      name="phone"
+                                      placeholder="phone"
+                                      defaultValue={phone}
+                                      onChange={this.customerChange}
+                                    />
+                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                </Form.Group>
+                                {/* <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                  <Form.Label>จังหวัด</Form.Label>
+                                  <Form.Control
+                                    required
+                                    type="text"
+                                    name=""
+                                    placeholder=""
+                                    defaultValue=""
+                                    onChange={this.customerChange}
+                                  />
+                                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                              </Form.Group> */}
+                              </Form.Row>
+
+                              <Form.Row> 
+                                <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                    <Form.Label>band</Form.Label>
+                                    <Form.Control
+                                      required
+                                      type="text"
+                                      name="band"
+                                      placeholder="band "
+                                      defaultValue={band}
+                                      onChange={this.customerChange}
+                                    />
+                                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                                </Form.Group>
+                                <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                  <Form.Label>car_number</Form.Label>
+                                  <Form.Control
+                                    required
+                                    type="text"
+                                    name="car_number"
+                                    placeholder="car_number"
+                                    defaultValue={car_number}
+                                    onChange={this.customerChange}
+                                  />
+                                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                              </Form.Group>
+                               </Form.Row>
+                              <Form.Row> 
+                              <Form.Group as={Col} md="6" controlId="validationCustom02">
+                                  <Form.Label>Address</Form.Label>
+                                  <Form.Control
+                                    required
+                                    type="text"
+                                    name="address"
+                                    placeholder="cus_address"
+                                    defaultValue={cus_address}
+                                    onChange={this.customerChange}
+                                  />
+                                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                              </Form.Group>
+                              </Form.Row>
+                              <Card.Footer>
+                              <Button variant="success" type="submit"> 
+                              {/* {this.state.id ? "Update"  : "submit"} */}
+                              Update
+                              </Button>
+                              </Card.Footer>
+                            </Form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
+}
+
+// const mapStateToProps = ({ customerReducer }) => ({ customerReducer });
+// const mapDispatchToProps = {
+//   ...actions,
+//   getCustomerById,
+// };
+// export default connect(mapStateToProps, mapDispatchToProps)(CustomerEdit);
+export default CustomerEdit;
