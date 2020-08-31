@@ -39,7 +39,7 @@ router.put("/customer", async (req, res) => {
     });
     return res.json({
       code: 1,
-      message: 'This user updated',
+      message: 'This customer updated',
       result: constants.kResultOk,
     });
   } catch (error) {

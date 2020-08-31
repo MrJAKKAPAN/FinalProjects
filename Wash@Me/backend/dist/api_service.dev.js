@@ -6,7 +6,7 @@ var express = require("express");
 
 var router = express.Router();
 
-var customer = require("./models/customer");
+var service = require("./models/service");
 
 var Sequelize = require("sequelize");
 
@@ -18,16 +18,16 @@ var path = require("path");
 
 var fs = require("fs-extra");
 
-var Op = Sequelize.Op; // Get Customer
+var Op = Sequelize.Op; // Get service
 
-router.get("/customer", function _callee(req, res) {
+router.get("/service", function _callee(req, res) {
   var result;
   return regeneratorRuntime.async(function _callee$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return regeneratorRuntime.awrap(customer.findAll({
+          return regeneratorRuntime.awrap(service.findAll({
             order: Sequelize.literal("id DESC")
           }));
 
@@ -41,9 +41,9 @@ router.get("/customer", function _callee(req, res) {
       }
     }
   });
-}); // Add Customer
+}); // Add service
 
-router.post("/customer", function _callee3(req, res) {
+router.post("/service", function _callee3(req, res) {
   var form;
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
@@ -58,7 +58,7 @@ router.post("/customer", function _callee3(req, res) {
                   switch (_context2.prev = _context2.next) {
                     case 0:
                       _context2.next = 2;
-                      return regeneratorRuntime.awrap(customer.create(fields, files));
+                      return regeneratorRuntime.awrap(service.create(fields));
 
                     case 2:
                       result = _context2.sent;
@@ -87,9 +87,9 @@ router.post("/customer", function _callee3(req, res) {
       }
     }
   });
-}); // Update Customers
+}); // Update service
 
-router.put("/customer", function _callee4(req, res) {
+router.put("/service", function _callee4(req, res) {
   var fields;
   return regeneratorRuntime.async(function _callee4$(_context4) {
     while (1) {
@@ -98,7 +98,7 @@ router.put("/customer", function _callee4(req, res) {
           _context4.prev = 0;
           fields = req.body;
           _context4.next = 4;
-          return regeneratorRuntime.awrap(customer.update(fields, {
+          return regeneratorRuntime.awrap(service.update(fields, {
             where: {
               id: fields.id
             }
@@ -107,7 +107,7 @@ router.put("/customer", function _callee4(req, res) {
         case 4:
           return _context4.abrupt("return", res.json({
             code: 1,
-            message: 'This customer updated',
+            message: 'This service updated',
             result: constants.kResultOk
           }));
 
@@ -125,9 +125,9 @@ router.put("/customer", function _callee4(req, res) {
       }
     }
   }, null, null, [[0, 7]]);
-}); // Delete Customer
+}); // Delete service
 
-router["delete"]("/customer/:id", function _callee5(req, res) {
+router["delete"]("/service/:id", function _callee5(req, res) {
   var id, result;
   return regeneratorRuntime.async(function _callee5$(_context5) {
     while (1) {
@@ -136,7 +136,7 @@ router["delete"]("/customer/:id", function _callee5(req, res) {
           _context5.prev = 0;
           id = req.params.id;
           _context5.next = 4;
-          return regeneratorRuntime.awrap(customer.findOne({
+          return regeneratorRuntime.awrap(service.findOne({
             where: {
               id: id
             }
@@ -145,7 +145,7 @@ router["delete"]("/customer/:id", function _callee5(req, res) {
         case 4:
           result = _context5.sent;
           _context5.next = 7;
-          return regeneratorRuntime.awrap(customer.destroy({
+          return regeneratorRuntime.awrap(service.destroy({
             where: {
               id: id
             }
@@ -175,16 +175,16 @@ router["delete"]("/customer/:id", function _callee5(req, res) {
       }
     }
   }, null, null, [[0, 11]]);
-}); // Get Customer ById
+}); // Get service ById
 
-router.get("/customer/:id", function _callee6(req, res) {
+router.get("/service/:id", function _callee6(req, res) {
   var result;
   return regeneratorRuntime.async(function _callee6$(_context6) {
     while (1) {
       switch (_context6.prev = _context6.next) {
         case 0:
           _context6.next = 2;
-          return regeneratorRuntime.awrap(customer.findOne({
+          return regeneratorRuntime.awrap(service.findOne({
             where: {
               id: req.params.id
             }
@@ -205,9 +205,9 @@ router.get("/customer/:id", function _callee6(req, res) {
       }
     }
   });
-}); // Get CustomerByKeyword
+}); // Get serviceByKeyword
 
-router.get("/customer/keyword/:keyword", function _callee7(req, res) {
+router.get("/service/keyword/:keyword", function _callee7(req, res) {
   var keyword, result;
   return regeneratorRuntime.async(function _callee7$(_context7) {
     while (1) {
@@ -215,11 +215,10 @@ router.get("/customer/keyword/:keyword", function _callee7(req, res) {
         case 0:
           keyword = req.params.keyword;
           _context7.next = 3;
-          return regeneratorRuntime.awrap(customer.findAll({
+          return regeneratorRuntime.awrap(service.findAll({
             where: {
-              cus_fname: _defineProperty({}, Op.like, "%".concat(keyword, "%"))
-            } // {[Op.all]:`%${keyword}%`}
-
+              sv_name: _defineProperty({}, Op.like, "%".concat(keyword, "%"))
+            }
           }));
 
         case 3:

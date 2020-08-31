@@ -17,13 +17,12 @@ router.get("/product", async (req, res) => {
 // Add Products
 router.post("/product", async (req, res) => {
   try {
-    const form = new formidable.IncomingForm();
-    form.parse(req, async (error, fields, files) => {
-      let result = await product.create(fields);
-      res.json({
-        result: constants.kResultOk,
-        message: JSON.stringify(result),
-      });
+    const fields = req.body;
+    await product.create(fields);
+    return res.json({
+      code: 1,
+      message: 'This product create',
+      result: constants.kResultOk,
     });
   } catch (error) {
     res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
@@ -33,15 +32,14 @@ router.post("/product", async (req, res) => {
 // Update Product
 router.put("/product", async (req, res) => {
   try {
-    const form = new formidable.IncomingForm();
-    form.parse(req, async (error, fields, files) => {
-      let result = await product.update(fields, { where: { id: fields.id } });
-      // result = await uploadImage(files, fields);
-
-      res.json({
-        result: constants.kResultOk,
-        message: JSON.stringify(result),
-      });
+    const fields = req.body;
+    await product.update(fields, {
+      where: { id: fields.id },
+    });
+    return res.json({
+      code: 1,
+      message: 'This product updated',
+      result: constants.kResultOk,
     });
   } catch (error) {
     res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
@@ -50,8 +48,6 @@ router.put("/product", async (req, res) => {
 
 // Delete Product
 router.delete("/product/:id", async (req, res) => {
-  // router.delete("/product/:id-:option", (req, res) =>{
-  // res.json({id: req.params.id, option:req.params.option})
   try {
     const { id } = req.params;
     let result = await product.findOne({ where: { id: id } });
@@ -79,5 +75,6 @@ router.get("/product/keyword/:keyword", async (req, res) => {
   let result = await product.findAll({ where: { pro_name: {[Op.like]: `%${keyword}%`} }  });
   res.json(result);
 });
+
 
 module.exports = router;
