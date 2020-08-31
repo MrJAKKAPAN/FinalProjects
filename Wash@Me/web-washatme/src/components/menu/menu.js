@@ -32,9 +32,9 @@ class Menu extends Component {
               >
                 <li className={pathname === '/report' ? 'nav-item' : null}>
                   <Link to="/report" className="nav-link">
-                    <i className="nav-icon fas fa-th" />
+                    <i className="far fa-chart-bar" />
                     <p>
-                    &nbsp; Dashbord
+                    &nbsp; Report
                       <span className="right badge badge-danger">New</span>
                     </p>
                   </Link>

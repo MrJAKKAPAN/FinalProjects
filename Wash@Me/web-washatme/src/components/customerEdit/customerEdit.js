@@ -9,6 +9,7 @@ import {
   Button,
   Select,
   Space,
+  message, 
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
@@ -74,6 +75,10 @@ class CustomerEdit extends Component {
       customerUpdate
     );
     console.log(result)
+     message.success({ content: 'แก้ไขข้อมูลเรียบร้อย!', duration: 2,style: {
+            marginTop: '5vh',
+          } } ,300);
+
     await this.props.history.goBack();
     if (result.code !== 0 || result.status > 399) {
       return console.log("Cannot update customer data.");
@@ -81,7 +86,7 @@ class CustomerEdit extends Component {
     result = result.data;
     // console.log(result);
   };
-
+  
   render() {
     const layout = {
       labelCol: {
@@ -99,9 +104,6 @@ class CustomerEdit extends Component {
           }}
         >
           <Option value="08">+66</Option>
-          {/* <Option value="09">09</Option> */}
-          {/* <Option value="02">02</Option> */}
-          {/* <Option value="053">053</Option> */}
         </Select>
       </Form.Item>
     );

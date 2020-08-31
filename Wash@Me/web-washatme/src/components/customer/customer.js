@@ -10,6 +10,7 @@ import {
   Input,
   Row,
   Col,
+  message,
 } from "antd";
 import { DeleteOutlined, EditOutlined, AudioOutlined } from "@ant-design/icons";
 import "./customer.scss";
@@ -56,6 +57,9 @@ onDelete = async(id) => {
     await httpClient.delete(
         `http://localhost:8085/api/v1/customer/customer/${id}`
         );
+        message.success({ content: 'ลบข้อมูลเรียบร้อย!', duration: 2,style: {
+          marginTop: '5vh',
+        } } ,100);
         await this.componentDidMount();
 };
 

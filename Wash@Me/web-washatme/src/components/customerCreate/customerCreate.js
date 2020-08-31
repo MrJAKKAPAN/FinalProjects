@@ -9,6 +9,7 @@ import {
   Button,
   Select,
   Space,
+  message, 
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
@@ -36,7 +37,6 @@ class CustomerCreate extends Component {
   };
 
   onFinish = async(values) => {
-    // console.log("ค่า values ที่มาจาก form: ", values);
     const formData = new FormData();
       formData.append("cus_fname", values.cus_fname);
       formData.append("cus_lname", values.cus_lname);
@@ -54,7 +54,9 @@ class CustomerCreate extends Component {
       .catch((error) => {
         console.log("Error :", error);
       });
-
+      message.success({ content: 'เพิ่มข้อมูลเรียบร้อย!', duration: 2, style: {
+        marginTop: '5vh',
+      } } ,100);
     await this.props.history.goBack();
 
   };
@@ -117,7 +119,6 @@ class CustomerCreate extends Component {
                   >
                     <Input placeholder="นามสกุล" />
                   </Form.Item>
-                  {/* </Space> */}
                   <Form.Item
                     name="cus_email"
                     label="อีเมล์"
