@@ -26,6 +26,10 @@ const service = sequelize.define(
       type: Sequelize.NUMBER,
       allowNull: false,
     },
+    sv_type: {
+      type: Sequelize.TEXT,
+      allowNull: false,
+    },
     },
     {
       // options

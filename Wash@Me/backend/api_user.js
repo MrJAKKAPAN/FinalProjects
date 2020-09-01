@@ -15,24 +15,22 @@ router.get("/user", async (req, res) => {
   res.json(result);
 });
 
+// add user
 router.post("/user", async (req, res) => {
-  try {
-    // hash password
-    req.body.password = bcrypt.hashSync(req.body.password, 8);
-
-    let result = await user.create(req.body);
-    res.json({ result: constants.kResultOk, message: JSON.stringify(result) });
-  } catch (error) {
-    res.json({
-      result: constants.kResultNotOk,
-      message: JSON.stringify(error),
-    });
-  }
-  // CheckData
-  // console.log(req.body.username);
-  // const{username, password} = req.body
-  // res.json({result: "Add User", username, password})
+    try {
+      req.body.password = bcrypt.hashSync(req.body.password, 8);
+      const fields = req.body;
+      await user.create(fields);
+      return res.json({
+        code: 1,
+        message: 'This user create',
+        result: constants.kResultOk,
+      });
+    } catch (error) {
+      res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
+    }
 });
+
 
 // Update user
 router.put("/user", async (req, res) => {
@@ -78,7 +76,7 @@ router.get("/user/:id", async (req, res) => {
 router.get("/user/keyword/:keyword", async (req, res) => {
   const { keyword } = req.params;
   let result = await user.findAll({
-    where: { fname: { [Op.like]: `%${keyword}%` } },
+    where: { u_fname: { [Op.like]: `%${keyword}%` } },
     // {[Op.all]:`%${keyword}%`}
   });
   res.json(result);

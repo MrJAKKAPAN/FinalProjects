@@ -43,33 +43,32 @@ router.get("/user", function _callee(req, res) {
       }
     }
   });
-});
+}); // add user
+
 router.post("/user", function _callee2(req, res) {
-  var result;
+  var fields;
   return regeneratorRuntime.async(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
-          // hash password
           req.body.password = bcrypt.hashSync(req.body.password, 8);
-          _context2.next = 4;
-          return regeneratorRuntime.awrap(user.create(req.body));
+          fields = req.body;
+          _context2.next = 5;
+          return regeneratorRuntime.awrap(user.create(fields));
 
-        case 4:
-          result = _context2.sent;
-          res.json({
-            result: constants.kResultOk,
-            message: JSON.stringify(result)
-          });
-          _context2.next = 11;
-          break;
+        case 5:
+          return _context2.abrupt("return", res.json({
+            code: 1,
+            message: 'This user create',
+            result: constants.kResultOk
+          }));
 
         case 8:
           _context2.prev = 8;
           _context2.t0 = _context2["catch"](0);
           res.json({
-            result: constants.kResultNotOk,
+            result: constants.kResultNok,
             message: JSON.stringify(_context2.t0)
           });
 
@@ -209,7 +208,7 @@ router.get("/user/keyword/:keyword", function _callee6(req, res) {
           _context6.next = 3;
           return regeneratorRuntime.awrap(user.findAll({
             where: {
-              fname: _defineProperty({}, Op.like, "%".concat(keyword, "%"))
+              u_fname: _defineProperty({}, Op.like, "%".concat(keyword, "%"))
             } // {[Op.all]:`%${keyword}%`}
 
           }));

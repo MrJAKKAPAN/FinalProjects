@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { httpClient } from "../../utils/HttpClient";
 import { Link } from "react-router-dom";
+import moment from "moment-timezone";
 // import _ from "lodash";
 import {
   Table,
@@ -64,6 +65,7 @@ class ServicePaged extends Component {
   };
 
   render() {
+    const timeConverter = rawDate => moment(rawDate).format("DD/MM/YYYY");
     const { pagination } = this.props;
     const columns = [
       {
@@ -71,23 +73,18 @@ class ServicePaged extends Component {
         dataIndex: "id",
         align: "center",
         width: "60px",
-        height: "30px",
       },
       {
-        title: "รหัสรายการบริการ",
-        // dataIndex: "sv_name",
+        title: "วันที่บันทึก",
+        dataIndex: "createdAt",
         align: "center",
-        width: 200,
-        // sorter: {
-        //   compare: (a, b) => a.english - b.english,
-        //   multiple: 1,
-        // },
+        width:"100",
+        render: createdAt => timeConverter(createdAt)
       },
       {
         title: "ชื่อรายการ",
         dataIndex: "sv_name",
         align: "center",
-        width: 200,
       },
       {
         title: "รายละเอียด",
@@ -96,21 +93,20 @@ class ServicePaged extends Component {
       },
       {
         title: "ประเภท",
-        // dataIndex: "sv_price",
+        dataIndex: "sv_type",
         align: "center",
-        width: 100,
       },
       {
         title: "ราคา",
         dataIndex: "sv_price",
         align: "center",
-        width: 100,
+        render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
       },
       {
         title: "Member",
         dataIndex: "sv_member",
         align: "center",
-        width: 100,
+        render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
       },
 
       {

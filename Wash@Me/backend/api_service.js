@@ -17,13 +17,12 @@ router.get("/service", async (req, res) => {
 // Add service
 router.post("/service", async (req, res) => {
   try {
-    const form = new formidable.IncomingForm();
-    form.parse(req, async (error, fields, files) => {
-      let result = await service.create(fields);
-      res.json({
-        result: constants.kResultOk,
-        message: JSON.stringify(result),
-      });
+    const fields = req.body;
+    await service.create(fields);
+    return res.json({
+      code: 1,
+      message: 'This service create',
+      result: constants.kResultOk,
     });
   } catch (error) {
     res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
