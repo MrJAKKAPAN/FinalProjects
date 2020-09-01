@@ -16,7 +16,7 @@ import CustomerCreate from "./components/customerCreate/customerCreate";
 import CustomerEdit from "./components/customerEdit/customerEdit";
 
 import Member from "./components/member/member";
-import MemberCreate from "./components/member/member";
+import MemberCreate from "./components/memberCreate/memberCreate";
 import MemberEdit from "./components/memberEdit/memberEdit";
 
 import servicePaged from "./components/servicePaged/servicePaged";

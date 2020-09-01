@@ -18,11 +18,9 @@ import {
   Col,
 } from "antd";
 
-
 const { Content } = Layout;
 const { Column, ColumnGroup } = Table;
 const { Search } = Input;
-
 
 class Member extends Component {
   constructor(props) {
@@ -65,7 +63,7 @@ class Member extends Component {
 
   render() {
 
-      const timeConverter = rawDate => moment(rawDate).tz("Thai/Bangkok").format('L');
+      const timeConverter = rawDate => moment(rawDate).format("DD/MM/YYYY");
       const { pagination } = this.props;
       const columns = [
         {
@@ -84,37 +82,37 @@ class Member extends Component {
         },
         {
           title:"ชื่อ",
-          dataIndex:"fname",
+          dataIndex:"u_fname",
           align:"center",
           width:"200"
         },
         {
           title:"นามสกุล",
-          dataIndex:"lname",
+          dataIndex:"u_lname",
           align:"center",
           width:"350",
         },
         {
           title:"เบอร์โทร",
-          dataIndex:"tel",
+          dataIndex:"u_tel",
           align:"center",
           width:"100",
         },
         {
           title:"เลขบัตรประชาชน",
-          dataIndex:"cardNumber",
+          dataIndex:"u_cardNumber",
           align:"center",
           width:"200",
         },
         {
           title:"อีเมล์",
-          dataIndex:"email",
+          dataIndex:"u_email",
           align:"center",
           width:"150",
         },
         {
           title:"ที่อยู่",
-          dataIndex:"address",
+          dataIndex:"u_address",
           align:"center",
           width:"350",
         },
@@ -168,7 +166,7 @@ class Member extends Component {
                       <Button
                         type="success"
                         onClick={() =>
-                          this.props.history.push(`/revenue-create/`)
+                          this.props.history.push(`/member-create/`)
                         }
                         style={{
                           float: "left",

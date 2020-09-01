@@ -18,37 +18,33 @@ const user = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: false,
     },
-    fname: {
+    u_fname: {
       type: Sequelize.TEXT,
       allowNull: false,
     },
-    lname: {
+    u_lname: {
       type: Sequelize.TEXT,
       allowNull: false,
     },
-    tel: {
-      type: Sequelize.TEXT ,
+    u_tel: {
+      type: Sequelize.NUMBER ,
       allowNull: false,
     },
-    cardNumber: {
+    u_cardNumber: {
+      type: Sequelize.NUMBER,
+      allowNull: false,
+    },
+    u_email: {
       type: Sequelize.TEXT,
       allowNull: false,
     },
-    email: {
+    u_address: {
       type: Sequelize.TEXT,
       allowNull: false,
     },
-    address: {
-      type: Sequelize.TEXT,
+    u_status: {
+      type: Sequelize.NUMBER,
       allowNull: false,
-    },
-    status: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-    },
-    level: {
-      type: Sequelize.STRING,
-      defaultValue: "normal",
     },
   },
   {

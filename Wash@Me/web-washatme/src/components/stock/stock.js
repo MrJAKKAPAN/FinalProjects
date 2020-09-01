@@ -65,7 +65,7 @@ class Revenue extends Component {
 
   render() {
 
-      const timeConverter = rawDate => moment(rawDate).tz("Thai/Bangkok").format('L');
+      const timeConverter = rawDate => moment(rawDate).format("DD/MM/YYYY");
       const { pagination } = this.props;
       const columns = [
         {
