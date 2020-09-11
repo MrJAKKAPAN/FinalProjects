@@ -76,7 +76,7 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/home" component={Home} />
               <Route path="/stock-edit/:id" component={StockEdit} />
-              <SecuredRoute path="/register" component={Register} />
+              {/* <SecuredRoute path="/register" component={Register} /> */}
               <SecuredRoute path="/report" component={Report} />
 
               <SecuredRoute path="/stock" component={Stock} />
