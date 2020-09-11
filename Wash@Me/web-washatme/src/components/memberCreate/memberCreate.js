@@ -113,7 +113,7 @@ class MemberCreate extends Component {
                       <Input placeholder="ชื่อรายการ" />
                     </Form.Item>
                     <Form.Item name="u_status" label="สถานะ" >
-                      <Select placeholder="เลือกสถานะ" defaultValue="0">
+                      <Select placeholder="เลือกสถานะ" >
                           <Option value="0">Admin</Option>
                           <Option value="1">SuperAdmin</Option>
                       </Select>

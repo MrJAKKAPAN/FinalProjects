@@ -164,7 +164,6 @@ class CustomerEdit extends Component {
                       {
                         required: true,
                         message: "โปรดระบุเบอร์โทร",
-                        // pattern: new RegExp(/^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/),
                       },
                     ]}
                   >

@@ -1,8 +1,22 @@
 import React, { Component } from 'react';
+import './revenueEdit.css';
+
 
 class RevenueEdit extends Component {
+
+
   render() {
-    return <div>RevenueEdit</div>;
+    
+    
+
+
+
+    return (
+  <div className="content-wrapper">
+        RevenueEdit
+  </div>
+
+              )
   }
 }
 

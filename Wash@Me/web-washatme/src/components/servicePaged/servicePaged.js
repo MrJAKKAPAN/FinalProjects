@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { httpClient } from "../../utils/HttpClient";
 import { Link } from "react-router-dom";
 import moment from "moment-timezone";
-// import _ from "lodash";
 import {
   Table,
   Space,
@@ -148,8 +147,7 @@ class ServicePaged extends Component {
         <div className="content">
           <div className="row">
             <div className="col-12">
-              sdsdsds
-              <div className="card">
+              <div className="card" style={{top:'1%'}}>
                 <div className="card-body">
                   <Row>
                     <Col span={4}>

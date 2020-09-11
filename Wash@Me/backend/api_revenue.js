@@ -36,18 +36,17 @@ router.get("/revenue/keyword/:keyword", async(req, res) => {
 
   // Add revenue
 router.post("/revenue", async (req, res) => {
-    try {
-        const form = new formidable.IncomingForm();
-        form.parse(req, async (error, fields, files) => {
-        let result = await revenue.create(fields);
-        res.json({
-            result: constants.kResultOk,
-            message: JSON.stringify(result),
-        });
+  try {
+    const fields = req.body;
+    await revenue.create(fields);
+    return res.json({
+      code: 1,
+      message: 'This revenue create',
+      result: constants.kResultOk,
     });
-    } catch (error) {
-        res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
-    }
+  } catch (error) {
+    res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
+  }
 });
 
 // Update revenue

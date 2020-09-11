@@ -68,19 +68,25 @@ class Revenue extends Component {
       const timeConverter = rawDate => moment(rawDate).tz("Thai/Bangkok").format('L');
       const { pagination } = this.props;
       const columns = [
-        {
-          title: "ID",
-          dataIndex: "id",
-          align: "center",
-          width: "60px",
-          height: "30px",
-        },
+        // {
+        //   title: "ID",
+        //   dataIndex: "id",
+        //   align: "center",
+        //   width: "60px",
+        //   height: "30px",
+        // },
         {
           title:"วันที่บันทึก",
           dataIndex:"createdAt",
           align:"center",
           width:"200",
           render: createdAt => timeConverter(createdAt)
+        },
+        {
+          title:"ประเภทรับ-จ่าย",
+          dataIndex:"re_type",
+          align:"center",
+          width:"350",
         },
         {
           title:"อ้างอิงใบเสร็จเลขที่ ",
@@ -106,12 +112,7 @@ class Revenue extends Component {
           align:"center",
           width:"200",
         },
-        {
-          title:"ประเภทรับ-จ่าย",
-          dataIndex:"re_type",
-          align:"center",
-          width:"350",
-        },
+        
         {
           title:"ราคาต่อหน่วย",
           dataIndex:"re_price",
@@ -181,8 +182,8 @@ class Revenue extends Component {
         <div className="content">
           <div className="row">
             <div className="col-12">
-              sdsdsds
-              <div className="card">
+             
+              <div className="card" style={{top:'1%'}}>
                 <div className="card-body">
                   <Row>
                     <Col span={4}>
@@ -200,6 +201,22 @@ class Revenue extends Component {
                         }}
                       >
                         เพิ่ม
+                      </Button>
+                      <Button
+                        type="success"
+                        onClick={() =>
+                          this.props.history.push(`/revenue-create/`)
+                        }
+                        style={{
+                          float: "left",
+                          backgroundColor: "green",
+                          color: "white",
+                          border: "green",
+                          width: "100px",
+                          marginLeft:"10px"
+                        }}
+                      >
+                        เพิ่มราย
                       </Button>
                     </Col>
                     <Col span={12}></Col>

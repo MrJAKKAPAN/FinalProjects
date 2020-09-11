@@ -18,9 +18,9 @@ video {
     top: -10%;
     z-index: 1;
     height: 70vh;
-    -webkit-box-shadow: 2px 14px 6px -9px rgba(0,0,0,0.7);
-    -moz-box-shadow: 2px 14px 6px -9px rgba(0,0,0,0.7);
-    box-shadow: 2px 14px 6px -9px rgba(0,0,0,0.7);
+    // -webkit-box-shadow: 2px 14px 6px -9px rgba(0,0,0,0.7);
+    // -moz-box-shadow: 2px 14px 6px -9px rgba(0,0,0,0.7);
+    // box-shadow: 2px 14px 6px -9px rgba(0,0,0,0.7);
 }
 
 .section {
@@ -115,6 +115,16 @@ a {
     
     
 }
+/* features */
+.features-icons {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+.features-icons-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: orangered;
+}
 
 .Slider {
     width: 100%;
@@ -139,6 +149,7 @@ a {
         padding: 0px 10px;
     }
 }
+
 
 // Card
 .container {
@@ -341,7 +352,6 @@ a {
 .text-about {
     background-color: #f4f4f4;
     display: block;
-    padding-top: 5%;
     text-align: center;
 
     .aboutTitle{

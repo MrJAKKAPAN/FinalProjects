@@ -15,7 +15,7 @@ class Menu extends Component {
   render() {
       const {pathname} = this.props.location;
     return (
-      <div>
+      <div style={{minHeight:'100hv'}}>
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
           {/* Brand Logo */}
           <a href="index3.html" className="brand-link" style={{textAlign:'center'}}>

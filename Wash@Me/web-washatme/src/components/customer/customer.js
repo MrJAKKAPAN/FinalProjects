@@ -71,8 +71,7 @@ onDelete = async(id) => {
         <div className="content">
           <div className="row">
             <div className="col-12">
-              sdsdsds
-              <div className="card">
+              <div className="card" style={{top:'1%'}}>
                 <div className="card-body">
                   <Row>
                     <Col span={4}>
