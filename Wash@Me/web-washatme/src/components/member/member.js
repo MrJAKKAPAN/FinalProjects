@@ -66,20 +66,20 @@ class Member extends Component {
       const timeConverter = rawDate => moment(rawDate).format("DD/MM/YYYY");
       const { pagination } = this.props;
       const columns = [
-        {
-          title: "ID",
-          dataIndex: "id",
-          align: "center",
-          width: "60px",
-          height: "30px",
-        },
-        {
-          title:"วันที่บันทึก",
-          dataIndex:"createdAt",
-          align:"center",
-          width:"200",
-          render: createdAt => timeConverter(createdAt)
-        },
+        // {
+        //   title: "ID",
+        //   dataIndex: "id",
+        //   align: "center",
+        //   width: "60px",
+        //   height: "30px",
+        // },
+        // {
+        //   title:"วันที่บันทึก",
+        //   dataIndex:"createdAt",
+        //   align:"center",
+        //   width:"200",
+        //   render: createdAt => timeConverter(createdAt)
+        // },
         {
           title:"ชื่อ",
           dataIndex:"u_fname",
@@ -158,7 +158,11 @@ class Member extends Component {
         <div className="content">
           <div className="row">
             <div className="col-12">
-              sdsdsds
+            <div class="card" style={{ marginTop: "1rem"}}>
+                <div class="card-body">
+                  <text style={{ fontSize:'1.5rem' }}> พนักงาน / Member </text>
+                </div>
+              </div>
               <div className="card">
                 <div className="card-body">
                   <Row>
@@ -190,7 +194,7 @@ class Member extends Component {
                     </Col>
                   </Row>
                   <Table
-                    title={() => 'Header'}
+                    // title={() => 'Header'}
                     bordered
                     dataSource={this.state.result}
                     columns={columns}

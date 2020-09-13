@@ -68,20 +68,20 @@ class Revenue extends Component {
       const timeConverter = rawDate => moment(rawDate).format("DD/MM/YYYY");
       const { pagination } = this.props;
       const columns = [
-        {
-          title: "ID",
-          dataIndex: "id",
-          align: "center",
-          width: "60px",
-          height: "30px",
-        },
-        {
-          title:"วันที่บันทึก",
-          dataIndex:"createdAt",
-          align:"center",
-          width:"100",
-          render: createdAt => timeConverter(createdAt)
-        },
+        // {
+        //   title: "ID",
+        //   dataIndex: "id",
+        //   align: "center",
+        //   width: "60px",
+        //   height: "30px",
+        // },
+        // {
+        //   title:"วันที่บันทึก",
+        //   dataIndex:"createdAt",
+        //   align:"center",
+        //   width:"100",
+        //   render: createdAt => timeConverter(createdAt)
+        // },
         {
           title:"ชื่อสินค้า ",
           dataIndex:"pro_name",
@@ -102,13 +102,13 @@ class Revenue extends Component {
           width:"200",
           render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
-        {
-          title:"จำนวน",
-          dataIndex:"pro_number",
-          align:"center",
-          width:"200",
-          render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
-        },
+        // {
+        //   title:"จำนวน",
+        //   dataIndex:"pro_number",
+        //   align:"center",
+        //   width:"200",
+        //   render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
+        // },
         {
           title:"จัดการ",
           align:"center",
@@ -149,9 +149,14 @@ class Revenue extends Component {
     return (
       <div className="content-wrapper">
         <div className="content">
-
+            
           <div className="row">
             <div className="col-12">
+            <div class="card" style={{ marginTop: "1rem"}}>
+                <div class="card-body">
+                  <text style={{ fontSize:'1.5rem' }}> สินค้า / Product </text>
+                </div>
+              </div>
               <div className="card" style={{top:'1%'}}>
                 <div className="card-body" >
                   <Row>
@@ -183,7 +188,7 @@ class Revenue extends Component {
                     </Col>
                   </Row>
                   <Table
-                    title={() => 'Header'}
+                    // title={() => 'Header'}
                     bordered
                     dataSource={this.state.result}
                     columns={columns}

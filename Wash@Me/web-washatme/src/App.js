@@ -27,6 +27,12 @@ import Revenue from "./components/revenue/revenue";
 import RevenueCreate from "./components/revenueCreate/revenueCreate";
 import RevenueEdit from "./components/revenueEdit/revenueEdit";
 
+import Expenditure from "./components/expenditure/expenditure";
+import ExpenditureCreate from "./components/expenditureCreate/expenditureCreate";
+import ExpenditureEdit from "./components/expenditureEdit/expenditureEdit";
+
+import Test from "./components/test/test";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -76,7 +82,6 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/home" component={Home} />
               <Route path="/stock-edit/:id" component={StockEdit} />
-              {/* <SecuredRoute path="/register" component={Register} /> */}
               <SecuredRoute path="/report" component={Report} />
 
               <SecuredRoute path="/stock" component={Stock} />
@@ -95,9 +100,15 @@ class App extends Component {
               <SecuredRoute path="/revenue-create" component={RevenueCreate} />
               <SecuredRoute path="/revenue-edit/:id" component={RevenueEdit} />
 
+              <SecuredRoute path="/expenditure" component={Expenditure} />
+              <SecuredRoute path="/expenditure-create" component={ExpenditureCreate} />
+              <SecuredRoute path="/expenditure-edit/:id" component={ExpenditureEdit} />
+
               <SecuredRoute path="/member" component={Member} />
               <SecuredRoute path="/member-create" component={MemberCreate} />
               <SecuredRoute path="/member-edit/:id" component={MemberEdit} />
+
+              <SecuredRoute path="/test" component={Test} />
 
               {/* redirect to home */}
               <Route exact={true} path="/" component={this.redirectToHome} />

@@ -18,11 +18,11 @@ class Menu extends Component {
       <div style={{minHeight:'100hv'}}>
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
           {/* Brand Logo */}
-          <a href="index3.html" className="brand-link" style={{textAlign:'center'}}>
+          <a href="index3.html" className="brand-link" style={{textAlign:'center', height:'auto'}}>
             <span className="brand-text font-weight-light">Wash@Me</span>
           </a>
           {/* Sidebar */}
-          <div className="sidebar">
+          <div className="sidebar" style={{height:'auto'}}>
             <nav className="mt-2">
               <ul
                 className="nav nav-pills nav-sidebar flex-column"
@@ -42,7 +42,13 @@ class Menu extends Component {
                 <li className={pathname === '/revenue' ? 'nav-item' : null}>
                   <Link to="/revenue" className="nav-link">
                     <i className="nav-icon fas fa-th" />
-                    <p>&nbsp; รายรับ / รายจ่าย</p>
+                    <p>&nbsp; รายรับ / Revenue</p>
+                  </Link>
+                </li>
+                <li className={pathname === '/expenditure' ? 'nav-item' : null}>
+                  <Link to="/expenditure" className="nav-link">
+                    <i className="nav-icon fas fa-th" />
+                    <p>&nbsp; รายจ่าย / expenditure</p>
                   </Link>
                 </li>
 

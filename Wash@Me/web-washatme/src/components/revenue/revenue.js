@@ -68,25 +68,12 @@ class Revenue extends Component {
       const timeConverter = rawDate => moment(rawDate).tz("Thai/Bangkok").format('L');
       const { pagination } = this.props;
       const columns = [
-        // {
-        //   title: "ID",
-        //   dataIndex: "id",
-        //   align: "center",
-        //   width: "60px",
-        //   height: "30px",
-        // },
         {
           title:"วันที่บันทึก",
           dataIndex:"createdAt",
           align:"center",
           width:"200",
           render: createdAt => timeConverter(createdAt)
-        },
-        {
-          title:"ประเภทรับ-จ่าย",
-          dataIndex:"re_type",
-          align:"center",
-          width:"350",
         },
         {
           title:"อ้างอิงใบเสร็จเลขที่ ",
@@ -127,13 +114,13 @@ class Revenue extends Component {
           width:"300",
           render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
-        {
-          title:"หน่วยนับ", 
-          dataIndex:"re_unit",
-          align:"center",
-          width:"300",
-          render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
-        },
+        // {
+        //   title:"หน่วยนับ", 
+        //   dataIndex:"re_unit",
+        //   align:"center",
+        //   width:"300",
+        //   render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
+        // },
         {
           title:"พนักงานผู้บันทึก",
           dataIndex:"re_ad_name",
@@ -182,7 +169,11 @@ class Revenue extends Component {
         <div className="content">
           <div className="row">
             <div className="col-12">
-             
+            <div class="card" style={{ marginTop: "1rem"}}>
+                <div class="card-body">
+                  <text style={{ fontSize:'1.5rem' }}> รายรับ / Revenue </text>
+                </div>
+              </div>
               <div className="card" style={{top:'1%'}}>
                 <div className="card-body">
                   <Row>
@@ -200,22 +191,6 @@ class Revenue extends Component {
                           width: "100px",
                         }}
                       >
-                        เพิ่ม
-                      </Button>
-                      <Button
-                        type="success"
-                        onClick={() =>
-                          this.props.history.push(`/revenue-create/`)
-                        }
-                        style={{
-                          float: "left",
-                          backgroundColor: "green",
-                          color: "white",
-                          border: "green",
-                          width: "100px",
-                          marginLeft:"10px"
-                        }}
-                      >
                         เพิ่มราย
                       </Button>
                     </Col>
@@ -230,7 +205,7 @@ class Revenue extends Component {
                     </Col>
                   </Row>
                   <Table
-                    title={() => 'Header'}
+                    // title={() => 'Header'}
                     bordered
                     dataSource={this.state.result}
                     columns={columns}
