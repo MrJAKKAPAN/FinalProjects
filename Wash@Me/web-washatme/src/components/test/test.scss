@@ -1,0 +1,15 @@
+.products {
+    display: grid;
+    grid-template-columns:1fr 1fr 1fr;
+    
+    .productInfo {
+        padding:4rem ;
+    }
+    img {
+        width: 100%;
+    }
+    button {
+        font-size: 15px;
+        padding: 10px;
+    }
+}

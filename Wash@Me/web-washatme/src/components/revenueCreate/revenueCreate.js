@@ -18,6 +18,9 @@ import {
   Descriptions,
   Card,
   Radio,
+  Tabs,
+  Table,
+  // Search,
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
@@ -34,21 +37,21 @@ const { Option } = Select;
 const { TextArea } = Input;
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
-
+const { Column, ColumnGroup } = Table;
+const { TabPane } = Tabs;
+const { Search } = Input;
 class RevenueCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-    
-      data:[],
-      // a:[1,2,3,4,],
-      // b:[1,2,3,4,],
-    };    
+      data: [],
+    };
   }
-  componentDidMount(){
 
-  }
-  
+
+
+  componentDidMount() {}
+
 
   onFinish = async (values) => {
     console.log(values);
@@ -71,9 +74,21 @@ class RevenueCreate extends Component {
     // await this.props.history.goBack();
   };
 
-  render() {
-    const a = [1,2,3,4]
+  
 
+  addToCart = () => {
+    console.log('Add To Cart');
+  }
+
+
+  callback = (key) => {
+    console.log(key);
+  };
+
+
+
+
+  render() {
     const layout = {
       labelCol: {
         span: 6,
@@ -83,6 +98,77 @@ class RevenueCreate extends Component {
       },
     };
 
+    const columnsService = [
+      {
+        title: "ชื่อรายการ",
+        dataIndex: "name",
+        align: "center",
+      },
+      {
+        title: "ราคา",
+        dataIndex: "age",
+        align: "center",
+      },
+      {
+        title: "Action",
+        align: "center",
+        dataIndex: "action",
+        render: (text, record) => <Button onClick={this.addToCart} type="primary">เพิ่ม</Button>,
+      },
+    ];
+    const dataService = [
+      {
+        name: "John Brown",
+        age: 32,
+        address: "New York No. 1 Lake Park",
+      },
+      {
+        name: "John Brown",
+        age: 32,
+        address: "New York No. 1 Lake Park",
+      },
+    ];
+
+    const columnsProduct = [
+      {
+        title: "ชื่อสินค้า",
+        dataIndex: "name",
+        align: "center",
+      },
+      {
+        title: "ราคา",
+        dataIndex: "age",
+        align: "center",
+      },
+      {
+        title: "Action",
+        align: "center",
+        dataIndex: "action",
+        render: (text, record) => <Button type="primary">เพิ่ม</Button>,
+      },
+    ];
+    const dataProduct = [
+      {
+        name: "John Brown",
+        age: 32,
+        address: "New York No. 1 Lake Park",
+      },
+      {
+        name: "John Brown",
+        age: 32,
+        address: "New York No. 1 Lake Park",
+      },
+      
+    ];
+
+    const dataAdd = [
+      {
+        name: "John Brown",
+        price: 32,
+        coat: 1,
+        sum: 32,
+      },
+    ];
 
     const style = { paddingTop: "1px" };
     return (
@@ -100,46 +186,29 @@ class RevenueCreate extends Component {
                     style={{ border: "1px solid rgb(226, 225, 225)" }}
                   >
                     <Row style={{ paddingTop: "3%" }}>
-                      <Col span={14}>
+                      <Col span={12}>
                         <Form.Item name="" label="วันที่บันทึก">
                           <Input disabled />
                         </Form.Item>
                       </Col>
-                      <Col span={10}></Col>
-                    </Row>
-
-                    <Row>
-                      <Col span={14}>
-                        <Form.Item name="" label="ประเภทบัญชี">
-                          <Radio.Group name="radiogroup">
-                            <Radio value={1}>รายรับ</Radio>
-                            <Radio value={2}>รายจ่าย</Radio>
-                          </Radio.Group>
-                        </Form.Item>
+                      <Col span={12}>
+                      <Form.Item name="" label="เลขที่ใบเสร็จอ้างอิง">
+                          <Input placeholder="เลขที่ใบเสร็จอ้างอิง" />
+                          </Form.Item>
                       </Col>
-                      <Col span={10}></Col>
                     </Row>
-
-                    <Row>
-                      <Col span={14}>
-                        <Form.Item name="cus_name" label="บันทึกย่อ">
+                     <Row>
+                      <Col span={12}>
+                      <Form.Item name="" label="บันทึกย่อ">
                           <TextArea
                             placeholder="รายละเอียด"
                             autoSize
                             rows={4}
                           />
                         </Form.Item>
-                      </Col>
-                      <Col span={10}>
-                        <Form.Item name="" label="เลขที่ใบเสร็จอ้างอิง">
-                          <Input placeholder="เลขที่ใบเสร็จอ้างอิง" />
-                        </Form.Item>
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col span={14}>
-                        <Form.Item name="" label="ลูกค้า (ถ้ามี)">
+                        </Col>
+                        <Col span={12}>
+                        <Form.Item name="" label="ป้ายทะเบียนรถ(ถ้ามี)">
                           <Select defaultValue="lucy">
                             <Option value="jack">Jack</Option>
                             <Option value="lucy">Lucy</Option>
@@ -147,45 +216,93 @@ class RevenueCreate extends Component {
                           </Select>
                         </Form.Item>
                       </Col>
-                      <Col span={10}></Col>
-                    </Row>
-
-                    <Content style={{ padding: "0 50px" }}>
+                    </Row> 
+                  
+                    <Content style={{ padding: "0 20px" }}>
                       <div className="site-layout-content">
                         <Row>
-                          <Col span={24}>
-
-
-
-
-
-
+                          <Col span={11}>
+                            <Tabs
+                              defaultActiveKey="1"
+                              onChange={this.callback}
+                              type="card"
+                            >
+                              <TabPane tab="บริการ" key="1">
+                                <Table
+                                  columns={columnsService}
+                                  dataSource={dataService}
+                                  size="small"
+                                  scroll={{ y: 220 }}
+                                  pagination={false}
+                                />
+                              </TabPane>
+                              <TabPane tab="สินค้า" key="2">
+                                <Table
+                                  columns={columnsProduct}
+                                  dataSource={dataProduct}
+                                  size="small"
+                                  scroll={{ y: 220 }}
+                                  pagination={false}
+                                />
+                              </TabPane>
+                            </Tabs>
+                          </Col>
+                          <Col span={12} offset={1}>
+                            <Table 
+                                  title={() => <h6>ตระกร้าสินค้า</h6>}
+                                  size="small" 
+                                  dataSource={dataAdd}
+                                  pagination={false}
+                                  scroll={{ y: 280 }}>
+                              <Column
+                                title="ชื่อรายการ"
+                                dataIndex="name"
+                                key="1"
+                                align= "center"
+                              />
+                              <Column title="ราคา" dataIndex="price" align= "center"/>
+                              <Column title="จำนวน" dataIndex="coat" align= "center"/>
+                              <Column title="รวม" dataIndex="sum" align= "center"/>
+                              <Column
+                                title="Action"
+                                align= "center"
+                                key="action"
+                                render={(text, record) => (
+                                  <Space size="middle">
+                                    <Button type="primary" danger>ลบ</Button>
+                                  </Space>
+                                )}
+                              />
+                            </Table>
                           </Col>
                         </Row>
                       </div>
                     </Content>
                     <Form.Item
-                      wrapperCol={{ ...layout.wrapperCol, offset: 11 }}
-                      style={{ paddingTop: "3%" }}
+                      name=""
+                      style={{ paddingTop: "2%"}}
+                      label="ยอดรวม"
+                    >
+                      <Input placeholder="รวมราคา" />
+                    </Form.Item>
+                    <Form.Item
+                      wrapperCol={{ ...layout.wrapperCol, offset: 10 }}
+                      // style={{ paddingTop: "5px" }}
                     >
                       <Button
                         type="primary"
                         htmlType="submit"
                         style={{ marginRight: "5px" }}
                       >
-                        {" "}
-                        Submit{" "}
+                        Submit
                       </Button>
                       <Button
-                        type="primary"
-                        danger
-                        type="submit"
+                        type="primary" danger
                         onClick={() => {
                           this.props.history.goBack();
                         }}
                       >
-                        {" "}
-                        Cancel{" "}
+                        Cancel
                       </Button>
                     </Form.Item>
                   </Form>

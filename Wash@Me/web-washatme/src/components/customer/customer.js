@@ -71,6 +71,11 @@ onDelete = async(id) => {
         <div className="content">
           <div className="row">
             <div className="col-12">
+            <div class="card" style={{ marginTop: "1rem"}}>
+                <div class="card-body">
+                  <text style={{ fontSize:'1.5rem' }}> ลูกค้า / Customer </text>
+                </div>
+              </div>
               <div className="card" style={{top:'1%'}}>
                 <div className="card-body">
                   <Row>
@@ -105,7 +110,7 @@ onDelete = async(id) => {
 
                   <Table
                     bordered
-                    title={() => 'ตารางข้อมูลลูกค้า'}
+                    // title={() => 'ตารางข้อมูลลูกค้า'}
                     dataSource={this.state.result}
                     // columns={columns}
                     pagination={pagination}
@@ -113,17 +118,17 @@ onDelete = async(id) => {
                     style={{ marginTop: "10px" }}
                   >
                     <Column
-                      title="ID"
-                      dataIndex="id"
-                      align="center"
-                      width="60px"
-                    />
-                    {/* <Column
-                      title="รหัสลูกค้า"
-                      dataIndex=""
+                      title="เลขป้ายทะเบียนรถ"
+                      dataIndex="cus_car_number"
                       align="center"
                       width="200"
-                    /> */}
+                    />
+                    <Column
+                      title="ยี่ห้อ"
+                      dataIndex="cus_band"
+                      align="center"
+                      width="100"
+                    />
                     <Column
                       title="ชื่อลูกค้า"
                       dataIndex="cus_fname"
@@ -142,18 +147,6 @@ onDelete = async(id) => {
                       align="center"
                       width="200"
                       style={{backgroundColor:'black'}}
-                    />
-                    <Column
-                      title="เลขป้ายทะเบียนรถ"
-                      dataIndex="cus_car_number"
-                      align="center"
-                      width="200"
-                    />
-                    <Column
-                      title="ยี่ห้อ"
-                      dataIndex="cus_band"
-                      align="center"
-                      width="100"
                     />
                     <Column
                       title="E-Mail"
