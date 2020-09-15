@@ -9,7 +9,8 @@ import {
   Button,
   Select,
   Space,
-  message, 
+  message,
+  PageHeader
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
@@ -36,15 +37,15 @@ class CustomerCreate extends Component {
     cus_address: "",
   };
 
-  onFinish = async(values) => {
+  onFinish = async (values) => {
     const formData = new FormData();
-      formData.append("cus_fname", values.cus_fname);
-      formData.append("cus_lname", values.cus_lname);
-      formData.append("cus_email", values.cus_email);
-      formData.append("cus_tel", values.cus_tel);
-      formData.append("cus_car_number", values.cus_car_number);
-      formData.append("cus_band", values.cus_band);
-      formData.append("cus_address", values.cus_address);
+    formData.append("cus_fname", values.cus_fname);
+    formData.append("cus_lname", values.cus_lname);
+    formData.append("cus_email", values.cus_email);
+    formData.append("cus_tel", values.cus_tel);
+    formData.append("cus_car_number", values.cus_car_number);
+    formData.append("cus_band", values.cus_band);
+    formData.append("cus_address", values.cus_address);
     await httpClient
       .post(`http://localhost:8085/api/v1/customer/customer/`, formData)
       .then((res) => {
@@ -54,11 +55,17 @@ class CustomerCreate extends Component {
       .catch((error) => {
         console.log("Error :", error);
       });
-      message.success({ content: 'เพิ่มข้อมูลเรียบร้อย!', duration: 2, style: {
-        marginTop: '5vh',
-      } } ,100);
+    message.success(
+      {
+        content: "เพิ่มข้อมูลเรียบร้อย!",
+        duration: 2,
+        style: {
+          marginTop: "5vh",
+        },
+      },
+      100
+    );
     await this.props.history.goBack();
-
   };
 
   render() {
@@ -89,118 +96,133 @@ class CustomerCreate extends Component {
 
     return (
       <div className="content-wrapper">
-        <Layout>
-          <Layout>
-            <Layout style={{ padding: "0 24px 24px" }}>
-              <Content
-                className="site-layout-background"
-                style={{ padding: 24, margin: 0, minHeight: 450 }}
-              >
-                <Form {...layout} name="nest-messages" onFinish={this.onFinish}>
-                  <Form.Item
-                    name="cus_fname"
-                    label="ชื่อ"
-                    onChange={this.handleChange}
-                    rules={[{ required: true, message: "โปรดระบุชื่อ " }]}
+        <section className="content">
+          <PageHeader
+            className="site-page-header"
+            onBack={() => {
+              this.props.history.goBack();
+            }}
+            title="ลูกค้า"
+            subTitle="บันทึกข้อมูลลูกค้า"
+          />
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-10">
+              <div className="card" style={{ top: "2%" }}>
+                <div className="card-body">
+                  <Form
+                    style={{ paddingTop: "2%" }}
+                    {...layout}
+                    name="nest-messages"
+                    onFinish={this.onFinish}
                   >
-                    <Input placeholder="ชื่อลูกค้า" />
-                  </Form.Item>
-                  <Form.Item
-                    label="นามสกุล"
-                    name="cus_lname"
-                    onChange={this.handleChange}
-                    rules={[
-                      {
-                        required: true,
-                        message: "โปรดระบุนามสกุล",
-                        pattern: new RegExp(/\D+/g),
-                      },
-                    ]}
-                  >
-                    <Input placeholder="นามสกุล" />
-                  </Form.Item>
-                  <Form.Item
-                    name="cus_email"
-                    label="อีเมล์"
-                    onChange={this.handleChange}
-                    rules={[
-                      {
-                        required: true,
-                        message: " โปรดระบุอีเมล์ ",
-                        type: "email",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="อีเมล์" />
-                  </Form.Item>
-                  <Form.Item
-                    name="cus_tel"
-                    label="เบอร์โทร"
-                    onChange={this.handleChange}
-                    rules={[
-                      {
-                        required: true,
-                        message: "โปรดระบุเบอร์โทร",
-                      },
-                    ]}
-                  >
-                    <Input
-                      placeholder="เบอร์โทร"
-                      style={{ width: "100%" }}
-                      maxLength={10}
-                      minLength={10}
-                    />
-                  </Form.Item>
-                  <Form.Item
-                    name="cus_car_number"
-                    label="ป้ายทะเบียนรถ"
-                    onChange={this.handleChange}
-                    rules={[
-                      { required: true, message: "โปรดระบุป้ายทะเบียนรถ" },
-                    ]}
-                  >
-                    <Input placeholder="ป้ายทะเบียนรถ" />
-                  </Form.Item>
-                  <Form.Item
-                    name="cus_band"
-                    label="ยี่ห้อ"
-                    onChange={this.handleChange}
-                    rules={[{ required: true, message: "โปรดระบุยี่ห้อรถ" }]}
-                  >
-                    <Input placeholder="ป้ายทะเบียนรถ" />
-                  </Form.Item>
-                  <Form.Item
-                    name="cus_address"
-                    label="ที่อยู่"
-                    onChange={this.handleChange}
-                    rules={[{ required: true, message: "โปรดระบุที่อยู่" }]}
-                  >
-                    <Input placeholder="ป้ายทะเบียนรถ" />
-                  </Form.Item>
-                  <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      style={{ marginRight: "5px" }}
+                    <Form.Item
+                      name="cus_fname"
+                      label="ชื่อ"
+                      onChange={this.handleChange}
+                      rules={[{ required: true, message: "โปรดระบุชื่อ " }]}
                     >
-                      Submit
-                    </Button>
-                    <Button
-                      type="primary"
-                      danger
-                      type="submit"
-                      onClick={() => {
-                        this.props.history.goBack();
-                      }}
+                      <Input placeholder="ชื่อลูกค้า" />
+                    </Form.Item>
+                    <Form.Item
+                      label="นามสกุล"
+                      name="cus_lname"
+                      onChange={this.handleChange}
+                      rules={[
+                        {
+                          required: true,
+                          message: "โปรดระบุนามสกุล",
+                          pattern: new RegExp(/\D+/g),
+                        },
+                      ]}
                     >
-                      Cancel
-                    </Button>
-                  </Form.Item>
-                </Form>
-              </Content>
-            </Layout>
-          </Layout>
-        </Layout>
+                      <Input placeholder="นามสกุล" />
+                    </Form.Item>
+                    <Form.Item
+                      name="cus_email"
+                      label="อีเมล์"
+                      onChange={this.handleChange}
+                      rules={[
+                        {
+                          required: true,
+                          message: " โปรดระบุอีเมล์ ",
+                          type: "email",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="อีเมล์" />
+                    </Form.Item>
+                    <Form.Item
+                      name="cus_tel"
+                      label="เบอร์โทร"
+                      onChange={this.handleChange}
+                      rules={[
+                        {
+                          required: true,
+                          message: "โปรดระบุเบอร์โทร",
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder="เบอร์โทร"
+                        style={{ width: "100%" }}
+                        maxLength={10}
+                        minLength={10}
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      name="cus_car_number"
+                      label="ป้ายทะเบียนรถ"
+                      onChange={this.handleChange}
+                      rules={[
+                        { required: true, message: "โปรดระบุป้ายทะเบียนรถ" },
+                      ]}
+                    >
+                      <Input placeholder="ป้ายทะเบียนรถ" />
+                    </Form.Item>
+                    <Form.Item
+                      name="cus_band"
+                      label="ยี่ห้อ"
+                      onChange={this.handleChange}
+                      rules={[{ required: true, message: "โปรดระบุยี่ห้อรถ" }]}
+                    >
+                      <Input placeholder="ป้ายทะเบียนรถ" />
+                    </Form.Item>
+                    <Form.Item
+                      name="cus_address"
+                      label="ที่อยู่"
+                      onChange={this.handleChange}
+                      rules={[{ required: true, message: "โปรดระบุที่อยู่" }]}
+                    >
+                      <Input placeholder="ที่อยู่" />
+                    </Form.Item>
+                    <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        style={{ marginRight: "5px" }}
+                      >
+                        Submit
+                      </Button>
+                      <Button
+                        type="primary"
+                        danger
+                        type="submit"
+                        onClick={() => {
+                          this.props.history.goBack();
+                        }}
+                      >
+                        Cancel
+                      </Button>
+                    </Form.Item>
+                  </Form>
+
+                  {/* </Layout> */}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     );
   }

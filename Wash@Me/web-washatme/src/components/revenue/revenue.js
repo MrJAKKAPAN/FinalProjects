@@ -170,8 +170,8 @@ class Revenue extends Component {
           <div className="row">
             <div className="col-12">
             <div class="card" style={{ marginTop: "1rem"}}>
-                <div class="card-body">
-                  <text style={{ fontSize:'1.5rem' }}> รายรับ / Revenue </text>
+                <div class="card-body" style={{ textAlign:'center' }}>
+                  <text style={{ fontSize:'1.5rem' }}>--- &nbsp;&nbsp; รายรับ / Revenue &nbsp;&nbsp; ---</text>
                 </div>
               </div>
               <div className="card" style={{top:'1%'}}>

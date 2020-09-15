@@ -13,6 +13,7 @@ import {
   Input,
   Row,
   Col,
+  PageHeader
 } from "antd";
 
 import { DeleteOutlined, EditOutlined, AudioOutlined } from "@ant-design/icons";
@@ -148,13 +149,13 @@ class ServicePaged extends Component {
           <div className="row">
             <div className="col-12">
             <div class="card" style={{ marginTop: "1rem"}}>
-                <div class="card-body">
-                  <text style={{ fontSize:'1.5rem' }}> อัตราบริการ / Service </text>
+                <div class="card-body" style={{ textAlign:'center' }}> 
+                  <text style={{ fontSize:'1.5rem' }}> --- &nbsp;&nbsp; อัตราบริการ / Service &nbsp;&nbsp; ---</text>
                 </div>
               </div>
               <div className="card" style={{top:'1%'}}>
                 <div className="card-body">
-                  <Row>
+                  <Row >
                     <Col span={4}>
                       <Button
                         type="success"

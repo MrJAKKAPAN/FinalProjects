@@ -44,19 +44,6 @@ router.put("/service", async (req, res) => {
   } catch (error) {
     res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
   }
-  // try {
-  //   const form = new formidable.IncomingForm();
-  //   form.parse(req, async (error, fields, files) => {
-  //     let result = await service.update(fields, { where: { id: fields.id } });
-
-  //     res.json({
-  //       result: constants.kResultOk,
-  //       message: JSON.stringify(result),
-  //     });
-  //   });
-  // } catch (error) {
-  //   res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
-  // }
 });
 
 // Delete service

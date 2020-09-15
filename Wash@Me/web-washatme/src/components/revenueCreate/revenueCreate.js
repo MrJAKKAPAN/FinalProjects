@@ -1,5 +1,6 @@
 // export default RevenueCreate;
 import React, { Component } from "react";
+import moment from "moment";
 import {
   Layout,
   Menu,
@@ -20,7 +21,7 @@ import {
   Radio,
   Tabs,
   Table,
-  // Search,
+  DatePicker
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
@@ -48,10 +49,7 @@ class RevenueCreate extends Component {
     };
   }
 
-
-
   componentDidMount() {}
-
 
   onFinish = async (values) => {
     console.log(values);
@@ -74,21 +72,16 @@ class RevenueCreate extends Component {
     // await this.props.history.goBack();
   };
 
-  
-
   addToCart = () => {
-    console.log('Add To Cart');
-  }
-
+    console.log("Add To Cart");
+  };
 
   callback = (key) => {
     console.log(key);
   };
 
-
-
-
   render() {
+    const dateFormat = 'DD/MM/YYYY';
     const layout = {
       labelCol: {
         span: 6,
@@ -113,7 +106,11 @@ class RevenueCreate extends Component {
         title: "Action",
         align: "center",
         dataIndex: "action",
-        render: (text, record) => <Button onClick={this.addToCart} type="primary">เพิ่ม</Button>,
+        render: (text, record) => (
+          <Button onClick={this.addToCart} type="primary">
+            เพิ่ม
+          </Button>
+        ),
       },
     ];
     const dataService = [
@@ -158,7 +155,6 @@ class RevenueCreate extends Component {
         age: 32,
         address: "New York No. 1 Lake Park",
       },
-      
     ];
 
     const dataAdd = [
@@ -174,7 +170,13 @@ class RevenueCreate extends Component {
     return (
       <div className="content-wrapper">
         <section className="content">
-          <div className="row">
+          <PageHeader
+            className="site-page-header"
+            onBack={() => {this.props.history.goBack();}}
+            title="รายรับ"
+            subTitle="บันทึกข้อมูลรายรับ"
+          />
+          <div className="row">          
             <div className="col-1"></div>
             <div className="col-10">
               <div className="card" style={{ top: "2%" }}>
@@ -187,27 +189,27 @@ class RevenueCreate extends Component {
                   >
                     <Row style={{ paddingTop: "3%" }}>
                       <Col span={12}>
-                        <Form.Item name="" label="วันที่บันทึก">
-                          <Input disabled />
+                        <Form.Item name="date" label="วันที่บันทึก">
+                            <DatePicker disabled defaultValue={moment()} format={dateFormat}/>
                         </Form.Item>
                       </Col>
                       <Col span={12}>
-                      <Form.Item name="" label="เลขที่ใบเสร็จอ้างอิง">
+                        <Form.Item name="" label="เลขที่ใบเสร็จอ้างอิง">
                           <Input placeholder="เลขที่ใบเสร็จอ้างอิง" />
-                          </Form.Item>
+                        </Form.Item>
                       </Col>
                     </Row>
-                     <Row>
+                    <Row>
                       <Col span={12}>
-                      <Form.Item name="" label="บันทึกย่อ">
+                        <Form.Item name="" label="บันทึกย่อ">
                           <TextArea
                             placeholder="รายละเอียด"
                             autoSize
                             rows={4}
                           />
                         </Form.Item>
-                        </Col>
-                        <Col span={12}>
+                      </Col>
+                      <Col span={12}>
                         <Form.Item name="" label="ป้ายทะเบียนรถ(ถ้ามี)">
                           <Select defaultValue="lucy">
                             <Option value="jack">Jack</Option>
@@ -216,8 +218,8 @@ class RevenueCreate extends Component {
                           </Select>
                         </Form.Item>
                       </Col>
-                    </Row> 
-                  
+                    </Row>
+
                     <Content style={{ padding: "0 20px" }}>
                       <div className="site-layout-content">
                         <Row>
@@ -248,28 +250,43 @@ class RevenueCreate extends Component {
                             </Tabs>
                           </Col>
                           <Col span={12} offset={1}>
-                            <Table 
-                                  title={() => <h6>ตระกร้าสินค้า</h6>}
-                                  size="small" 
-                                  dataSource={dataAdd}
-                                  pagination={false}
-                                  scroll={{ y: 280 }}>
+                            <Table
+                              title={() => <h6>ตระกร้าสินค้า</h6>}
+                              size="small"
+                              dataSource={dataAdd}
+                              pagination={false}
+                              scroll={{ y: 280 }}
+                            >
                               <Column
                                 title="ชื่อรายการ"
                                 dataIndex="name"
                                 key="1"
-                                align= "center"
+                                align="center"
                               />
-                              <Column title="ราคา" dataIndex="price" align= "center"/>
-                              <Column title="จำนวน" dataIndex="coat" align= "center"/>
-                              <Column title="รวม" dataIndex="sum" align= "center"/>
+                              <Column
+                                title="ราคา"
+                                dataIndex="price"
+                                align="center"
+                              />
+                              <Column
+                                title="จำนวน"
+                                dataIndex="coat"
+                                align="center"
+                              />
+                              <Column
+                                title="รวม"
+                                dataIndex="sum"
+                                align="center"
+                              />
                               <Column
                                 title="Action"
-                                align= "center"
+                                align="center"
                                 key="action"
                                 render={(text, record) => (
                                   <Space size="middle">
-                                    <Button type="primary" danger>ลบ</Button>
+                                    <Button type="primary" danger>
+                                      ลบ
+                                    </Button>
                                   </Space>
                                 )}
                               />
@@ -280,7 +297,7 @@ class RevenueCreate extends Component {
                     </Content>
                     <Form.Item
                       name=""
-                      style={{ paddingTop: "2%"}}
+                      style={{ paddingTop: "2%" }}
                       label="ยอดรวม"
                     >
                       <Input placeholder="รวมราคา" />
@@ -297,7 +314,8 @@ class RevenueCreate extends Component {
                         Submit
                       </Button>
                       <Button
-                        type="primary" danger
+                        type="primary"
+                        danger
                         onClick={() => {
                           this.props.history.goBack();
                         }}

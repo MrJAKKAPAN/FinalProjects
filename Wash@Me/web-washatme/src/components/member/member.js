@@ -159,8 +159,8 @@ class Member extends Component {
           <div className="row">
             <div className="col-12">
             <div class="card" style={{ marginTop: "1rem"}}>
-                <div class="card-body">
-                  <text style={{ fontSize:'1.5rem' }}> พนักงาน / Member </text>
+                <div class="card-body" style={{ textAlign:'center' }}>
+                  <text style={{ fontSize:'1.5rem' }}> --- &nbsp;&nbsp; พนักงาน / Member &nbsp;&nbsp; --- </text>
                 </div>
               </div>
               <div className="card">

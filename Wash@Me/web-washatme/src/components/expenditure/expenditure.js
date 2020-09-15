@@ -130,8 +130,8 @@ class Expenditure extends Component {
           <div className="row">
             <div className="col-12">
               <div class="card" style={{ marginTop: "1rem" }}>
-                <div class="card-body">
-                  <text style={{ fontSize:'1.5rem' }}> รายจ่าย / Expenditure </text>
+                <div class="card-body" style={{ textAlign:'center' }}>
+                  <text style={{ fontSize:'1.5rem' }}> --- &nbsp;&nbsp; รายจ่าย / Expenditure &nbsp;&nbsp; ---</text>
                 </div>
               </div>
               <div className="card" style={{ top: "1%" }}>
