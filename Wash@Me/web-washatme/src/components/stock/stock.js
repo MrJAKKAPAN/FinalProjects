@@ -153,8 +153,8 @@ class Revenue extends Component {
           <div className="row">
             <div className="col-12">
             <div class="card" style={{ marginTop: "1rem"}}>
-                <div class="card-body">
-                  <text style={{ fontSize:'1.5rem' }}> สินค้า / Product </text>
+                <div class="card-body" style={{ textAlign:'center' }}>
+                  <text style={{ fontSize:'1.5rem',textAlign:'center' }}>--- &nbsp;&nbsp; สินค้า / Product &nbsp;&nbsp; ---</text>
                 </div>
               </div>
               <div className="card" style={{top:'1%'}}>

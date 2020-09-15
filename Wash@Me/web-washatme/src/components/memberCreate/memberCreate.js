@@ -11,6 +11,7 @@ import {
   Select,
   Space,
   message,
+  PageHeader
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
@@ -80,14 +81,19 @@ class MemberCreate extends Component {
     };
     return (
       <div className="content-wrapper">
-        <section>Header</section>
         <section className="content">
+        <PageHeader
+            className="site-page-header"
+            onBack={() => {this.props.history.goBack();}}
+            title="พนักงาน"
+            subTitle="บันทึกข้อมูลพนักงาน"
+          />
           <div className="row">
             <div className="col-2"></div>
             <div className="col-8">
-              <div className="card">
+              <div className="card" >
                 <div className="card-body">
-                  <Form {...layout} name="nest-messages" onFinish={(values) => this.onFinish(values)}>
+                  <Form {...layout} name="nest-messages" onFinish={(values) => this.onFinish(values)}  style={{ marginTop: "2%" }}>
                     <Form.Item name="username" label="ชื่อบัญชี" rules={[{ required: true, message: "โปรดระบุชื่อบัญชี" }]}>
                       <Input placeholder="Username" />
                     </Form.Item>

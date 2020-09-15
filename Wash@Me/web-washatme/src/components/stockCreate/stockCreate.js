@@ -10,6 +10,7 @@ import {
   Select,
   Space,
   message,
+  PageHeader
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
@@ -65,19 +66,26 @@ class StockCreate extends Component {
     };
     return (
       <div className="content-wrapper">
-        {/* <section>Header</section> */}
         <section className="content">
+          <PageHeader
+              className="site-page-header"
+              onBack={() => {this.props.history.goBack();}}
+              title="สินค้า"
+              subTitle="บันทึกข้อมูลสินค้า"
+            />
           <div className="row">
             <div className="col-2"></div>
             <div className="col-8">
               <div className="card">
                 <div className="card-body">
                   <Form
+                    style={{ marginTop: "2%" }}
                     {...layout}
                     name="nest-messages"
                     onFinish={(value) => this.onFinish(value)}
                   >
                     <Form.Item
+                      
                       name="pro_name"
                       label="ชื่อสินค้า"
                       rules={[

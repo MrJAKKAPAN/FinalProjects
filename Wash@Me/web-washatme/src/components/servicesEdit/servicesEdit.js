@@ -10,6 +10,7 @@ import {
   Select,
   Space,
   message,
+  PageHeader
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
@@ -84,8 +85,15 @@ class ServicesEdit extends Component {
     };
     return (
       <div className="content-wrapper">
-        <section>Header</section>
         <section className="content">
+        <PageHeader
+            className="site-page-header"
+            onBack={() => {
+              this.props.history.goBack();
+            }}
+            title="อัตราบริการ"
+            subTitle="แก้ไขข้อมูลอัตราบริการ"
+          />
           <div className="row">
             <div className="col-2"></div>
             <div className="col-8">
