@@ -27,14 +27,34 @@ const { Option } = Select;
 const { SubMenu } = Menu;
 
 class ExpenditureCreate extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+    state = {
+      ex_name: "",
+      ex_price: "",
+      ex_detail: "",
+      ex_name_member: "",
     };
-  }
 
-  onFinish = (value) => {
-    console.log(value);
+
+  onFinish = async(values) => {
+    // console.log(value);
+    const result = {
+      ex_name: values.ex_name,
+      ex_price: values.ex_price,
+      ex_detail: values.ex_detail,
+      // ex_name_member: values.ex_detail,
+    }
+    console.log(result);
+    await httpClient.post(`http://localhost:8085/api/v1/expenditure/expenditure/`, result)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      console.log("Error :", error);
+    });
+    message.success({ content: 'เพิ่มรายการจ่ายเรียบร้อย', duration: 2, style: {
+      marginTop: '5vh',
+    } } ,100);
+    await this.props.history.goBack();
   };
 
   render() {
@@ -53,7 +73,7 @@ class ExpenditureCreate extends Component {
         <section className="content">
           <PageHeader
             className="site-page-header"
-            onBack={() => { this.props.history.goBack(); }}
+            onBack={() => {this.props.history.goBack();}}
             title="รายจ่าย"
             subTitle="บันทึกข้อมูลราจ่าย"
           />

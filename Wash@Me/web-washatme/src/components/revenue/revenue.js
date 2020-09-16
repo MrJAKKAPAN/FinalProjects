@@ -16,12 +16,14 @@ import {
   Input,
   Row,
   Col,
+  Select,
 } from "antd";
 
 
 const { Content } = Layout;
 const { Column, ColumnGroup } = Table;
 const { Search } = Input;
+const { Option } = Select;
 
 
 class Revenue extends Component {
@@ -45,16 +47,14 @@ class Revenue extends Component {
       .then((e) => this.setState({ result: e.data }));
         console.log(this.state);
   }
-
-  onChange = (createdAt) => {
-    if(createdAt === "" ) {
+  onChangeEdit = (re_pro_name) => {
+    if(re_pro_name === "" ) {
         this.componentDidMount()
     }else{
-    httpClient.get(`http://localhost:8085/api/v1/revenue/revenue/keyword/${createdAt}`)
+    httpClient.get(`http://localhost:8085/api/v1/revenue/revenue/keyword/${re_pro_name}`)
     .then((e) => this.setState({ result: e.data}));
     }
 };
-
   onDelete = async(id) => {
   console.log(id);
   await httpClient.delete(
@@ -62,6 +62,10 @@ class Revenue extends Component {
       );
       await this.componentDidMount();
 };
+
+
+
+
 
   render() {
 
@@ -88,14 +92,14 @@ class Revenue extends Component {
           width:"350",
         },
         {
-          title:"รายละเอียด",
+          title:"บันทึกย่อ",
           dataIndex:"re_detail",
           align:"center",
           width:"100",
         },
         {
-          title:"รหัสสมาชิก (ถ้ามี)",
-          dataIndex:"re_cus_name",
+          title:"ป้ายทะเบียน(ถ้ามี)",
+          dataIndex:"re_cus_car-number",
           align:"center",
           width:"200",
         },
@@ -114,13 +118,6 @@ class Revenue extends Component {
           width:"300",
           render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
-        // {
-        //   title:"หน่วยนับ", 
-        //   dataIndex:"re_unit",
-        //   align:"center",
-        //   width:"300",
-        //   render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
-        // },
         {
           title:"พนักงานผู้บันทึก",
           dataIndex:"re_ad_name",
@@ -198,7 +195,7 @@ class Revenue extends Component {
                     <Col span={8}>
                       <Search
                         placeholder="ค้นหาวันที่บันทึก "
-                        onChange={(e) => this.onChange(e.target.value)}
+                        onChange={(e) => this.onChangeEdit(e.target.value)}
                         style={{ width: 300, float: "right" }}
                         enterButton
                       />

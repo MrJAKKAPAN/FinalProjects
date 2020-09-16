@@ -73,7 +73,7 @@ router.get("/expenditure", async (req, res) => {
   router.get("/expenditure/keyword/:keyword", async (req, res) => {
     const { keyword } = req.params;
     let result = await expenditure.findAll({
-      where: { cus_fname: { [Op.like]: `%${keyword}%` } },
+      where: { ex_name: { [Op.like]: `%${keyword}%` } },
       // {[Op.all]:`%${keyword}%`}
     });
     res.json(result);

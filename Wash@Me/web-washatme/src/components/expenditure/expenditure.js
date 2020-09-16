@@ -17,6 +17,7 @@ import {
   Row,
   Col,
   PageHeader,
+  message,
 } from "antd";
 
 const { Content } = Layout;
@@ -38,9 +39,33 @@ class Expenditure extends Component {
     }
   }
 
+  componentDidMount  () {
+      httpClient
+      .get("http://localhost:8085/api/v1/expenditure/expenditure/")
+      .then((e) => this.setState({ result: e.data }));
+        console.log(this.state);
+  }
+
+  onChange = (ex_name) => {
+    if(ex_name === "" ){
+      this.componentDidMount()
+    }else{
+      httpClient.get(`http://localhost:8085/api/v1/expenditure/expenditure/keyword/${ex_name}`)
+      .then((e) => this.setState({result: e.data}));
+    }
+  };
+
+  onDelete = async(id) => {
+    console.log(id);
+    await httpClient.delete(`http://localhost:8085/api/v1/expenditure/expenditure/${id}`);
+    message.success({ content: 'ลบข้อมูลเรียบร้อย!', duration: 2,style: {
+      marginTop: '5vh',
+    } } ,100);
+    await this.componentDidMount();
+  }
+
   render() {
-    const timeConverter = (rawDate) =>
-      moment(rawDate).tz("Thai/Bangkok").format("L");
+    const timeConverter = (rawDate) => moment(rawDate).tz("Thai/Bangkok").format("L");
     const { pagination } = this.props;
     const columns = [
       {
@@ -48,40 +73,26 @@ class Expenditure extends Component {
         dataIndex: "createdAt",
         align: "center",
         width: "200",
-        render: (createdAt) => timeConverter(createdAt),
+        render: (createdAt) => timeConverter(createdAt)
       },
       {
-        title: "ชื่อบริการ/สินค้า",
-        dataIndex: "re_pro_name",
-        align: "center",
-        width: "350",
-      },
-      {
-        title: "รายละเอียด",
-        dataIndex: "re_detail",
-        align: "center",
-        width: "100",
-      },
-      {
-        title: "ราคาต่อหน่วย",
-        dataIndex: "re_price",
+        title: "รายการ",
+        dataIndex: "ex_name",
         align: "center",
         width: "300",
-        render: (value) => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ","), //convert number monney
       },
       {
-        title: "จำนวน",
-        dataIndex: "re_number",
+        title: "จำนวนเงิน",
+        dataIndex: "ex_price",
         align: "center",
         width: "300",
         render: (value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ","), //convert number monney
       },
       {
-        title: "หน่วยนับ",
-        dataIndex: "re_unit",
+        title: "บันทึกย่อ",
+        dataIndex: "ex_detail",
         align: "center",
         width: "300",
-        render: (value) => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ","), //convert number monney
       },
       {
         title: "พนักงานผู้บันทึก",
@@ -149,7 +160,6 @@ class Expenditure extends Component {
                           color: "white",
                           border: "green",
                           width: "100px",
-                          // marginLeft: "10px",
                         }}
                       >
                         เพิ่มรายจ่าย
@@ -158,7 +168,7 @@ class Expenditure extends Component {
                     <Col span={12}></Col>
                     <Col span={8}>
                       <Search
-                        placeholder="ค้นหาวันที่บันทึก "
+                        placeholder="ค้นหารายการ"
                         onChange={(e) => this.onChange(e.target.value)}
                         style={{ width: 300, float: "right" }}
                         enterButton
@@ -166,7 +176,6 @@ class Expenditure extends Component {
                     </Col>
                   </Row>
                   <Table
-                    // title={() => "Header"}
                     bordered
                     dataSource={this.state.result}
                     columns={columns}

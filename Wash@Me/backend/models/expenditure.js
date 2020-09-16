@@ -23,12 +23,11 @@ const expenditure = sequelize.define(
         },
         ex_name_member: {
             type: Sequelize.TEXT,
-            allowNull:false,
+            // allowNull:false,
         },
     },
-    // options
     {
-
+// options
     }
 );
 (async () => {
