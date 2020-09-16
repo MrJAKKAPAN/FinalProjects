@@ -1,4 +1,3 @@
-// export default RevenueCreate;
 import React, { Component } from "react";
 import moment from "moment";
 import {
@@ -9,7 +8,6 @@ import {
   Input,
   InputNumber,
   Button,
-  Select,
   Space,
   message,
   PageHeader,
@@ -21,7 +19,8 @@ import {
   Radio,
   Tabs,
   Table,
-  DatePicker
+  Select,
+  DatePicker,
 } from "antd";
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
@@ -49,12 +48,37 @@ class RevenueCreate extends Component {
     };
   }
 
-  componentDidMount() {}
+// join data
+componentDidMount =  async() => {
+    let dataProduct = [];
+    await httpClient
+          .get("")
+          .then((res) => {
+            dataProduct.push(res)
+          })
+    let dataCustomer = [];
+    await httpClient
+            .get("")
+            .then((res) => {
+              dataCustomer.push(res)
+            })
+    await dataProduct.concat(dataCustomer)
+
+console.log(dataProduct);
+  }
 
   onFinish = async (values) => {
     console.log(values);
-    // const addMember = {
-    //   username: values.username,
+    const addRevenue = {
+      // re_add_name : ,
+      // re_price: values.re_price,
+      // re_pro_name: values.re_pro_name,
+      // re_member: values.re_member,
+      // re_reference: values.re_reference,
+      // re_cus_name: values.re_cus_name,
+      // re_ad_name: values.re_ad_name,
+      // 
+    }
 
     // }
     // console.log(addMember);
@@ -72,6 +96,17 @@ class RevenueCreate extends Component {
     // await this.props.history.goBack();
   };
 
+// select
+ onChange = (value)=> {
+  console.log(`selected ${value}`);
+}
+ onSearch = (value) => {
+  console.log('search:', value);
+}
+
+
+
+
   addToCart = () => {
     console.log("Add To Cart");
   };
@@ -80,8 +115,9 @@ class RevenueCreate extends Component {
     console.log(key);
   };
 
+
   render() {
-    const dateFormat = 'DD/MM/YYYY';
+    const dateFormat = "DD/MM/YYYY";
     const layout = {
       labelCol: {
         span: 6,
@@ -125,7 +161,6 @@ class RevenueCreate extends Component {
         address: "New York No. 1 Lake Park",
       },
     ];
-
     const columnsProduct = [
       {
         title: "ชื่อสินค้า",
@@ -156,7 +191,6 @@ class RevenueCreate extends Component {
         address: "New York No. 1 Lake Park",
       },
     ];
-
     const dataAdd = [
       {
         name: "John Brown",
@@ -172,11 +206,13 @@ class RevenueCreate extends Component {
         <section className="content">
           <PageHeader
             className="site-page-header"
-            onBack={() => {this.props.history.goBack();}}
+            onBack={() => {
+              this.props.history.goBack();
+            }}
             title="รายรับ"
             subTitle="บันทึกข้อมูลรายรับ"
           />
-          <div className="row">          
+          <div className="row">
             <div className="col-1"></div>
             <div className="col-10">
               <div className="card" style={{ top: "2%" }}>
@@ -190,7 +226,11 @@ class RevenueCreate extends Component {
                     <Row style={{ paddingTop: "3%" }}>
                       <Col span={12}>
                         <Form.Item name="date" label="วันที่บันทึก">
-                            <DatePicker disabled defaultValue={moment()} format={dateFormat}/>
+                          <DatePicker
+                            disabled
+                            defaultValue={moment()}
+                            format={dateFormat}
+                          />
                         </Form.Item>
                       </Col>
                       <Col span={12}>
@@ -211,10 +251,24 @@ class RevenueCreate extends Component {
                       </Col>
                       <Col span={12}>
                         <Form.Item name="" label="ป้ายทะเบียนรถ(ถ้ามี)">
-                          <Select defaultValue="lucy">
+                          <Select
+                            showSearch
+                            style={{ width: 200 }}
+                            placeholder="Select a person"
+                            optionFilterProp="children"
+                            onChange={this.onChange}
+                            onSearch={this.onSearch}
+                            filterOption={(input, option) =>
+                              option.children
+                                .toLowerCase()
+                                .indexOf(input.toLowerCase()) >= 0
+                            }
+                          >
+
                             <Option value="jack">Jack</Option>
-                            <Option value="lucy">Lucy</Option>
-                            <Option value="Yiminghe">yiminghe</Option>
+                            <Option value="Jacks">Jacks</Option>
+                            <Option value="Game">Game</Option>
+                            
                           </Select>
                         </Form.Item>
                       </Col>
@@ -296,15 +350,14 @@ class RevenueCreate extends Component {
                       </div>
                     </Content>
                     <Form.Item
-                      name=""
+                      // name=""
                       style={{ paddingTop: "2%" }}
                       label="ยอดรวม"
                     >
-                      <Input placeholder="รวมราคา" />
+                      <Input disabled/>
                     </Form.Item>
                     <Form.Item
                       wrapperCol={{ ...layout.wrapperCol, offset: 10 }}
-                      // style={{ paddingTop: "5px" }}
                     >
                       <Button
                         type="primary"

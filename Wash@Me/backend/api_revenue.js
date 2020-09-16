@@ -28,7 +28,7 @@ router.get("/revenue/:id", async (req, res) => {
 router.get("/revenue/keyword/:keyword", async (req, res) => {
   const { keyword } = req.params;
   let result = await revenue.findAll({
-    where: { re_type: { [Op.like]: `%${keyword}%` } },
+    where: { re_pro_name: { [Op.like]: `%${keyword}%` } },
     // {[Op.all]:`%${keyword}%`}
   });
   res.json(result);

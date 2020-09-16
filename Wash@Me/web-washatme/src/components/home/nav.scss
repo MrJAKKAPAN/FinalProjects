@@ -1,0 +1,37 @@
+
+.main-navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 0.5%;
+    min-height: 7vh;
+    font-family:  'Bebas Neue', cursive;
+    cursor: pointer;
+    .logo {
+        color: #000;
+        // text-transform: uppercase;
+    }
+    .nav-links {
+        display: flex;
+        justify-content: space-around;
+        width: 30%;
+
+        a { 
+            color: #000;
+            text-decoration: none;
+            letter-spacing: 3px;
+            font-weight: 400;
+            font-size: 20px;
+        }
+        
+        li {
+            list-style: none;
+
+            :hover {
+                color: #f15e22;
+            }
+        }
+    }
+
+
+}
