@@ -48,6 +48,8 @@ class RevenueCreate extends Component {
     };
   }
 
+
+
 // join data
 componentDidMount =  async() => {
     let dataProduct = [];
@@ -67,6 +69,8 @@ componentDidMount =  async() => {
 console.log(dataProduct);
   }
 
+
+  
   onFinish = async (values) => {
     console.log(values);
     const addRevenue = {

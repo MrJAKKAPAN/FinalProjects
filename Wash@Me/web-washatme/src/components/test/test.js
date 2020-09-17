@@ -1,44 +1,107 @@
-import React, { Component } from "react";
-import "./test.scss";
-
-class Test extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+// import React, { Component } from "react";
+// import "./test.scss";
+// import { render } from 'react-dom';
 
 
+// class Test extends React.Component{
+//   constructor(){
+//     super();
+//     this.products = {
+//       carrot: 5,
+//       apple: 3,
+//       BM: 5,
+//       Benz: 10
+//     }
+    
+
+//     this.state = {
+//       cart: "",
+//       total: 0
+//     }
+//   }
+
+//   addHandler = e => {
+//     let product = e.target.name
+//     let items = this.state.cart
+//     if(items){
+//       if (items[product]) {
+//         items[product] = items[product]+1
+//       }else{
+//         items[product] = 1
+//       }
+//     }else{
+//       items = {[product]: 1}
+//     }
+//     console.log(this.state.total, this.products[product])
+//     this.setState({ cart: items, total: this.state.total + this.products[product]  })
+//   }
+
+//   addService = e => {
+//     let service = e.target.name
+//     let items = this.state.cart
+//     if(items){
+//       if (items[service]) {
+//         items[service] = items[service]+1
+//       }else{
+//         items[service] = 1
+//       }
+//     }else{
+//       items = {[service]: 1}
+//     }
+//     console.log(this.state.total, this.services[service])
+//     this.setState({ cart: items, total: this.state.total + this.services[service]  })
+//   }
+
+//   removeHandler = e => {
+//     let product = e.target.name
+//     let items = this.state.cart
+//     items[product] = items[product] - 1
+//     this.setState({ cart: items, total: this.state.total - this.products[product] })
+//   }
+//   // removeService = e => {
+//   //   let service = e.target.name
+//   //   let items = this.state.cart
+//   //   items[service] = items[service] - 1
+//   //   this.setState({ cart: items, total: this.state.total - this.services[service]})
+//   // }
 
 
 
-  render() {
-    const products = [
-      {
-        id: 1,
-        name: "R1 M",
-        price: "50000",
-        img:
-          "https://www.mrlhobby.com/wp-content/uploads/2018/09/14133_1-2.jpg",
-      },
-      {
-        id: 2,
-        name: "Ducati v4",
-        price: "100000",
-        img:
-          "https://lh3.googleusercontent.com/proxy/AEEnMDYFJL3d1xchUe2RY5wR-hekpBSPVkbvUFEx9t_9h9gOEqA8V9_QuJTu_jgUhzHxgxbILMIsZNWK7KtQZy0ugv2ZzlYKm7VS",
-      },
-      {
-        id: 3,
-        name: "z900",
-        price: "20000",
-        img:
-          "https://www.peeramotosports.co.th/wp-content/uploads/2019/11/Z900-Black-Green-2020-2-1066x800.jpg",
-      },
-    ];
+//   cart = ( ) => {
+//     const itemLis = []
+//     for ( let key in this.state.cart ) {
+//       if(this.state.cart[key] > 0){
+//         itemLis.push(<div><li>{key} quantity: {this.state.cart[key]}</li><button name={key} onClick={this.removeHandler}>remove</button></div>)
+//       }
+//     }
+//     return itemLis
+//   }
+  
 
-    return (
-      <div className="content-wrapper">sdf</div>);
-    }
-  }
+//   render( ) {
+//     console.log(this.state);
+//     return(
+//       <div className="content-wrapper">
+
+
+//         <h1>Items: </h1>
+//         <p>carrot price: 5 <button onClick={this.addHandler} name="carrot">Add To Cart</button></p>
+//         <p>apple price: 3 <button onClick={this.addHandler} name="apple">Add To Cart</button></p>
+//         <p>apple price: 3 <button onClick={this.addHandler} name="BM">Add To Cart</button></p>
+//         <p>apple price: 3 <button onClick={this.addHandler} name="Benz">Add To Cart</button></p>
+//         <h1>Cart: </h1>
+
+
+//         <h2>total price: {this.state.total}</h2>
+//         <ul>
+//           {this.cart()}
+//         </ul>
+
+
+//       </div>
+//     )
+//   }
+// }
+
       
-export default Test;
+// export default Test;

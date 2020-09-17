@@ -83,7 +83,7 @@ class Menu extends Component {
                     onClick={() => {
                       this.props.history.push("/home")
                       localStorage.removeItem(server.LOGIN_PASSED);
-                      // บอกให้มันไปใช้ func update
+                      // // บอกให้มันไปใช้ func update
                       this.props.appReducer.app.forceUpdate();
                     }}
                   >
@@ -104,13 +104,13 @@ class Menu extends Component {
   }
 }
 
-export default withRouter(Menu);
-// const mapStateToProps = ({appReducer}) => ({
-//   appReducer
-// })
+// export default withRouter(Menu);
+const mapStateToProps = ({appReducer}) => ({
+  appReducer
+})
 
-// const mapDispatchToProps = {
-//   // action
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu))
+const mapDispatchToProps = {
+  // action
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu))
 
