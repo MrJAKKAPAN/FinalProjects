@@ -6,33 +6,25 @@ import Login from "./components/login/login";
 import Home from "./components/home/home";
 import Register from "./components/register/register";
 import Report from "./components/report/report";
-
 import Stock from "./components/stock/stock";
 import StockCreate from "./components/stockCreate/stockCreate";
 import StockEdit from "./components/stockEdit/stockEdit";
-
 import Customer from "./components/customer/customer";
 import CustomerCreate from "./components/customerCreate/customerCreate";
 import CustomerEdit from "./components/customerEdit/customerEdit";
-
 import Member from "./components/member/member";
 import MemberCreate from "./components/memberCreate/memberCreate";
 import MemberEdit from "./components/memberEdit/memberEdit";
-
 import servicePaged from "./components/servicePaged/servicePaged";
 import ServiceCreate from "./components/servicesCreate/servicesCreate";
 import ServiceEdit from "./components/servicesEdit/servicesEdit";
-
 import Revenue from "./components/revenue/revenue";
 import RevenueCreate from "./components/revenueCreate/revenueCreate";
 import RevenueEdit from "./components/revenueEdit/revenueEdit";
-
 import Expenditure from "./components/expenditure/expenditure";
 import ExpenditureCreate from "./components/expenditureCreate/expenditureCreate";
 import ExpenditureEdit from "./components/expenditureEdit/expenditureEdit";
-
 import Test from "./components/test/test";
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -61,10 +53,15 @@ const SecuredRoute = ({component: Component, ...rest}) => (
   />
 );
 
+//       window.location.reload(1);
+
 class App extends Component {
-  componentDidMount() {
-    this.props.setApp(this);
-  }
+  componentDidMount = () => {
+    this.props.setApp(this); 
+    // window.location.reload(1);
+    // this.forceUpdate();
+    }
+   
 
   RedirectToLogin = () => {
     return <Redirect to="/home" />;
