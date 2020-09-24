@@ -54,14 +54,14 @@ class RevenueCreate extends Component {
 componentDidMount =  async() => {
     let dataProduct = [];
     await httpClient
-          .get("")
+          .get(" ")
           .then((res) => {
             dataProduct.push(res)
           })
     let dataCustomer = [];
     await httpClient
-            .get("")
-            .then((res) => {
+          .get(" ")
+          .then((res) => {
               dataCustomer.push(res)
             })
     await dataProduct.concat(dataCustomer)
@@ -309,7 +309,7 @@ console.log(dataProduct);
                           </Col>
                           <Col span={12} offset={1}>
                             <Table
-                              title={() => <h6>ตระกร้าสินค้า</h6>}
+                              title={() => <h6>รายการบริการ</h6>}
                               size="small"
                               dataSource={dataAdd}
                               pagination={false}
