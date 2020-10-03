@@ -27,18 +27,18 @@ const { Header, Content, Sider } = Layout;
 
 class StockCreate extends Component {
   state = {
-    pro_price: "",
-    pro_original: "",
-    pro_name: "",
-    pro_number: "",
+    price: "",
+    original: "",
+    name: "",
+    number: "",
   };
 
   onFinish = async(value) => {
     const product = {
-      pro_price : value.pro_price,
-      pro_original : value.pro_original,
-      pro_name : value.pro_name,
-      pro_number : value.pro_number,
+      price : value.price,
+      original : value.original,
+      name : value.name,
+      number : value.number,
     }
     console.log(product);
    await httpClient.post(`http://localhost:8085/api/v1/stock/product`,product)
@@ -86,7 +86,7 @@ class StockCreate extends Component {
                   >
                     <Form.Item
                       
-                      name="pro_name"
+                      name="name"
                       label="ชื่อสินค้า"
                       rules={[
                         { required: true, message: "โปรดระบุชื่อสินค้า" },
@@ -96,7 +96,7 @@ class StockCreate extends Component {
                     </Form.Item>
                     <Form.Item
                       label="ราคาต้นทุน"
-                      name="pro_original"
+                      name="original"
                       rules={[
                         { required: true, message: "โปรดระบุราคาต้นทุน" },
                       ]}
@@ -112,7 +112,7 @@ class StockCreate extends Component {
                     </Form.Item>
 
                     <Form.Item
-                      name="pro_price"
+                      name="price"
                       label="ราคาขาย"
                       rules={[
                         {
@@ -131,7 +131,7 @@ class StockCreate extends Component {
                       />
                     </Form.Item>
                     <Form.Item
-                      name="pro_number"
+                      name="number"
                       label="จำนวน"
                       rules={[
                         {

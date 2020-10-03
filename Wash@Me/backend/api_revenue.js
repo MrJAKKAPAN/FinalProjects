@@ -28,31 +28,38 @@ router.get("/revenue/:id", async (req, res) => {
 router.get("/revenue/keyword/:keyword", async (req, res) => {
   const { keyword } = req.params;
   let result = await revenue.findAll({
-    where: { re_pro_name: { [Op.like]: `%${keyword}%` } },
+    where: { car_number: { [Op.like]: `%${keyword}%` } },
     // {[Op.all]:`%${keyword}%`}
   });
   res.json(result);
 });
 
+
 // Add revenue
 router.post("/revenue", async (req, res) => {
   try {
     const fields = req.body;
-    await revenue.create(fields);
+    // console.log('--->',fields.addedItems)
+    const result = await revenue.bulkCreate(fields.addedItems);
+    // console.log(result)
     return res.json({
       code: 1,
       message: "This revenue create",
       result: constants.kResultOk,
     });
   } catch (error) {
+    console.log(error)
     res.json({ result: constants.kResultNok, message: JSON.stringify(error) });
   }
 });
+
+
 
 // Update revenue
 router.put("/revenue", async (req, res) => {
   try {
     const fields = req.body;
+    // มันไม่มี ฟิล อยู๋แล้วมันจะ updatอันบนพี่ e ยังไง  ?
     await revenue.update(fields, {
       where: { id: fields.id },
     });

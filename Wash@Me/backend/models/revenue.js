@@ -4,53 +4,58 @@ const sequelize = require("../db_instance");
 const revenue = sequelize.define(
   "revenue",
   {
-    id: {
+    re_id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
-    },
-    re_type: {
+    }, 
+    car_number: {
       type: Sequelize.TEXT,
-      allowNull: false,
-      // primaryKey: true
     },
-    re_detail: {
+    type: {
       type: Sequelize.TEXT,
-      allowNull: false,
-      // primaryKey: true
+      allowNull: true,
     },
-    re_pro_name: {
+    detail: {
       type: Sequelize.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
-    re_cus_name: {
+    name: {
       type: Sequelize.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
-    re_receipt: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-    re_price: {
-      type: Sequelize.TEXT,
-      allowNull: false,
+    price: {
+      type: Sequelize.NUMBER,
+      allowNull: true,
     },
-    re_number: {
-      type: Sequelize.TEXT,
-      allowNull: false,
+    member: {
+      type: Sequelize.NUMBER,
+      allowNull: true,
     },
-    re_unit: {
-      type: Sequelize.TEXT,
-      allowNull: false,
+    total: {
+      type: Sequelize.NUMBER,
+      allowNull: true,
     },
-    re_ad_name: {
+    quantity: {
       type: Sequelize.TEXT,
-      allowNull: false,
+      allowNull: true,
+    },
+    id: {
+      type: Sequelize.NUMBER,
+      allowNull: true,
+    },
+    // original: {
+    //   type: Sequelize.NUMBER,
+    //   allowNull: true,
+    // },
+    ad_name: {
+      type: Sequelize.TEXT,
+      allowNull: true,
     },
   },
   {
     // options
-  }
+  },
 );
 
 (async () => {

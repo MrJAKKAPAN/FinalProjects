@@ -44,16 +44,15 @@ class Test extends Component {
         
     };
     this.add_to_cart = this.add_to_cart.bind(this);
+    this.onClickRemove = this.onClickRemove.bind(this);
     
   }
 
   add_to_cart = (e, item) => {
-      console.log('func_addToCart_item:',item);
+      // console.log('func_addToCart_item:',item);
         const addedItems = this.state.addedItems.slice();
-        // console.log(addedItems);
         const addedItem = addedItems.find(cartItem => item.name === cartItem.name);
-        console.log('func_addToCart_addedItems:',addedItems);
-        let total = this.state.total;
+        // let total = this.state.total;
 
         if (addedItem) {
             addedItem.quantity++;
@@ -62,29 +61,44 @@ class Test extends Component {
             new_item.quantity = 1;
             addedItems.push(new_item);
           }
-
         this.setState({ addedItems })
-        
-    //   totalPrice
-    if(addedItems.length === 0) {
-      total = 0;
-    }else{
-        total = addedItems.reduce(
-            (prev, curr) => prev + curr.quantity * curr.price,
-            0 
-        );
-    }
-    this.setState({ total });
 
+    //   totalPrice
+    this.setState((prevState) => ({
+          total:prevState.addedItems.reduce(
+           (total, {price, quantity}) => total + quantity * price,
+          0
+          )
+        }));
+  }
+
+  onClickRemove = (e, item) => {
+      this.setState((prevState) => ({
+        addedItems: prevState.addedItems.map((cartItem) => 
+          cartItem.name === item.name
+          ? {
+            ...cartItem,
+            quantity: Math.max(0, cartItem.quantity - 1)
+          }        
+          : cartItem
+        )
+      }));
+
+     //   totalPrice 
+        this.setState((prevState) => ({
+          total:prevState.addedItems.reduce(
+           (total, {price, quantity}) => total + quantity * price,
+          0
+          )
+        }));
   }
 
 
 
   render() {
     const { addedItems, products, keyword, total,  } = this.state;
-
-console.log(this.state);
-    // console.log('render data:',products);
+    // console.log(addedItems);
+  
 
 
     return (
@@ -95,7 +109,7 @@ console.log(this.state);
             <List products={products} add_to_cart={this.add_to_cart} />
         </div>
         <div class="container-fluid" style={{width:'70%'}}>
-            <Cart addedItems={addedItems}/>
+            <Cart addedItems={addedItems} onClickRemove={this.onClickRemove}/>
         </div>
 
 <div style={{textAlign:'center'}}>

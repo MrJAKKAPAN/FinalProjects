@@ -9,24 +9,24 @@ const service = sequelize.define(
       autoIncrement: true,
       primaryKey: true
     },
-    sv_name: {
+    name: {
       type: Sequelize.TEXT,
       allowNull: false,
       // primaryKey: true
     },
-    sv_detail: {
+    detail: {
       type: Sequelize.TEXT,
       allowNull: false,
     },
-    sv_member: {
+    member: {
       type: Sequelize.NUMBER,
       allowNull: false,
     },
-    sv_price: {
+    price: {
       type: Sequelize.NUMBER,
       allowNull: false,
     },
-    sv_type: {
+    type: {
       type: Sequelize.TEXT,
       allowNull: false,
     },

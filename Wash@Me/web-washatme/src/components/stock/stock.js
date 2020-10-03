@@ -43,14 +43,14 @@ class Revenue extends Component {
     httpClient
       .get("http://localhost:8085/api/v1/stock/product/")
       .then((e) => this.setState({ result: e.data }));
-        console.log(this.state);
+        // console.log(this.state);
   }
 
-  onChange = (pro_name) => {
-    if(pro_name === "" ) {
+  onChange = (name) => {
+    if(name === "" ) {
         this.componentDidMount()
     }else{
-    httpClient.get(`http://localhost:8085/api/v1/stock/product/keyword/${pro_name}`)
+    httpClient.get(`http://localhost:8085/api/v1/stock/product/keyword/${name}`)
     .then((e) => this.setState({ result: e.data}));
     }
 };
@@ -64,6 +64,7 @@ class Revenue extends Component {
 };
 
   render() {
+      console.log(this.state);
 
       const timeConverter = rawDate => moment(rawDate).format("DD/MM/YYYY");
       const { pagination } = this.props;
@@ -84,31 +85,31 @@ class Revenue extends Component {
         // },
         {
           title:"ชื่อสินค้า ",
-          dataIndex:"pro_name",
+          dataIndex:"name",
           align:"center",
           width:"300"
         },
         {
           title:"ราคาต้นทุน",
-          dataIndex:"pro_original",
+          dataIndex:"original",
           align:"center",
           width:"200",
           render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
         {
           title:"ราคาขาย",
-          dataIndex:"pro_price",
+          dataIndex:"price",
           align:"center",
           width:"200",
           render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
-        // {
-        //   title:"จำนวน",
-        //   dataIndex:"pro_number",
-        //   align:"center",
-        //   width:"200",
-        //   render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
-        // },
+        {
+          title:"จำนวน",
+          dataIndex:"number",
+          align:"center",
+          width:"200",
+          render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
+        },
         {
           title:"จัดการ",
           align:"center",

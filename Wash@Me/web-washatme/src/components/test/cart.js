@@ -3,8 +3,7 @@ import AddedItem from "./cartItem";
 
 class Cart extends React.Component{
   render() {
-    const { addedItems } = this.props;
-    console.log('Cart :',addedItems);
+    const { addedItems, onClickRemove } = this.props;
 
     return (
     //   <div>
@@ -20,7 +19,11 @@ class Cart extends React.Component{
             </thead>
 
             {addedItems.map((addedItem) => (
-                <AddedItem key={addedItem.name} addedItem={addedItem} />
+                <AddedItem 
+                    key={addedItem.name} 
+                    addedItem={addedItem} 
+                    onClickRemove={onClickRemove}
+                    />
             ))}
 
         </table>

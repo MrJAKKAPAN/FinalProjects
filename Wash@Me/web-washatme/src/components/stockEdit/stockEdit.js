@@ -30,10 +30,10 @@ class stockEdit extends Component {
   formRef = React.createRef();
   state = {
     id: "",
-    pro_price: "",
-    pro_original: "",
-    pro_name: "",
-    pro_number: "",
+    price: "",
+    original: "",
+    name: "",
+    number: "",
   };
 
   componentDidMount() {
@@ -44,10 +44,10 @@ class stockEdit extends Component {
       .then((e) => {
         this.formRef.current.setFieldsValue({
           id: e.data.id,
-          pro_price: e.data.pro_price,
-          pro_original: e.data.pro_original,
-          pro_name: e.data.pro_name,
-          pro_number: e.data.pro_number,
+          price: e.data.price,
+          original: e.data.original,
+          name: e.data.name,
+          number: e.data.number,
         });
       });
   }
@@ -55,10 +55,10 @@ class stockEdit extends Component {
   handleUpdate = async (values) => {
     const productUpdate = {
       id: this.props.match.params.id,
-      pro_price: values.pro_price,
-      pro_original: values.pro_original,
-      pro_name: values.pro_name,
-      pro_number: values.pro_number,
+      price: values.price,
+      original: values.original,
+      name: values.name,
+      number: values.number,
     };
     let result = await httpClient.put(
       "http://localhost:8085/api/v1/stock/product",
@@ -115,7 +115,7 @@ class stockEdit extends Component {
                     onValuesChange={(changedValues, allValues) => {}}
                   >
                     <Form.Item
-                      name="pro_name"
+                      name="name"
                       label="ชื่อสินค้า"
                       rules={[
                         { required: true, message: "โปรดระบุชื่อสินค้า" },
@@ -125,7 +125,7 @@ class stockEdit extends Component {
                     </Form.Item>
                     <Form.Item
                       label="ราคาต้นทุน"
-                      name="pro_original"
+                      name="original"
                       rules={[
                         { required: true, message: "โปรดระบุราคาต้นทุน" },
                       ]}
@@ -140,7 +140,7 @@ class stockEdit extends Component {
                       />
                     </Form.Item>
                     <Form.Item
-                      name="pro_price"
+                      name="price"
                       label="ราคาขาย"
                       rules={[
                         {
@@ -159,7 +159,7 @@ class stockEdit extends Component {
                       />
                     </Form.Item>
                     <Form.Item
-                      name="pro_number"
+                      name="number"
                       label="จำนวน"
                       rules={[
                         {

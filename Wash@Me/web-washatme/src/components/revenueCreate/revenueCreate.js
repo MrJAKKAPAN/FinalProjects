@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import ListService from "./cart/cartService/listCartService";
+import ListProduct from "./cart/cartProduct/listCartProduct";
+import Cart from "./cart/cart";
 import moment from "moment";
 import {
   Layout,
@@ -32,6 +35,7 @@ import {
   ArrowUpOutlined,
   ArrowDownOutlined,
 } from "@ant-design/icons";
+import AddedItem from "../test/cartItem";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -44,84 +48,147 @@ class RevenueCreate extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
+      dataCustomer: [],
+      dataProduct: [],
+      dataService: [],
+      dataAdmin: [],
+      addedItems: [],
+      total: 0,
     };
   }
-
-
-
-// join data
-componentDidMount =  async() => {
-    let dataProduct = [];
+  // join data
+  componentDidMount = async () => {
     await httpClient
-          .get(" ")
-          .then((res) => {
-            dataProduct.push(res)
-          })
-    let dataCustomer = [];
+      .get("http://localhost:8085/api/v1/user/user")
+      .then((e) => this.setState({ dataAdmin: e.data }));
+    // let dataCustomer = [];
     await httpClient
-          .get(" ")
-          .then((res) => {
-              dataCustomer.push(res)
+      .get("http://localhost:8085/api/v1/customer/customer/")
+      .then((e) => this.setState({ dataCustomer: e.data }));
+    // console.log('componentDidMount :',dataCustomer);
+        await httpClient
+              .get("http://localhost:8085/api/v1/stock/product/")
+              .then((e) => this.setState({dataProduct: e.data}))
+
+        // let dataService = [];
+        await httpClient
+              .get("http://localhost:8085/api/v1/service/service/")
+              .then((e) => this.setState({dataService: e.data}))
+  };
+
+  onFinish = async(values) => {
+    const { addedItems, total } = this.state;
+    values.re_total = total;
+    await addedItems.forEach((doc) => {
+      doc.car_number = values.cus_car_number;
+      doc.reference = values.re_reference;
+      doc.detail = values.re_detail;
+      doc.total = doc.price * doc.quantity;
+    });
+    await console.log(values, addedItems);
+    await httpClient
+            .post(`http://localhost:8085/api/v1/revenue/revenue`,{addedItems})
+            .then((res) => {
+              console.log(res);
             })
-    await dataProduct.concat(dataCustomer)
+            .catch((error) => {
+              console.log("Error :", error);
+            })
+      // message.success({ content: 'บันทึกรายรับเรียบร้อย!', duration: 2, style: {
+      //   marginTop: '5vh',
+      // } } ,100);
+      // await this.props.history.goBack();
+    // .then((e) => this.setState({dataService: e.data}))
+  };
 
-console.log(dataProduct);
-  }
-
-
-  
-  onFinish = async (values) => {
-    console.log(values);
-    const addRevenue = {
-      // re_add_name : ,
-      // re_price: values.re_price,
-      // re_pro_name: values.re_pro_name,
-      // re_member: values.re_member,
-      // re_reference: values.re_reference,
-      // re_cus_name: values.re_cus_name,
-      // re_ad_name: values.re_ad_name,
-      // 
+  // cart
+  addCart = (e, item) => {
+    console.log(item);
+    const addedItems = this.state.addedItems.slice();
+    const addedItem = addedItems.find(
+      (cartItem) => item.name === cartItem.name
+    );
+    if (addedItem) {
+      addedItem.quantity++;
+    } else {
+      let new_item = item;
+      new_item.quantity = 1;
+      addedItems.push(new_item);
     }
+    this.setState({ addedItems });
+    // console.log(addedItems);
 
-    // }
-    // console.log(addMember);
-    // await httpClient.post(`http://localhost:8085/api/v1/user/user`, addMember)
-    // .then((res) => {
-    //   console.log(res);
-    //   console.log(res.data);
-    // })
-    // .catch((error) => {
-    //   console.log("Error:", error);
-    // });
-    // message.success({ content: 'เพิ่มข้อมูลพนักงานเรียบร้อย!', duration: 2, style: {
-    //   marginTop: '5vh',
-    // } } ,100);
-    // await this.props.history.goBack();
+    this.getTotal();
   };
+  addCertProduct = (e, item) => {
+    const addedItems = this.state.addedItems.slice();
+    const addedItem = addedItems.find(
+      (cartItem) => item.name === cartItem.name
+    );
+    if (addedItem) {
+      addedItem.quantity++;
+    } else {
+      let new_item = item;
+      new_item.quantity = 1;
+      addedItems.push(new_item);
+    }
+    this.setState({ addedItems });
+    // console.log(addedItems);
 
-// select
- onChange = (value)=> {
-  console.log(`selected ${value}`);
-}
- onSearch = (value) => {
-  console.log('search:', value);
-}
-
-
-
-
-  addToCart = () => {
-    console.log("Add To Cart");
+    this.setState((prevState) => ({
+      total: prevState.addedItems.reduce(
+        (total, { price, quantity }) => total + quantity * price,
+        0
+      ),
+    }));
   };
-
-  callback = (key) => {
-    console.log(key);
+  onClickRemove = (e, item) => {
+    this.setState((prevState) => ({
+      addedItems: prevState.addedItems.flatMap((cartItem) => {
+        if (cartItem.name === item.name) {
+          return cartItem.quantity === 1
+            ? [] // return [] to remove
+            : [
+                {
+                  ...cartItem,
+                  quantity: cartItem.quantity - 1,
+                },
+              ]; // return [updated cartItem] to update
+        } else {
+          return [cartItem]; // return cart item to keep
+        }
+      }),
+    }));
+    this.getTotal();
   };
-
+  getTotal = () => {
+    this.setState((prevState) => ({
+      total: prevState.addedItems.reduce(
+        (total, { price, quantity }) => total + quantity * price,
+        0
+      ),
+    }));
+  };
+  // select
+  onChange = (value) => {
+    console.log(`selected ${value}`);
+  };
+  onSearch = (value) => {
+    console.log("search:", value);
+  };
 
   render() {
+    const {
+      dataCustomer,
+      dataProduct,
+      dataService,
+      dataAdmin,
+      addedItems,
+      total,
+    } = this.state;
     const dateFormat = "DD/MM/YYYY";
+
+    //layout
     const layout = {
       labelCol: {
         span: 6,
@@ -130,81 +197,65 @@ console.log(dataProduct);
         span: 12,
       },
     };
-
-    const columnsService = [
-      {
-        title: "ชื่อรายการ",
-        dataIndex: "name",
-        align: "center",
-      },
-      {
-        title: "ราคา",
-        dataIndex: "age",
-        align: "center",
-      },
-      {
-        title: "Action",
-        align: "center",
-        dataIndex: "action",
-        render: (text, record) => (
-          <Button onClick={this.addToCart} type="primary">
+    // TableService
+    const tableService = dataService.map((item) => (
+      <tr key={item.id}>
+        <td>{item.name}</td>
+        <td>xxx</td>
+        <td>{item.price.toFixed(2)}</td>
+        <td>
+          <button
+            type="button"
+            className="btn btn-success"
+            style={{ fontSize: "12px" }}
+            onClick={(e) => this.addCart(e, item)}
+          >
             เพิ่ม
-          </Button>
-        ),
-      },
-    ];
-    const dataService = [
-      {
-        name: "John Brown",
-        age: 32,
-        address: "New York No. 1 Lake Park",
-      },
-      {
-        name: "John Brown",
-        age: 32,
-        address: "New York No. 1 Lake Park",
-      },
-    ];
-    const columnsProduct = [
-      {
-        title: "ชื่อสินค้า",
-        dataIndex: "name",
-        align: "center",
-      },
-      {
-        title: "ราคา",
-        dataIndex: "age",
-        align: "center",
-      },
-      {
-        title: "Action",
-        align: "center",
-        dataIndex: "action",
-        render: (text, record) => <Button type="primary">เพิ่ม</Button>,
-      },
-    ];
-    const dataProduct = [
-      {
-        name: "John Brown",
-        age: 32,
-        address: "New York No. 1 Lake Park",
-      },
-      {
-        name: "John Brown",
-        age: 32,
-        address: "New York No. 1 Lake Park",
-      },
-    ];
-    const dataAdd = [
-      {
-        name: "John Brown",
-        price: 32,
-        coat: 1,
-        sum: 32,
-      },
-    ];
+          </button>
+        </td>
+      </tr>
+    ));
+    // TableProduct
+    const tableProduct = dataProduct.map((item) => (
+      <tr key={item.id}>
+        <td>{item.name}</td>
+        <td>{item.price.toFixed(2)}</td>
+        <td>
+          <button
+            type="button"
+            className="btn btn-success"
+            style={{ fontSize: "12px" }}
+            onClick={(e) => this.addCertProduct(e, item)}
+          >
+            เพิ่ม
+          </button>
+        </td>
+      </tr>
+    ));
+    // cart
+    const tableCart = addedItems.map((addedItem) => (
+      <tr key={addedItem.id}>
+        {/* <td>{addedItem.id}</td> */}
+        <td>{addedItem.name}</td>
+        <td>{addedItem.price.toFixed(2)}</td>
+        <td>{addedItem.quantity}</td>
+        <td>
+          <button
+            type="button"
+            className="btn btn-danger"
+            style={{ fontSize: "12px" }}
+            onClick={(e) => this.onClickRemove(e, addedItem)}
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ));
+    //  Option
+    const car = dataCustomer.map((item) => (
+      <Option key={item.id} value={item.cus_car_number}>{item.cus_car_number}</Option>
+    ));
 
-    const style = { paddingTop: "1px" };
     return (
       <div className="content-wrapper">
         <section className="content">
@@ -219,7 +270,7 @@ console.log(dataProduct);
           <div className="row">
             <div className="col-1"></div>
             <div className="col-10">
-              <div className="card" style={{ top: "2%" }}>
+              <div className="card" style={{ top: "1%" }}>
                 <div className="card-body">
                   <Form
                     {...layout}
@@ -238,14 +289,17 @@ console.log(dataProduct);
                         </Form.Item>
                       </Col>
                       <Col span={12}>
-                        <Form.Item name="" label="เลขที่ใบเสร็จอ้างอิง">
+                        <Form.Item
+                          name="re_reference"
+                          label="เลขที่ใบเสร็จอ้างอิง"
+                        >
                           <Input placeholder="เลขที่ใบเสร็จอ้างอิง" />
                         </Form.Item>
                       </Col>
                     </Row>
                     <Row>
                       <Col span={12}>
-                        <Form.Item name="" label="บันทึกย่อ">
+                        <Form.Item name="re_detail" label="บันทึกย่อ">
                           <TextArea
                             placeholder="รายละเอียด"
                             autoSize
@@ -254,31 +308,26 @@ console.log(dataProduct);
                         </Form.Item>
                       </Col>
                       <Col span={12}>
-                        <Form.Item name="" label="ป้ายทะเบียนรถ(ถ้ามี)">
+                        <Form.Item name="cus_car_number" label="ป้ายทะเบียนรถ">
                           <Select
                             showSearch
                             style={{ width: 200 }}
-                            placeholder="Select a person"
+                            placeholder="เลือกป้ายทะเบียนรถ"
                             optionFilterProp="children"
-                            onChange={this.onChange}
+                            // onChange={this.onChange}
                             onSearch={this.onSearch}
-                            filterOption={(input, option) =>
-                              option.children
-                                .toLowerCase()
-                                .indexOf(input.toLowerCase()) >= 0
-                            }
+                            // filterOption={(input, option) =>
+                            //   option.children
+                            //     .toLowerCase()
+                            //     .indexOf(input.toLowerCase()) >= 0
+                            // }
                           >
-
-                            <Option value="jack">Jack</Option>
-                            <Option value="Jacks">Jacks</Option>
-                            <Option value="Game">Game</Option>
-                            
+                            {car}
                           </Select>
                         </Form.Item>
                       </Col>
                     </Row>
-
-                    <Content style={{ padding: "0 20px" }}>
+                    <Content style={{ padding: "0 10px" }}>
                       <div className="site-layout-content">
                         <Row>
                           <Col span={11}>
@@ -288,77 +337,81 @@ console.log(dataProduct);
                               type="card"
                             >
                               <TabPane tab="บริการ" key="1">
-                                <Table
-                                  columns={columnsService}
-                                  dataSource={dataService}
-                                  size="small"
-                                  scroll={{ y: 220 }}
-                                  pagination={false}
-                                />
+                                <div className="card" style={{ height: 170 }}>
+                                  <div className="card-body table-responsive p-0">
+                                    <table
+                                      className="table  table-sm table-head-fixed"
+                                      style={{ textAlign: "center" }}
+                                    >
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">ชื่อบริการ</th>
+                                          <th scope="col">ประเภท</th>
+                                          <th scope="col">ราคา</th>
+                                          <th scope="col">Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>{tableService}</tbody>
+                                    </table>
+                                  </div>
+                                </div>
                               </TabPane>
                               <TabPane tab="สินค้า" key="2">
-                                <Table
-                                  columns={columnsProduct}
-                                  dataSource={dataProduct}
-                                  size="small"
-                                  scroll={{ y: 220 }}
-                                  pagination={false}
-                                />
+                                <div className="card" style={{ height: 170 }}>
+                                  <div className="card-body table-responsive p-0">
+                                    <table
+                                      className="table  table-sm table-head-fixed"
+                                      style={{ textAlign: "center" }}
+                                    >
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">ชื่อบริการ</th>
+                                          <th scope="col">ราคา</th>
+                                          <th scope="col">Action</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>{tableProduct}</tbody>
+                                    </table>
+                                  </div>
+                                </div>
                               </TabPane>
                             </Tabs>
                           </Col>
                           <Col span={12} offset={1}>
-                            <Table
-                              title={() => <h6>รายการบริการ</h6>}
-                              size="small"
-                              dataSource={dataAdd}
-                              pagination={false}
-                              scroll={{ y: 280 }}
-                            >
-                              <Column
-                                title="ชื่อรายการ"
-                                dataIndex="name"
-                                key="1"
-                                align="center"
-                              />
-                              <Column
-                                title="ราคา"
-                                dataIndex="price"
-                                align="center"
-                              />
-                              <Column
-                                title="จำนวน"
-                                dataIndex="coat"
-                                align="center"
-                              />
-                              <Column
-                                title="รวม"
-                                dataIndex="sum"
-                                align="center"
-                              />
-                              <Column
-                                title="Action"
-                                align="center"
-                                key="action"
-                                render={(text, record) => (
-                                  <Space size="middle">
-                                    <Button type="primary" danger>
-                                      ลบ
-                                    </Button>
-                                  </Space>
-                                )}
-                              />
-                            </Table>
+                            <div className="card" style={{ height: 230 }}>
+                              <p style={{ textAlign: "center" }}>
+                                --- Order ---{" "}
+                              </p>
+
+                              <div className="card-body table-responsive p-0">
+                                <table
+                                  className="table  table-sm table-head-fixed"
+                                  style={{ textAlign: "center" }}
+                                >
+                                  <thead>
+                                    <tr>
+                                      {/* <th scope="col">id</th> */}
+                                      <th scope="col">รายการ</th>
+                                      <th scope="col">ราคา</th>
+                                      <th scope="col">จำนวน</th>
+                                      <th scope="col">Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>{tableCart}</tbody>
+                                </table>
+                              </div>
+                            </div>
                           </Col>
                         </Row>
                       </div>
                     </Content>
                     <Form.Item
-                      // name=""
-                      style={{ paddingTop: "2%" }}
+                      name="re_total"
+                      style={{ paddingTop: "1%" }}
                       label="ยอดรวม"
                     >
-                      <Input disabled/>
+                      <Input value={total} />
+                      <p style={{display:'none'}}>{this.state.total}</p>
                     </Form.Item>
                     <Form.Item
                       wrapperCol={{ ...layout.wrapperCol, offset: 10 }}

@@ -45,7 +45,7 @@ class Revenue extends Component {
     httpClient
       .get("http://localhost:8085/api/v1/revenue/revenue/")
       .then((e) => this.setState({ result: e.data }));
-        console.log(this.state);
+        // console.log(this.state);
   }
   onChangeEdit = (re_pro_name) => {
     if(re_pro_name === "" ) {
@@ -166,11 +166,11 @@ class Revenue extends Component {
         <div className="content">
           <div className="row">
             <div className="col-12">
-            <div class="card" style={{ marginTop: "1rem"}}>
+            {/* <div class="card" style={{ marginTop: "1rem"}}>
                 <div class="card-body" style={{ textAlign:'center' }}>
                   <text style={{ fontSize:'1.5rem' }}>--- &nbsp;&nbsp; รายรับ / Revenue &nbsp;&nbsp; ---</text>
                 </div>
-              </div>
+              </div> */}
               <div className="card" style={{top:'1%'}}>
                 <div className="card-body">
                   <Row>

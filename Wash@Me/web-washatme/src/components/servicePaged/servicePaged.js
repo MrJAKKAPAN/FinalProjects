@@ -45,13 +45,13 @@ class ServicePaged extends Component {
     console.log(this.state);
   }
 
-  onChange = (sv_name) => {
+  onChange = (name) => {
     // console.log(sv_name);
-    if (sv_name === "") {
+    if (name === "") {
       this.componentDidMount();
     } else {
       httpClient
-        .get(`http://localhost:8085/api/v1/service/service/keyword/${sv_name}`)
+        .get(`http://localhost:8085/api/v1/service/service/keyword/${name}`)
         .then((e) => this.setState({ result: e.data }));
     }
   };
@@ -83,28 +83,28 @@ class ServicePaged extends Component {
       },
       {
         title: "ชื่อรายการ",
-        dataIndex: "sv_name",
+        dataIndex: "name",
         align: "center",
       },
       {
         title: "รายละเอียด",
-        dataIndex: "sv_detail",
+        dataIndex: "detail",
         align: "center",
       },
       {
         title: "ประเภท",
-        dataIndex: "sv_type",
+        dataIndex: "type",
         align: "center",
       },
       {
         title: "ราคา",
-        dataIndex: "sv_price",
+        dataIndex: "price",
         align: "center",
         render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
       },
       {
         title: "Member",
-        dataIndex: "sv_member",
+        dataIndex: "member",
         align: "center",
         render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
       },
