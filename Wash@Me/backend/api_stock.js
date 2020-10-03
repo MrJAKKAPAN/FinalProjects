@@ -72,7 +72,7 @@ router.get ("/product/:id", async (req, res) => {
 // Get Product By keyword 
 router.get("/product/keyword/:keyword", async (req, res) => {
   const { keyword } = req.params;
-  let result = await product.findAll({ where: { pro_name: {[Op.like]: `%${keyword}%`} }  });
+  let result = await product.findAll({ where: { name: {[Op.like]: `%${keyword}%`} }  });
   res.json(result);
 });
 

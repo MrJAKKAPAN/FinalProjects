@@ -27,20 +27,20 @@ const { Header, Content, Sider } = Layout;
 
 class servicesCreate extends Component {
   state = {
-    sv_name: "",
-    sv_detail: "",
-    sv_type:"",
-    sv_price: "",
-    sv_member: "",
+    name: "",
+    detail: "",
+    type:"",
+    price: "",
+    member: "",
   };
 
   onFinish = async(values) => {
     const serviceAdd = {
-      sv_name : values.sv_name,
-      sv_detail : values.sv_detail,
-      sv_type : values.sv_type,
-      sv_member : values.sv_member,
-      sv_price : values.sv_price,
+      name : values.name,
+      detail : values.detail,
+      type : values.type,
+      member : values.member,
+      price : values.price,
     }
     console.log(serviceAdd);
    await httpClient.post(`http://localhost:8085/api/v1/service/service/`, serviceAdd)
@@ -87,7 +87,7 @@ class servicesCreate extends Component {
                     onFinish={(value) => this.onFinish(value)}
                   >
                     <Form.Item
-                      name="sv_name"
+                      name="name"
                       label="ชื่อรายการ"
                       rules={[
                         { required: true, message: "โปรดระบุชื่อรายการ" },
@@ -97,13 +97,13 @@ class servicesCreate extends Component {
                     </Form.Item>
                     <Form.Item
                         label="รายละเอียด"
-                        name="sv_detail"
+                        name="detail"
                         rules={[{ required: true, message: "โปรดระบุรายละเอียดการบริการ" },]}
                     >
                     <Input placeholder="รายละเอียด" />
                     </Form.Item>
                     <Form.Item
-                        name="sv_type"
+                        name="type"
                         label="ประเภทรถ"
                         rules={[
                         {
@@ -123,7 +123,7 @@ class servicesCreate extends Component {
                     </Select>
                     </Form.Item>
                     <Form.Item
-                        name="sv_price"
+                        name="price"
                         label="ค่าบริการ"
                         rules={[
                         {
@@ -143,7 +143,7 @@ class servicesCreate extends Component {
                       {/* <h7>&nbsp; ชิ้น</h7> */}
                     </Form.Item>
                     <Form.Item
-                        name="sv_member"
+                        name="member"
                         label="ค่าบริการสำหรับสมาชิก"
                         rules={[
                         {

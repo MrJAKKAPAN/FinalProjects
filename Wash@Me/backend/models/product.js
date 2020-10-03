@@ -14,20 +14,20 @@ const product = sequelize.define(
     //   allowNull: false,
     //   // primaryKey: true
     // },
-    pro_name: {
+    name: {
       type: Sequelize.TEXT,
       allowNull: false,
       // primaryKey: true
     },
-    pro_original: {
+    original: {
       type: Sequelize.NUMBER,
       allowNull: false,
     },
-    pro_price: {
+    price: {
       type: Sequelize.NUMBER,
       allowNull: false,
     },
-    pro_number: {
+    number: {
       type: Sequelize.NUMBER,
       allowNull: false,
     }

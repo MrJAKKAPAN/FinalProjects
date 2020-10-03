@@ -74,7 +74,7 @@ router.get ("/service/:id", async (req, res) => {
 // Get serviceByKeyword
 router.get("/service/keyword/:keyword", async(req, res) => {
   const {keyword} = req.params;
-  let result = await service.findAll({where: {sv_name:{[Op.like]: `%${keyword}%`} } });
+  let result = await service.findAll({where: {name:{[Op.like]: `%${keyword}%`} } });
   res.json(result);
 });
 

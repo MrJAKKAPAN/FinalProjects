@@ -28,11 +28,11 @@ const { Header, Content, Sider } = Layout;
 class ServicesEdit extends Component {
   formRef = React.createRef();
   state = {
-    sv_name: "",
-    sv_detail: "",
-    sv_type:"",
-    sv_price: "",
-    sv_member: "",
+    name: "",
+    detail: "",
+    type:"",
+    price: "",
+    member: "",
   };
 
   componentDidMount() {
@@ -41,11 +41,11 @@ class ServicesEdit extends Component {
     .then((e) => {
       this.formRef.current.setFieldsValue({
         id: e.data.id,
-        sv_name: e.data.sv_name,
-        sv_detail: e.data.sv_detail,
-        sv_type: e.data.sv_type,
-        sv_price: e.data.sv_price,
-        sv_member: e.data.sv_member
+        name: e.data.name,
+        detail: e.data.detail,
+        type: e.data.type,
+        price: e.data.price,
+        member: e.data.member
       });
     });
     console.log(this.state);
@@ -55,11 +55,11 @@ class ServicesEdit extends Component {
   updateService = async(values) => {
     const serviceAdd = {
       id: this.props.match.params.id,
-      sv_name : values.sv_name,
-      sv_detail : values.sv_detail,
-      sv_type : values.sv_type,
-      sv_member : values.sv_member,
-      sv_price : values.sv_price,
+      name : values.name,
+      detail : values.detail,
+      type : values.type,
+      member : values.member,
+      price : values.price,
     }
     console.log(serviceAdd);
   let result =  await httpClient.put(
@@ -107,7 +107,7 @@ class ServicesEdit extends Component {
                     onValuesChange={(changedValues, allValues) => {}}
                   >
                     <Form.Item
-                      name="sv_name"
+                      name="name"
                       label="ชื่อรายการ"
                       rules={[
                         { required: true, message: "โปรดระบุชื่อรายการ" },
@@ -117,13 +117,13 @@ class ServicesEdit extends Component {
                     </Form.Item>
                     <Form.Item
                         label="รายละเอียด"
-                        name="sv_detail"
+                        name="detail"
                         rules={[{ required: true, message: "โปรดระบุรายละเอียดการบริการ" },]}
                     >
                     <Input placeholder="รายละเอียด" />
                     </Form.Item>
                     <Form.Item
-                        name="sv_type"
+                        name="type"
                         label="ประเภทรถ"
                         rules={[
                         {
@@ -143,7 +143,7 @@ class ServicesEdit extends Component {
                     </Select>
                     </Form.Item>
                     <Form.Item
-                        name="sv_price"
+                        name="price"
                         label="ค่าบริการ"
                         rules={[
                         {
@@ -163,7 +163,7 @@ class ServicesEdit extends Component {
                       {/* <h7>&nbsp; ชิ้น</h7> */}
                     </Form.Item>
                     <Form.Item
-                        name="sv_member"
+                        name="member"
                         label="ค่าบริการสำหรับสมาชิก"
                         rules={[
                         {
