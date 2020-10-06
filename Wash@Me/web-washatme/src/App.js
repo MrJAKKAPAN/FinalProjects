@@ -94,7 +94,7 @@ class App extends Component {
               <SecuredRoute path="/service-create" component={ServiceCreate} />
               <SecuredRoute path="/service-edit/:id" component={ServiceEdit} />
 
-              <SecuredRoute path="/revenue" component={Revenue} />
+              <SecuredRoute path="/revenue/" component={Revenue} />
               <SecuredRoute path="/revenue-create" component={RevenueCreate} />
               <SecuredRoute path="/revenue-edit/:id" component={RevenueEdit} />
 

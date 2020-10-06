@@ -44,10 +44,10 @@ const revenue = sequelize.define(
       type: Sequelize.NUMBER,
       allowNull: true,
     },
-    // original: {
-    //   type: Sequelize.NUMBER,
-    //   allowNull: true,
-    // },
+    reference: {
+      type: Sequelize.NUMBER,
+      allowNull: true,
+    },
     ad_name: {
       type: Sequelize.TEXT,
       allowNull: true,

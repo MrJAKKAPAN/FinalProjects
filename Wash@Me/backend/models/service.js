@@ -30,8 +30,9 @@ const service = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: false,
     },
-    },
+  },
     {
+      timestamps: false,
       // options
     }
   );

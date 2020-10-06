@@ -29,7 +29,6 @@ const { Option } = Select;
 class Revenue extends Component {
   constructor(props) {
     super(props);
-    {
       this.state = {
         result: [],
         pagination: {
@@ -39,13 +38,13 @@ class Revenue extends Component {
         loading: true,
       };
     }
-  }
+
   
   componentDidMount() {
     httpClient
       .get("http://localhost:8085/api/v1/revenue/revenue/")
       .then((e) => this.setState({ result: e.data }));
-        // console.log(this.state);
+        // console.log(e);
   }
   onChangeEdit = (re_pro_name) => {
     if(re_pro_name === "" ) {
@@ -68,8 +67,9 @@ class Revenue extends Component {
 
 
   render() {
+    // console.log(this.state)
 
-      const timeConverter = rawDate => moment(rawDate).tz("Thai/Bangkok").format('L');
+      const timeConverter = rawDate => moment(rawDate).format('L');
       const { pagination } = this.props;
       const columns = [
         {
@@ -80,47 +80,53 @@ class Revenue extends Component {
           render: createdAt => timeConverter(createdAt)
         },
         {
-          title:"อ้างอิงใบเสร็จเลขที่ ",
-          dataIndex:"re_receipt",
+          title:"ป้ายทะเบียนรถ ",
+          dataIndex:"car_number",
           align:"center",
           width:"200"
         },
         {
           title:"ชื่อบริการ/สินค้า",
-          dataIndex:"re_pro_name",
+          dataIndex:"name",
           align:"center",
           width:"350",
         },
         {
           title:"บันทึกย่อ",
-          dataIndex:"re_detail",
+          dataIndex:"detail",
           align:"center",
           width:"100",
-        },
-        {
-          title:"ป้ายทะเบียน(ถ้ามี)",
-          dataIndex:"re_cus_car-number",
-          align:"center",
-          width:"200",
-        },
-        
+        },  
         {
           title:"ราคาต่อหน่วย",
-          dataIndex:"re_price",
+          dataIndex:"price",
           align:"center",
           width:"300",
           render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
         {
           title:"จำนวน",
-          dataIndex:"re_number",
+          dataIndex:"quantity",
           align:"center",
           width:"300",
           render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
         },
         {
+          title:"ราคารวม",
+          dataIndex:"total",
+          align:"center",
+          width:"300",
+          render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
+        },
+        {
+          title:"ใบเสร็จอ้างอิง",
+          dataIndex:"reference",
+          align:"center",
+          width:"300",
+        },
+        {
           title:"พนักงานผู้บันทึก",
-          dataIndex:"re_ad_name",
+          dataIndex:"ad_name",
           align:"center",
           width:"300",
         },
@@ -194,7 +200,7 @@ class Revenue extends Component {
                     <Col span={12}></Col>
                     <Col span={8}>
                       <Search
-                        placeholder="ค้นหาวันที่บันทึก "
+                        placeholder="ค้นหาป้ายทะเบียนรถ"
                         onChange={(e) => this.onChangeEdit(e.target.value)}
                         style={{ width: 300, float: "right" }}
                         enterButton

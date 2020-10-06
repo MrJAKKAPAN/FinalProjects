@@ -86,11 +86,9 @@ class Login extends Component {
                     </div>
                   </div>
                 </div>
-
+                
                 {/* Ternary condition */}
                 {this.props.loginReducer.isError ? this.showError() : null}
-
-                {/* <span>#Debug: {JSON.stringify(this.state)}</span> */}
                 {/* Sign In */}
                 <div className="row">
                   <div className="col-12">
