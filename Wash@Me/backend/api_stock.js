@@ -18,6 +18,7 @@ router.get("/product", async (req, res) => {
 router.post("/product", async (req, res) => {
   try {
     const fields = req.body;
+    console.log(fields)
     await product.create(fields);
     return res.json({
       code: 1,

@@ -57,21 +57,17 @@ class RevenueCreate extends Component {
     };
   }
   // join data
-  componentDidMount = async () => {
+  componentDidMount = async() => {
     await httpClient
       .get("http://localhost:8085/api/v1/user/user")
       .then((e) => this.setState({ dataAdmin: e.data }));
-    // let dataCustomer = [];
     await httpClient
       .get("http://localhost:8085/api/v1/customer/customer/")
       .then((e) => this.setState({ dataCustomer: e.data }));
-    // console.log('componentDidMount :',dataCustomer);
-        await httpClient
+    await httpClient
               .get("http://localhost:8085/api/v1/stock/product/")
               .then((e) => this.setState({dataProduct: e.data}))
-
-        // let dataService = [];
-        await httpClient
+    await httpClient
               .get("http://localhost:8085/api/v1/service/service/")
               .then((e) => this.setState({dataService: e.data}))
   };
@@ -94,11 +90,10 @@ class RevenueCreate extends Component {
             .catch((error) => {
               console.log("Error :", error);
             })
-      // message.success({ content: 'บันทึกรายรับเรียบร้อย!', duration: 2, style: {
-      //   marginTop: '5vh',
-      // } } ,100);
-      // await this.props.history.goBack();
-    // .then((e) => this.setState({dataService: e.data}))
+    message.success({ content: 'บันทึกรายรับเรียบร้อย!', duration: 2, style: {
+      marginTop: '5vh',
+    }} ,100);
+    await this.props.history.goBack();
   };
 
   // cart
@@ -116,8 +111,6 @@ class RevenueCreate extends Component {
       addedItems.push(new_item);
     }
     this.setState({ addedItems });
-    // console.log(addedItems);
-
     this.getTotal();
   };
   addCertProduct = (e, item) => {
@@ -133,8 +126,6 @@ class RevenueCreate extends Component {
       addedItems.push(new_item);
     }
     this.setState({ addedItems });
-    // console.log(addedItems);
-
     this.setState((prevState) => ({
       total: prevState.addedItems.reduce(
         (total, { price, quantity }) => total + quantity * price,
@@ -153,7 +144,7 @@ class RevenueCreate extends Component {
                   ...cartItem,
                   quantity: cartItem.quantity - 1,
                 },
-              ]; // return [updated cartItem] to update
+              ]; 
         } else {
           return [cartItem]; // return cart item to keep
         }
@@ -201,7 +192,7 @@ class RevenueCreate extends Component {
     const tableService = dataService.map((item) => (
       <tr key={item.id}>
         <td>{item.name}</td>
-        <td>xxx</td>
+    <td>{item.type}</td>
         <td>{item.price.toFixed(2)}</td>
         <td>
           <button
@@ -235,8 +226,8 @@ class RevenueCreate extends Component {
     // cart
     const tableCart = addedItems.map((addedItem) => (
       <tr key={addedItem.id}>
-        {/* <td>{addedItem.id}</td> */}
         <td>{addedItem.name}</td>
+        <td>{addedItem.type}</td>
         <td>{addedItem.price.toFixed(2)}</td>
         <td>{addedItem.quantity}</td>
         <td>
@@ -316,11 +307,6 @@ class RevenueCreate extends Component {
                             optionFilterProp="children"
                             // onChange={this.onChange}
                             onSearch={this.onSearch}
-                            // filterOption={(input, option) =>
-                            //   option.children
-                            //     .toLowerCase()
-                            //     .indexOf(input.toLowerCase()) >= 0
-                            // }
                           >
                             {car}
                           </Select>
@@ -392,6 +378,7 @@ class RevenueCreate extends Component {
                                     <tr>
                                       {/* <th scope="col">id</th> */}
                                       <th scope="col">รายการ</th>
+                                      <th scope="col">ประเภท</th>
                                       <th scope="col">ราคา</th>
                                       <th scope="col">จำนวน</th>
                                       <th scope="col">Action</th>
@@ -410,7 +397,7 @@ class RevenueCreate extends Component {
                       style={{ paddingTop: "1%" }}
                       label="ยอดรวม"
                     >
-                      <Input value={total} />
+                      <InputNumber disabled value={total} formatter={value => `฿ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}/>
                       <p style={{display:'none'}}>{this.state.total}</p>
                     </Form.Item>
                     <Form.Item

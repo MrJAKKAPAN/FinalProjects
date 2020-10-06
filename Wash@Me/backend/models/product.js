@@ -9,11 +9,6 @@ const product = sequelize.define(
       autoIncrement: true,
       primaryKey: true
     },
-    // pro_id: {
-    //   type: Sequelize.TEXT,
-    //   allowNull: false,
-    //   // primaryKey: true
-    // },
     name: {
       type: Sequelize.TEXT,
       allowNull: false,
@@ -33,7 +28,7 @@ const product = sequelize.define(
     }
     },
     {
-      // options
+      timestamps: false,
     }
   );
 
