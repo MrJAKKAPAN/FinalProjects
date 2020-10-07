@@ -8,6 +8,7 @@ class Report extends Component {
     super(props);
     this.state = {
 // Revenue
+      GetRevenue:[],
       January:[],
       February:[],
       March:[],
@@ -21,6 +22,7 @@ class Report extends Component {
       November:[],
       December:[],
 // Expenditure
+      GetExpenditure:[],
       ExJanuary:[],
       ExFebruary:[],
       ExMarch:[],
@@ -34,6 +36,7 @@ class Report extends Component {
       ExNovember:[],
       ExDecember:[],
       
+
       Type: "bar",
       total: 0,
       Expenditure:[],
@@ -43,6 +46,10 @@ class Report extends Component {
 
   componentDidMount = async() => {
     // Revenues
+      await httpClient
+        .get ("http://localhost:8085/api/v1/revenue/revenue")
+        .then((e) => this.setState({GetRevenue: e.data}));
+    // month
       await httpClient
         .get ("http://localhost:8085/api/v1/revenue/January")
         .then((e) => this.setState({January: e.data}));
@@ -81,6 +88,10 @@ class Report extends Component {
         .then((e) => this.setState({December: e.data}));
 
         // expenditure
+        await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/expenditure")
+        .then((e) => this.setState({GetExpenditure: e.data}));
+        // month
         await httpClient
         .get ("http://localhost:8085/api/v1/expenditure/January")
         .then((e) => this.setState({ExJanuary: e.data}));
@@ -124,8 +135,9 @@ class Report extends Component {
   render() {
       console.log(this.state)
       // Revenue
-      const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues } = this.state;
+      const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues, GetRevenue } = this.state;
       
+      const GetRevenues =  GetRevenue.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Januarys =  January.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Februarys =  February.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Marchs =  March.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
@@ -153,8 +165,9 @@ class Report extends Component {
       Revenues.push(Decembers)
 
       // Expenditure
-      const { ExJanuary, ExFebruary, ExMarch, ExApril, ExMay, ExJune, ExJuly, ExAugust, ExSeptember, ExOctober, ExNovember, ExDecember, Expenditure } = this.state;
+      const { ExJanuary, ExFebruary, ExMarch, ExApril, ExMay, ExJune, ExJuly, ExAugust, ExSeptember, ExOctober, ExNovember, ExDecember, Expenditure, GetExpenditure } = this.state;
       
+      const GetExpenditures = GetExpenditure.reduce((sum, { ex_price }) => sum + ex_price ,0);
       const ExJanuarys =  ExJanuary.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
       const ExFebruarys =  ExFebruary.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
       const ExMarchs =  ExMarch.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
@@ -270,13 +283,13 @@ class Report extends Component {
       responsive: true,
       scales: {
         yAxes: [{
+          // stacked: true,
           barPercentage: 1.0,
           categoryPercentage: 1.0,
           ticks: {
             callback: function (value, index, values) {
               return value + ' ฿.';
             },
-            // fontColor: '#75c0cc',
             beginAtZero: true
           },
           gridLines: {
@@ -284,8 +297,8 @@ class Report extends Component {
           }
         }],
         xAxes: [{
+          // stacked: true,
           ticks: {
-            // fontColor: '#75c0cc'
           },
           gridLines: {
             offsetGridLines: false
@@ -301,25 +314,15 @@ class Report extends Component {
         <section className="content" style={{ marginTop: "1%" }}>
           <div className="container-fluid">
             {/* Small boxes (Stat box) */}
-            <div className="row">
-              <div className="col-lg-3 col-6">
-                <div className="small-box bg-info">
-                  <div className="inner">
-                    <h3>{Octobers}</h3>
-                    <p>New Orders</p>
-                  </div>
-                  <div className="icon">
-                    <i className="ion ion-bag" />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3 col-6">
+            <div className="row"> 
+              <div className="col-lg-4 col-6">
                 <div className="small-box bg-success">
                   <div className="inner">
                     <h3>
-                      53<sup style={{ fontSize: 20 }}>%</sup>
+                      ฿ {(GetRevenues - GetExpenditures)}
+                      {/* <sup style={{ fontSize: 20 }}>%</sup> */}
                     </h3>
-                    <p>Bounce Rate</p>
+                    <p>ยอดคงสุทธิ (ทั้งหมด)</p>
                   </div>
                   <div className="icon">
                     <i className="ion ion-stats-bars" />
@@ -328,23 +331,23 @@ class Report extends Component {
               </div>
               {/* ./col */}
 
-              <div className="col-lg-3 col-6">
+              <div className="col-lg-4 col-6">
                 {/* small box */}
                 <div className="small-box bg-warning">
                   <div className="inner">
-                    <h3>44</h3>
-                    <p>User Registrations</p>
+                    <h3>฿ {GetRevenues.toFixed(2)}</h3>
+                    <p>ยอดรายรับทั้งหมด</p>
                   </div>
                   <div className="icon">
                     <i className="ion ion-person-add" />
                   </div>
                 </div>
               </div>
-              <div className="col-lg-3 col-6">
+              <div className="col-lg-4 col-6">
                 <div className="small-box bg-danger">
                   <div className="inner">
-                    <h3>65</h3>
-                    <p>Unique Visitors</p>
+                    <h3>฿ {GetExpenditures.toFixed(2)}</h3>
+                    <p>ยอดรายจ่ายทั้งหมด</p>
                   </div>
                   <div className="icon">
                     <i className="ion ion-pie-graph" />
