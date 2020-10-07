@@ -7,6 +7,7 @@ class Report extends Component {
   constructor(props) {
     super(props);
     this.state = {
+// Revenue
       January:[],
       February:[],
       March:[],
@@ -19,14 +20,29 @@ class Report extends Component {
       October:[],
       November:[],
       December:[],
+// Expenditure
+      ExJanuary:[],
+      ExFebruary:[],
+      ExMarch:[],
+      ExApril:[],
+      ExMay:[],
+      ExJune:[],
+      ExJuly:[],
+      ExAugust:[],
+      ExSeptember:[],
+      ExOctober:[],
+      ExNovember:[],
+      ExDecember:[],
+      
       Type: "bar",
       total: 0,
-      // Revenues:[199990, 1500000, 5002000, 3500000, 2500000, 3500000, 4500000, 5000000,199990,199990,199990],
+      Expenditure:[],
       Revenues:[],
    }
   }
 
   componentDidMount = async() => {
+    // Revenues
       await httpClient
         .get ("http://localhost:8085/api/v1/revenue/January")
         .then((e) => this.setState({January: e.data}));
@@ -63,14 +79,53 @@ class Report extends Component {
       await httpClient
         .get ("http://localhost:8085/api/v1/revenue/December")
         .then((e) => this.setState({December: e.data}));
+
+        // expenditure
+        await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/January")
+        .then((e) => this.setState({ExJanuary: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/February")
+        .then((e) => this.setState({ExFebruary: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/March")
+        .then((e) => this.setState({ExMarch: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/April")
+        .then((e) => this.setState({ExApril: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/May")
+        .then((e) => this.setState({ExMay: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/June")
+        .then((e) => this.setState({ExJune: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/July")
+        .then((e) => this.setState({ExJuly: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/August")
+        .then((e) => this.setState({ExAugust: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/September")
+        .then((e) => this.setState({ExSeptember: e.data}));
+      await httpClient
+        .get("http://localhost:8085/api/v1/expenditure/October")
+        .then((e) => this.setState({ExOctober: e.data }));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/November")
+        .then((e) => this.setState({ExNovember: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/December")
+        .then((e) => this.setState({ExDecember: e.data}));
   }
 
 
 
   render() {
       console.log(this.state)
+      // Revenue
       const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues } = this.state;
-
+      
       const Januarys =  January.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Februarys =  February.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Marchs =  March.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
@@ -83,9 +138,7 @@ class Report extends Component {
       const Octobers =  October.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Novembers =  November.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Decembers =  December.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
-
-      console.log(Februarys)
-
+      
       Revenues.push(Januarys)
       Revenues.push(Februarys)
       Revenues.push(Marchs)
@@ -98,6 +151,36 @@ class Report extends Component {
       Revenues.push(Octobers)
       Revenues.push(Novembers)
       Revenues.push(Decembers)
+
+      // Expenditure
+      const { ExJanuary, ExFebruary, ExMarch, ExApril, ExMay, ExJune, ExJuly, ExAugust, ExSeptember, ExOctober, ExNovember, ExDecember, Expenditure } = this.state;
+      
+      const ExJanuarys =  ExJanuary.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExFebruarys =  ExFebruary.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExMarchs =  ExMarch.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExAprils =  ExApril.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExMays =  ExMay.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExJunes =  ExJune.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExJulys =  ExJuly.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExAugusts =  ExAugust.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExSeptembers =  ExSeptember.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExOctobers =  ExOctober.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExNovembers =  ExNovember.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+      const ExDecembers =  ExDecember.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
+
+      Expenditure.push(ExJanuarys)
+      Expenditure.push(ExFebruarys)
+      Expenditure.push(ExMarchs)
+      Expenditure.push(ExAprils)
+      Expenditure.push(ExMays)
+      Expenditure.push(ExJunes)
+      Expenditure.push(ExJulys)
+      Expenditure.push(ExAugusts)
+      Expenditure.push(ExSeptembers)
+      Expenditure.push(ExOctobers)
+      Expenditure.push(ExNovembers)
+      Expenditure.push(ExDecembers)
+      
       
       const data = {
       labels: [
@@ -118,7 +201,7 @@ class Report extends Component {
           label: 'รายรับ',
           fill: true,
           lineTension: 0.5,
-          backgroundColor: '#2DE439',
+          backgroundColor: 'rgba(75,192,192,1)',
           borderColor: 'rgba(75,192,192,1)',
           borderCapStyle: 'butt',
           borderDash: [],
@@ -167,46 +250,51 @@ class Report extends Component {
           pointRadius: 1,
           pointHitRadius: 10,
           data: [ 
-            Januarys ,
-            Februarys,
-            Marchs,
-            Aprils,
-            Mays,
-            Junes,
-            Julys,
-            Augusts,
-            Septembers,
-            Octobers,
-            Novembers,
-            Decembers
+            ExJanuarys ,
+            ExFebruarys,
+            ExMarchs,
+            ExAprils,
+            ExMays,
+            ExJunes,
+            ExJulys,
+            ExAugusts,
+            ExSeptembers,
+            ExOctobers,
+            ExNovembers,
+            ExDecembers
           ]
         } 
       ]
     };
-    const datas = {
-      // labels: [
-      //   moment()
-      //     .subtract(1, "month")
-      //     .format("DD-MM-YYYY"),
-      //   moment().format("MMMM")
-      // ],
-      labels: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December'],
-      datasets: [
-         
-      ]
+    const chartConfig = {
+      responsive: true,
+      scales: {
+        yAxes: [{
+          barPercentage: 1.0,
+          categoryPercentage: 1.0,
+          ticks: {
+            callback: function (value, index, values) {
+              return value + ' ฿.';
+            },
+            // fontColor: '#75c0cc',
+            beginAtZero: true
+          },
+          gridLines: {
+            display: true
+          }
+        }],
+        xAxes: [{
+          ticks: {
+            // fontColor: '#75c0cc'
+          },
+          gridLines: {
+            offsetGridLines: false
+          }
+        }],
+      }
     };
+    
+   
     
     return (
       <div className="content-wrapper">
@@ -276,23 +364,11 @@ class Report extends Component {
                     data={data}
                     width={100}
                     height={30}
+                    options={chartConfig}
                   />
                   </div>
                 </div>
               </div>
-              {/* <div className="col-lg-6 col-12">
-                <div className="small-box bg">
-                  <div className="inner">
-                  <Bar
-                    data={datas}
-                    width={60}
-                    height={30}
-                    // options={lineOptions}
-                  />
-                    
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
         </section>
