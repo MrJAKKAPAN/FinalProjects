@@ -80,4 +80,137 @@ router.get("/expenditure", async (req, res) => {
   });
 
 
+
+  // Month CreatedAt
+// January
+router.get("/January", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: [ "2019-12-31 19:30:00.000 +00:00", "2020-01-30 19:30:00.000 +00:00"]},}});
+        res.json(result);
+  // res.json(result);
+  console.log("January");
+});
+
+// February
+router.get("/February", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: [ "2019-01-31 19:30:00.000 +00:00", "2020-02-28 19:30:00.000 +00:00"]}}});
+        res.json(result);
+  // console.log(result);
+});
+
+// March
+router.get("/March", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: ["2020-02-29 17:00:00.000 +00:00", "2020-03-30 17:00:00.000 +00:00"]} },    
+  });
+  res.json(result);
+  // console.log(result);
+});
+
+// April
+router.get("/April", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: ["2020-03-31 19:30:00.000 +00:00", "2020-04-29 19:30:00.000 +00:00"]} },    
+  });
+  res.json(result);
+  // console.log(result);
+});
+
+// May
+router.get("/May", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: [ "2020-04-30 19:30:00.000 +00:00", "2020-05-30 19:30:00.000 +00:00"]} },    
+  });
+  res.json(result);
+  // console.log(result);
+});
+
+// June
+router.get("/June", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: ["2020-05-31 19:30:00.000 +00:00", "2020-06-29 19:30:00.000 +00:00"]} },    
+  });
+  res.json(result);
+  // console.log(result);
+});
+
+// July
+router.get("/July", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: ["2020-06-30 19:30:00.000 +00:00", "2020-07-30 19:30:00.000 +00:00"]} },    
+  });
+  res.json(result);
+  // console.log(result);
+});
+
+// August
+router.get("/August", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: ["2020-07-31 19:30:00.000 +00:00", "2020-08-30 19:30:00.000 +00:00"]} },    
+  });
+  res.json(result);
+  // console.log(result);
+});
+
+// September
+router.get("/September", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: ["2020-08-31 19:30:00.000 +00:00", "2020-09-29 19:30:00.000 +00:00"]}},    
+  });
+  res.json(result);
+  // console.log(result);
+});
+
+// October
+router.get("/October", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: ["2020-09-30 19:30:00.000 +00:00", "2020-10-30 19:30:00.000 +00:00"]} },    
+  });
+  res.json(result);
+  // console.log(result);
+});
+
+// November
+router.get("/November", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: ["2020-10-31 19:30:00.000 +00:00", "2020-11-29 19:30:00.000 +00:00"]} },    
+  });
+  res.json(result);
+  // console.log(result);
+});
+
+// December
+router.get("/December", async (req, res) => {
+  let result = await expenditure.findAll({
+    where: { 
+      createdAt: { 
+        [Op.between]: ["2020-11-30 19:30:00.000 +00:00", "2020-12-30 19:30:00.000 +00:00"]} },    
+  });
+  res.json(result);
+  console.log("December");
+});
+
   module.exports = router;
