@@ -3,7 +3,6 @@ import { httpClient } from "../../utils/HttpClient";
 import { Bar } from "react-chartjs-2";
 import moment from "moment";
 
-
 class Report extends Component {
   constructor(props) {
     super(props);
@@ -22,8 +21,8 @@ class Report extends Component {
       December:[],
       Type: "bar",
       total: 0,
+      // Revenues:[199990, 1500000, 5002000, 3500000, 2500000, 3500000, 4500000, 5000000,199990,199990,199990],
       Revenues:[],
-      sumOctober: 0,
    }
   }
 
@@ -66,9 +65,11 @@ class Report extends Component {
         .then((e) => this.setState({December: e.data}));
   }
 
-  render() {
-      const { January, February, March, April, May, June, July, August, September, October, November, December } = this.state;
 
+
+  render() {
+      console.log(this.state)
+      const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues } = this.state;
 
       const Januarys =  January.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Februarys =  February.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
@@ -83,9 +84,21 @@ class Report extends Component {
       const Novembers =  November.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Decembers =  December.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
 
-      // const revenue = data.dataset[0].data.push(Octobers)
-      console.log(Octobers)
+      console.log(Februarys)
 
+      Revenues.push(Januarys)
+      Revenues.push(Februarys)
+      Revenues.push(Marchs)
+      Revenues.push(Aprils)
+      Revenues.push(Mays)
+      Revenues.push(Junes)
+      Revenues.push(Julys)
+      Revenues.push(Augusts)
+      Revenues.push(Septembers)
+      Revenues.push(Octobers)
+      Revenues.push(Novembers)
+      Revenues.push(Decembers)
+      
       const data = {
       labels: [
         'January',
@@ -105,7 +118,7 @@ class Report extends Component {
           label: 'รายรับ',
           fill: true,
           lineTension: 0.5,
-          backgroundColor: 'green',
+          backgroundColor: '#2DE439',
           borderColor: 'rgba(75,192,192,1)',
           borderCapStyle: 'butt',
           borderDash: [],
@@ -120,9 +133,54 @@ class Report extends Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          // data: this.state.Revenue
-          // data: [199990, 1500000, 5002000, 3500000, 2500000, 3500000, 4500000, 5000000,199990,199990,199990,199990, ]
+          data: [ Januarys ,
+                  Februarys,
+                  Marchs,
+                  Aprils,
+                  Mays,
+                  Junes,
+                  Julys,
+                  Augusts,
+                  Septembers,
+                  Octobers,
+                  Novembers,
+                  Decembers
+                ]
         },
+        {
+          label: 'รายจ่าย',
+          fill: true,
+          lineTension: 0.5,
+          backgroundColor: 'red',
+          borderColor: 'rgba(75,192,192,1)',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: 'rgba(75,192,192,1)',
+          pointBackgroundColor: '#fff',
+          pointBorderWidth: 1,
+          pointHoverRadius: 6,
+          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointHoverBorderWidth: 1,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: [ 
+            Januarys ,
+            Februarys,
+            Marchs,
+            Aprils,
+            Mays,
+            Junes,
+            Julys,
+            Augusts,
+            Septembers,
+            Octobers,
+            Novembers,
+            Decembers
+          ]
+        } 
       ]
     };
     const datas = {
@@ -146,28 +204,7 @@ class Report extends Component {
         'November',
         'December'],
       datasets: [
-         {
-          label: 'รายจ่าย',
-          fill: true,
-          lineTension: 0.5,
-          backgroundColor: 'red',
-          borderColor: 'rgba(75,192,192,1)',
-          borderCapStyle: 'butt',
-          borderDash: [],
-          borderDashOffset: 0.0,
-          borderJoinStyle: 'miter',
-          pointBorderColor: 'rgba(75,192,192,1)',
-          pointBackgroundColor: '#fff',
-          pointBorderWidth: 1,
-          pointHoverRadius: 6,
-          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-          pointHoverBorderColor: 'rgba(220,220,220,1)',
-          pointHoverBorderWidth: 1,
-          pointRadius: 1,
-          pointHitRadius: 10,
-          // data: this.state.Revenue
-          // data: [199990, 1500000, 5002000, 3500000, 2500000, 3500000, 4500000, 5000000,199990,199990,199990,199990, ]
-        } 
+         
       ]
     };
     
@@ -232,21 +269,18 @@ class Report extends Component {
           {/* /.container-fluid */}
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-6 col-12">
+              <div className="col-lg-12 col-12">
                 <div className="small-box bg">
                   <div className="inner">
-
                   <Bar
                     data={data}
-                    width={60}
+                    width={100}
                     height={30}
-                    // options={lineOptions}
                   />
-
                   </div>
                 </div>
               </div>
-              <div className="col-lg-6 col-12">
+              {/* <div className="col-lg-6 col-12">
                 <div className="small-box bg">
                   <div className="inner">
                   <Bar
@@ -255,10 +289,10 @@ class Report extends Component {
                     height={30}
                     // options={lineOptions}
                   />
-                    {/* รายจ่าย */}
+                    
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
