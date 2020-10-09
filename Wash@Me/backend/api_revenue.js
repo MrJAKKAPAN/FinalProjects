@@ -8,11 +8,19 @@ const path = require("path");
 const fs = require("fs-extra");
 const Op = Sequelize.Op;
 
+
 // Get revenue
 router.get("/revenue", async (req, res) => {
   let result = await revenue.findAll({ order: Sequelize.literal("id DESC") });
   res.json(result);
 });
+// Get revenue
+router.get("/revenuelimit", async (req, res) => {
+  let result = await revenue.findAll({ limit: 5 , order: Sequelize.literal("id DESC") });
+  res.json(result);
+  console.log(result)
+});
+
 
 // Get revenue ById
 router.get("/revenue/:id", async (req, res) => {

@@ -11,21 +11,31 @@ import { Table, Row, Col } from "antd";
 import "antd/dist/antd.css";
 import "./home.scss";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { httpClient } from "../../utils/HttpClient";
 
 class Home extends Component {
   constructor() {
     super();
     this.state = {
       Menulist: false,
+      Service:[]
     };
   }
 
+    componentDidMount  = () => {
+      // service
+      httpClient
+        .get("http://localhost:8085/api/v1/service/service/")
+        .then((e)=> this.setState({ Service: e.data}))
+    }
+
   render() {
+     const { Service } = this.state;
+    console.log(this.state)
+
     var settings = {
       dots: true,
       className: "center",
-      // centerMode: true,
-      // centerPadding: "6px",
       infinite: true,
       speed: 300,
       autoplay: true,
@@ -63,20 +73,21 @@ class Home extends Component {
 
     const columns = [
       {
-        title: "Name",
+        title: "ชื่อบริการ",
         dataIndex: "name",
       },
       {
-        title: "Age",
-        dataIndex: "age",
+        title: "ประเภท",
+        dataIndex: "type",
       },
       {
-        title: "Address",
-        dataIndex: "address",
+        title: "รายละเอียด",
+        dataIndex: "detail",
       },
       {
-        title: "Price",
+        title: "ราคา",
         dataIndex: "price",
+        render: value => ` ${value}.00`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
       },
     ];
 
@@ -129,58 +140,11 @@ class Home extends Component {
               <div className="col-lg-4">
                 <div className="features-icon-item mx-auto mb-5 mb-lg-3 ">
                   <div className="features-icons-icon">
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 16 16"
-                      className="bi bi-hdd-rack"
-                      fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M14 10H2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1zM2 9a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2H2z"
-                      />
-                      <path d="M5 11.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-2 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M14 3H2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM2 2a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
-                      />
-                      <path d="M5 4.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm-2 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                      <path
-                        fill-rule="evenodd"
-                        d="M3 9V7h1v2H3zm9 0V7h1v2h-1z"
-                      />
-                    </svg>
+                    <i class="fas fa-car"></i>
                   </div>
-                  <h3>Best Server</h3>
-                  <p className="lead mb-0">
-                    Do minim ad est ullamco minim ex nisi sunt in aliqua quis.
-                  </p>
-                </div>
-              </div>
-              <div className="col-lg-4">
-                <div className="features-icon-item mx-auto mb-5 mb-lg-3 ">
-                  <div className="features-icons-icon">
-                    <svg
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 16 16"
-                      className="bi bi-credit-card-2-back"
-                      fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"
-                      />
-                      <path d="M11 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zM1 9h14v2H1V9z" />
-                    </svg>
-                  </div>
-                  <h3>Dabit</h3>
-                  <p className="lead mb-0">
-                    Ex culpa eu incididunt Lorem dolor tempor deserunt pariatur
-                    !
+                  <h3 style={{ fontFamily:'Bebas Neue'}}>Wash At Me</h3>
+                  <p className="lead mb-0" style={{fontSize:'18px', fontWeight:400, fontFamily:'Prompt'}}>
+                    วอช แอท มี เป็นศูนย์บริการให้การดูแลรักษารถยนต์ครบวงจรให้บริการด้าน ขัดเคลือบสี ขัดลบรอย ขัดไฟหน้า ขัดชักเงา Wet Look เคลือบแก้ว เคลือบเซรามิค
                   </p>
                 </div>
               </div>
@@ -201,12 +165,24 @@ class Home extends Component {
                       />
                     </svg>
                   </div>
-                  <h3>GoodWeb</h3>
-                  <p className="lead mb-0">
-                    Magna do et ad minim voluptate laboris voluptate.
+                  <h3 style={{ fontFamily:'Bebas Neue'}}>Service</h3>
+                  <p className="lead mb-0" style={{fontSize:'18px', fontWeight:400, fontFamily:'Prompt'}}>
+                    บริการ พ่นกันสนิม ด้วยน้ำยากันสนิมสูตรใหม่ ไม่ผสมยางมะตอย ยืดหยุ่น ยืดหยุ่น ไม่แตกร่อน รับประกัน 5 ปี
                   </p>
                 </div>
               </div>
+              <div className="col-lg-4">
+                <div className="features-icon-item mx-auto mb-5 mb-lg-3 ">
+                  <div className="features-icons-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                  </div>
+                  <h3 style={{ fontFamily:'Bebas Neue'}}>location</h3>
+                  <p className="lead mb-0" style={{fontSize:'18px', fontWeight:400, fontFamily:'Prompt'}}>
+                  WASH​ AT​ ME​ สาขาลาดพร้าว101  2 ซอย โพธิ์แก้ว 3 คลองจั่น เขตบางกะปิ กรุงเทพมหานคร 10240
+                  </p>
+                </div>
+              </div>
+              
             </div>
           </div>
         </section>
@@ -264,7 +240,7 @@ class Home extends Component {
         <div className="serviceBox">
           <div className="inText-title-service">Service</div>
           <div className="serviceItem">
-            <Table columns={columns} dataSource={data} size="middle" />
+            <Table columns={columns} dataSource={this.state.Service} size="middle" />
           </div>
         </div>
 
@@ -324,7 +300,7 @@ class Home extends Component {
             </ul>
           </div>
           <div className="foot-home-text">Wash At Me</div>
-          Copy ©2020 DJ Wash At Me All Right Reserved
+          Copy ©2020  Wash At Me All Right Reserved
         </div>
       </div>
     );

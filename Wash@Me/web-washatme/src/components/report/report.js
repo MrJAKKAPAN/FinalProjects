@@ -2,12 +2,25 @@ import React, { Component } from "react";
 import { httpClient } from "../../utils/HttpClient";
 import { Bar } from "react-chartjs-2";
 import moment from "moment";
+import {
+  Tabs,
+  List,
+  Tag
+} from "antd";
+import InfiniteScroll from 'react-infinite-scroller';
 
+
+const { TabPane } = Tabs;
 class Report extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
+      hasMore: true,
 // Revenue
+
+      GetRevenue:[],
+      GetRevenuing:[],
       January:[],
       February:[],
       March:[],
@@ -21,6 +34,8 @@ class Report extends Component {
       November:[],
       December:[],
 // Expenditure
+      GetExpenditure:[],
+      GetExpendituring:[],
       ExJanuary:[],
       ExFebruary:[],
       ExMarch:[],
@@ -34,6 +49,7 @@ class Report extends Component {
       ExNovember:[],
       ExDecember:[],
       
+
       Type: "bar",
       total: 0,
       Expenditure:[],
@@ -43,6 +59,14 @@ class Report extends Component {
 
   componentDidMount = async() => {
     // Revenues
+      await httpClient
+        .get ("http://localhost:8085/api/v1/revenue/revenue")
+        .then((e) => this.setState({GetRevenue: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/revenue/revenuelimit/")
+        .then((e) => this.setState({GetRevenuing: e.data}));
+        
+    // month
       await httpClient
         .get ("http://localhost:8085/api/v1/revenue/January")
         .then((e) => this.setState({January: e.data}));
@@ -81,7 +105,14 @@ class Report extends Component {
         .then((e) => this.setState({December: e.data}));
 
         // expenditure
-        await httpClient
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/expenditure")
+        .then((e) => this.setState({GetExpenditure: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/expenditures")
+        .then((e) => this.setState({GetExpendituring: e.data}));
+        // month
+      await httpClient
         .get ("http://localhost:8085/api/v1/expenditure/January")
         .then((e) => this.setState({ExJanuary: e.data}));
       await httpClient
@@ -124,8 +155,9 @@ class Report extends Component {
   render() {
       console.log(this.state)
       // Revenue
-      const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues } = this.state;
+      const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues, GetRevenue, GetRevenuing } = this.state;
       
+      const GetRevenues =  GetRevenue.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Januarys =  January.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Februarys =  February.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Marchs =  March.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
@@ -153,8 +185,9 @@ class Report extends Component {
       Revenues.push(Decembers)
 
       // Expenditure
-      const { ExJanuary, ExFebruary, ExMarch, ExApril, ExMay, ExJune, ExJuly, ExAugust, ExSeptember, ExOctober, ExNovember, ExDecember, Expenditure } = this.state;
+      const { ExJanuary, ExFebruary, ExMarch, ExApril, ExMay, ExJune, ExJuly, ExAugust, ExSeptember, ExOctober, ExNovember, ExDecember, Expenditure, GetExpenditure, GetExpendituring } = this.state;
       
+      const GetExpenditures = GetExpenditure.reduce((sum, { ex_price }) => sum + ex_price ,0);
       const ExJanuarys =  ExJanuary.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
       const ExFebruarys =  ExFebruary.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
       const ExMarchs =  ExMarch.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
@@ -182,7 +215,7 @@ class Report extends Component {
       Expenditure.push(ExDecembers)
       
       
-      const data = {
+    const data = {
       labels: [
         'January',
         'February',
@@ -270,13 +303,13 @@ class Report extends Component {
       responsive: true,
       scales: {
         yAxes: [{
+          // stacked: true,
           barPercentage: 1.0,
           categoryPercentage: 1.0,
           ticks: {
             callback: function (value, index, values) {
               return value + ' ฿.';
             },
-            // fontColor: '#75c0cc',
             beginAtZero: true
           },
           gridLines: {
@@ -284,8 +317,8 @@ class Report extends Component {
           }
         }],
         xAxes: [{
+          // stacked: true,
           ticks: {
-            // fontColor: '#75c0cc'
           },
           gridLines: {
             offsetGridLines: false
@@ -293,33 +326,31 @@ class Report extends Component {
         }],
       }
     };
-    
-   
+    const tableExpenditrue = GetExpenditure.map((expenditure) => (
+      <tr key={expenditure.id}>
+        <td>{expenditure.createAt}</td>
+        <td>{expenditure.ex_name}</td>
+        <td>{expenditure.ex_price}</td>
+        <td>{expenditure.ex_detail}</td>
+      </tr>
+    ))
+    const colorRevenue = 'green';
+    const color = 'volcano';
     
     return (
       <div className="content-wrapper">
         <section className="content" style={{ marginTop: "1%" }}>
           <div className="container-fluid">
             {/* Small boxes (Stat box) */}
-            <div className="row">
-              <div className="col-lg-3 col-6">
-                <div className="small-box bg-info">
-                  <div className="inner">
-                    <h3>{Octobers}</h3>
-                    <p>New Orders</p>
-                  </div>
-                  <div className="icon">
-                    <i className="ion ion-bag" />
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3 col-6">
+            <div className="row"> 
+              <div className="col-lg-4 col-6">
                 <div className="small-box bg-success">
                   <div className="inner">
                     <h3>
-                      53<sup style={{ fontSize: 20 }}>%</sup>
+                      ฿ {(GetRevenues - GetExpenditures)}
+                      {/* <sup style={{ fontSize: 20 }}>%</sup> */}
                     </h3>
-                    <p>Bounce Rate</p>
+                    <p>ยอดคงสุทธิ (ทั้งหมด)</p>
                   </div>
                   <div className="icon">
                     <i className="ion ion-stats-bars" />
@@ -328,23 +359,23 @@ class Report extends Component {
               </div>
               {/* ./col */}
 
-              <div className="col-lg-3 col-6">
+              <div className="col-lg-4 col-6">
                 {/* small box */}
                 <div className="small-box bg-warning">
                   <div className="inner">
-                    <h3>44</h3>
-                    <p>User Registrations</p>
+                    <h3>฿ {GetRevenues.toFixed(2)}</h3>
+                    <p>ยอดรายรับทั้งหมด</p>
                   </div>
                   <div className="icon">
                     <i className="ion ion-person-add" />
                   </div>
                 </div>
               </div>
-              <div className="col-lg-3 col-6">
+              <div className="col-lg-4 col-6">
                 <div className="small-box bg-danger">
                   <div className="inner">
-                    <h3>65</h3>
-                    <p>Unique Visitors</p>
+                    <h3>฿ {GetExpenditures.toFixed(2)}</h3>
+                    <p>ยอดรายจ่ายทั้งหมด</p>
                   </div>
                   <div className="icon">
                     <i className="ion ion-pie-graph" />
@@ -357,15 +388,92 @@ class Report extends Component {
           {/* /.container-fluid */}
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-12 col-12">
+              <div className="col-lg-5 col-12">
                 <div className="small-box bg">
                   <div className="inner">
-                  <Bar
-                    data={data}
-                    width={100}
-                    height={30}
-                    options={chartConfig}
-                  />
+                  <Tabs
+                      defaultActiveKey="1"
+                      onChange={this.callback}
+                      type="card"
+                       >
+                      <TabPane tab="รายรับ" key="1">
+                      <div className="demo-infinite-container">
+                            <InfiniteScroll
+                              initialLoad={false}
+                              pageStart={0}
+                              useWindow={false}
+                            >
+                              <List
+                              style={{backgroundColor:'#f4f4f4'}}
+                                dataSource={this.state.GetRevenuing}
+                                renderItem={item => (
+                                  <List.Item 
+                                    key={item.re_id} 
+                                    style={{padding:'0.8rem'}}
+                                  >
+                                    <List.Item.Meta
+                                      title={<a >{item.name} {item.type} {item.quantity}</a>}
+                                      description={item.detail}
+                                    />
+                                    <div></div>
+                                    <dvi>{item.createAt}</dvi>
+                                    <Tag style={{marginRight:'10rem', }} color={colorRevenue}>
+                                      รายรับ
+                                    </Tag>
+                                    <div>{item.total.toFixed(2)} บาท</div>
+                                  </List.Item>
+                                )}
+                              >
+
+                              </List>
+                            </InfiniteScroll>
+                            </div>
+                      </TabPane>
+                      <TabPane tab="รายจ่าย" key="2">
+                          <div className="demo-infinite-container">
+                            <InfiniteScroll
+                              initialLoad={false}
+                              pageStart={0}
+                              useWindow={false}
+                              // style={{border:'2px solid red'}}
+                            >
+                              <List
+                              // style={{border:'2px solid red'}}
+                                dataSource={this.state.GetExpendituring}
+                                renderItem={item => (
+                                  <List.Item 
+                                    key={item.id} 
+                                    style={{padding:'0.8rem'}}
+                                  >
+                                    <List.Item.Meta
+                                      title={<a >{item.ex_name}</a>}
+                                      description={item.ex_detail}
+                                    />
+                                    <Tag style={{marginRight:'10rem', }} color={color}>
+                                      รายจ่าย
+                                    </Tag>
+                                    <div>{item.ex_price} บาท</div>
+                                  </List.Item>
+                                )}
+                              >
+
+                              </List>
+                            </InfiniteScroll>
+                            </div>
+                      </TabPane>
+                  </Tabs>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-7 col-12">
+                <div className="small-box bg">
+                  <div className="inner">
+                    <Bar
+                      data={data}
+                      width={100}
+                      height={56}
+                      options={chartConfig}
+                    />
                   </div>
                 </div>
               </div>

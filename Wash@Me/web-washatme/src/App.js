@@ -25,7 +25,7 @@ import Expenditure from "./components/expenditure/expenditure";
 import ExpenditureCreate from "./components/expenditureCreate/expenditureCreate";
 import ExpenditureEdit from "./components/expenditureEdit/expenditureEdit";
 
-import Test from "./components/test/test";
+// import Test from "./components/test/test";
 import {
   BrowserRouter as Router,
   Switch,
@@ -106,7 +106,7 @@ class App extends Component {
               <SecuredRoute path="/member-create" component={MemberCreate} />
               <SecuredRoute path="/member-edit/:id" component={MemberEdit} />
 
-              <SecuredRoute path="/test" component={Test} />
+              {/* <SecuredRoute path="/test" component={Test} /> */}
 
               {/* redirect to home */}
               <Route exact={true} path="/" component={this.redirectToHome} />

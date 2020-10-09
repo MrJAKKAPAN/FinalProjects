@@ -12,6 +12,12 @@ router.get("/expenditure", async (req, res) => {
     res.json(result);
     // res.json('result ok');
   });
+  router.get("/expenditures", async (req, res) => {
+    let result = await expenditure.findAll({limit:5, order: Sequelize.literal("id DESC") });
+    res.json(result);
+    // res.json('result ok');
+  });
+
   
   // Add expenditure
   router.post("/expenditure", async (req, res) => {
