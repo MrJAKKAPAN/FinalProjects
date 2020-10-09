@@ -14,6 +14,7 @@ class Login extends Component {
       password: "",
     };
   }
+  
 
   componentDidMount() {
     this.props.autoLogin(this.props.history);
