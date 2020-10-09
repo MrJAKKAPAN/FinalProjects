@@ -2,13 +2,25 @@ import React, { Component } from "react";
 import { httpClient } from "../../utils/HttpClient";
 import { Bar } from "react-chartjs-2";
 import moment from "moment";
+import {
+  Tabs,
+  List,
+  Tag
+} from "antd";
+import InfiniteScroll from 'react-infinite-scroller';
 
+
+const { TabPane } = Tabs;
 class Report extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
+      hasMore: true,
 // Revenue
+
       GetRevenue:[],
+      GetRevenuing:[],
       January:[],
       February:[],
       March:[],
@@ -23,6 +35,7 @@ class Report extends Component {
       December:[],
 // Expenditure
       GetExpenditure:[],
+      GetExpendituring:[],
       ExJanuary:[],
       ExFebruary:[],
       ExMarch:[],
@@ -49,6 +62,10 @@ class Report extends Component {
       await httpClient
         .get ("http://localhost:8085/api/v1/revenue/revenue")
         .then((e) => this.setState({GetRevenue: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/revenue/revenuelimit/")
+        .then((e) => this.setState({GetRevenuing: e.data}));
+        
     // month
       await httpClient
         .get ("http://localhost:8085/api/v1/revenue/January")
@@ -88,11 +105,14 @@ class Report extends Component {
         .then((e) => this.setState({December: e.data}));
 
         // expenditure
-        await httpClient
+      await httpClient
         .get ("http://localhost:8085/api/v1/expenditure/expenditure")
         .then((e) => this.setState({GetExpenditure: e.data}));
+      await httpClient
+        .get ("http://localhost:8085/api/v1/expenditure/expenditures")
+        .then((e) => this.setState({GetExpendituring: e.data}));
         // month
-        await httpClient
+      await httpClient
         .get ("http://localhost:8085/api/v1/expenditure/January")
         .then((e) => this.setState({ExJanuary: e.data}));
       await httpClient
@@ -135,7 +155,7 @@ class Report extends Component {
   render() {
       console.log(this.state)
       // Revenue
-      const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues, GetRevenue } = this.state;
+      const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues, GetRevenue, GetRevenuing } = this.state;
       
       const GetRevenues =  GetRevenue.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
       const Januarys =  January.reduce(( sum,{price, quantity}) =>  sum + price * quantity ,0);
@@ -165,7 +185,7 @@ class Report extends Component {
       Revenues.push(Decembers)
 
       // Expenditure
-      const { ExJanuary, ExFebruary, ExMarch, ExApril, ExMay, ExJune, ExJuly, ExAugust, ExSeptember, ExOctober, ExNovember, ExDecember, Expenditure, GetExpenditure } = this.state;
+      const { ExJanuary, ExFebruary, ExMarch, ExApril, ExMay, ExJune, ExJuly, ExAugust, ExSeptember, ExOctober, ExNovember, ExDecember, Expenditure, GetExpenditure, GetExpendituring } = this.state;
       
       const GetExpenditures = GetExpenditure.reduce((sum, { ex_price }) => sum + ex_price ,0);
       const ExJanuarys =  ExJanuary.reduce(( sum,{ex_price}) =>  sum + ex_price  ,0);
@@ -195,7 +215,7 @@ class Report extends Component {
       Expenditure.push(ExDecembers)
       
       
-      const data = {
+    const data = {
       labels: [
         'January',
         'February',
@@ -306,8 +326,16 @@ class Report extends Component {
         }],
       }
     };
-    
-   
+    const tableExpenditrue = GetExpenditure.map((expenditure) => (
+      <tr key={expenditure.id}>
+        <td>{expenditure.createAt}</td>
+        <td>{expenditure.ex_name}</td>
+        <td>{expenditure.ex_price}</td>
+        <td>{expenditure.ex_detail}</td>
+      </tr>
+    ))
+    const colorRevenue = 'green';
+    const color = 'volcano';
     
     return (
       <div className="content-wrapper">
@@ -360,15 +388,92 @@ class Report extends Component {
           {/* /.container-fluid */}
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-12 col-12">
+              <div className="col-lg-5 col-12">
                 <div className="small-box bg">
                   <div className="inner">
-                  <Bar
-                    data={data}
-                    width={100}
-                    height={30}
-                    options={chartConfig}
-                  />
+                  <Tabs
+                      defaultActiveKey="1"
+                      onChange={this.callback}
+                      type="card"
+                       >
+                      <TabPane tab="รายรับ" key="1">
+                      <div className="demo-infinite-container">
+                            <InfiniteScroll
+                              initialLoad={false}
+                              pageStart={0}
+                              useWindow={false}
+                            >
+                              <List
+                              style={{backgroundColor:'#f4f4f4'}}
+                                dataSource={this.state.GetRevenuing}
+                                renderItem={item => (
+                                  <List.Item 
+                                    key={item.re_id} 
+                                    style={{padding:'0.8rem'}}
+                                  >
+                                    <List.Item.Meta
+                                      title={<a >{item.name} {item.type} {item.quantity}</a>}
+                                      description={item.detail}
+                                    />
+                                    <div></div>
+                                    <dvi>{item.createAt}</dvi>
+                                    <Tag style={{marginRight:'10rem', }} color={colorRevenue}>
+                                      รายรับ
+                                    </Tag>
+                                    <div>{item.total.toFixed(2)} บาท</div>
+                                  </List.Item>
+                                )}
+                              >
+
+                              </List>
+                            </InfiniteScroll>
+                            </div>
+                      </TabPane>
+                      <TabPane tab="รายจ่าย" key="2">
+                          <div className="demo-infinite-container">
+                            <InfiniteScroll
+                              initialLoad={false}
+                              pageStart={0}
+                              useWindow={false}
+                              // style={{border:'2px solid red'}}
+                            >
+                              <List
+                              // style={{border:'2px solid red'}}
+                                dataSource={this.state.GetExpendituring}
+                                renderItem={item => (
+                                  <List.Item 
+                                    key={item.id} 
+                                    style={{padding:'0.8rem'}}
+                                  >
+                                    <List.Item.Meta
+                                      title={<a >{item.ex_name}</a>}
+                                      description={item.ex_detail}
+                                    />
+                                    <Tag style={{marginRight:'10rem', }} color={color}>
+                                      รายจ่าย
+                                    </Tag>
+                                    <div>{item.ex_price} บาท</div>
+                                  </List.Item>
+                                )}
+                              >
+
+                              </List>
+                            </InfiniteScroll>
+                            </div>
+                      </TabPane>
+                  </Tabs>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-7 col-12">
+                <div className="small-box bg">
+                  <div className="inner">
+                    <Bar
+                      data={data}
+                      width={100}
+                      height={56}
+                      options={chartConfig}
+                    />
                   </div>
                 </div>
               </div>
