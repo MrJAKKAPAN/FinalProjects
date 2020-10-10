@@ -3,6 +3,7 @@ import { withRouter, Link} from "react-router-dom";
 import { server } from "../../constants";
 import * as actions from "./../../actions/login.action"
 import {connect} from "react-redux";
+import image from "../images/logocarcare.png";
 
 class Menu extends Component { 
   constructor(props){
@@ -40,7 +41,7 @@ class Menu extends Component {
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
           {/* Brand Logo */}
           <a href="index3.html" className="brand-link" style={{textAlign:'center', height:'auto'}}>
-            <span className="brand-text font-weight-light">Wash@Me</span>
+            <span className="brand-text font-weight-light"><img src={image} width="120" height="40" /></span>
           </a>
           {/* Sidebar */}
           <div className="sidebar" style={{height:'auto'}}>
