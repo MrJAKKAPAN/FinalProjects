@@ -6,6 +6,7 @@ export const setApp = (app) => {
             {
                 type:APP_INIT,
                 payload: app
+                
             }
         );
     };

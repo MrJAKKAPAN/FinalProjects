@@ -14,7 +14,7 @@ class Login extends Component {
       password: "",
     };
   }
-  
+
 
   componentDidMount() {
     this.props.autoLogin(this.props.history);
@@ -32,14 +32,15 @@ class Login extends Component {
           x
         </button>
         <h4>
-          <i className="icon fa fa-ban" /> Error!{" "}
-        </h4>{" "}
+          <i className="icon fa fa-ban" /> Error!
+        </h4>
         ไม่มีชื่อผู้ใช้นี้
       </div>
     );
   };
 
   render() {
+      const {result} =this.props.loginReducer;
     return (
       <div className="hold-transition login-page">
         <div
