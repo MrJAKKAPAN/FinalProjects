@@ -153,7 +153,7 @@ class Report extends Component {
 
 
   render() {
-      console.log(this.state)
+      // console.log(this.state)
       // Revenue
       const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues, GetRevenue, GetRevenuing } = this.state;
       
@@ -452,7 +452,7 @@ class Report extends Component {
                                     <Tag style={{marginRight:'10rem', }} color={color}>
                                       รายจ่าย
                                     </Tag>
-                                    <div>{item.ex_price} บาท</div>
+                                    <div>{item.ex_price.toFixed(2)} บาท</div>
                                   </List.Item>
                                 )}
                               >

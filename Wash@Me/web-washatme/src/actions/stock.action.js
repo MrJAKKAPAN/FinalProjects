@@ -78,14 +78,6 @@ export const deleteProduct = id => {
     })
   }
 }
-// ลบข้อมูล
-// export const deleteProduct = id => {
-//   return async dispatch => {
-//     dispatch(setStateStockToFetching());
-//     await httpClient.delete(`${server.PRODUCT_URL}/${id}`)
-//     await doGetProducts(dispatch);
-//   };
-// };
 
 export const addProduct = (history, formData) => {
   return async dispatch => {

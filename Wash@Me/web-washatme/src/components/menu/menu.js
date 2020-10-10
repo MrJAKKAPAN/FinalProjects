@@ -1,19 +1,45 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { withRouter, Link} from "react-router-dom";
 import { server } from "../../constants";
+import * as actions from "./../../actions/login.action"
+import {connect} from "react-redux";
 
-class Menu extends Component {
-  constructor(props) {
+class Menu extends Component { 
+  constructor(props){
     super(props)
-  
     this.state = {
-
+      // resultsssss: this.props.loginReducer
     }
   }
+  renderData = () => {
+    try {
+      const { results, isFetching } = this.props.loginReducer;
+      // console.log(results);
+      // console.log(results.data.u_status);
+      // 
+      const item = results.data
+      console.log(item);
+      
+      if (item.u_status === 1) {
+        console.log(item.u_status)
+        return(  
+            <Link to="/member" className="nav-link">
+                    <i className="nav-icon fas fa-user-circle" />
+                    <p>&nbsp; พนักงาน / Member</p>
+            </Link>   
+        )
+      }
+  } catch (error) {
+      console.log('เป็น', error)
+    
+}}
   
+  
+
   render() {
+    console.log(this.state)
       const {pathname} = this.props.location;
+
     return (
       <div style={{minHeight:'100hv'}}>
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
@@ -65,12 +91,15 @@ class Menu extends Component {
                     <p>&nbsp; สินค้า / Product</p>
                   </Link>
                 </li>
+
                 <li className={pathname === '/member' ? 'nav-item' : null}>
-                  <Link to="/member" className="nav-link">
+                {this.renderData()}
+                {/* <Link to="/member" className="nav-link">
                     <i className="nav-icon fas fa-user-circle" />
                     <p>&nbsp; พนักงาน / Member</p>
-                  </Link>
+                </Link>    */}
                 </li>
+
                 <li className={pathname === '/servicePaged' ? 'nav-item' : null}>
                   <Link to="/servicePaged" className="nav-link" >
                     <i className="nav-icon fas fa-money-check" />
@@ -79,11 +108,10 @@ class Menu extends Component {
                 </li>
                 <li className="nav-item">
                   <div
-                    // logout
                     onClick={() => {
                       this.props.history.push("/home")
                       localStorage.removeItem(server.LOGIN_PASSED);
-                      // // บอกให้มันไปใช้ func update
+                      //func update
                       this.props.appReducer.app.forceUpdate();
                     }}
                   >
@@ -93,6 +121,7 @@ class Menu extends Component {
                     </a>
                   </div>
                 </li>
+              
               </ul>
             </nav>
             {/* /.sidebar-menu */}
@@ -105,12 +134,8 @@ class Menu extends Component {
 }
 
 // export default withRouter(Menu);
-const mapStateToProps = ({appReducer}) => ({
-  appReducer
-})
-
-const mapDispatchToProps = {
-  // action
-}
+const mapStateToProps = ({  loginReducer,appReducer }) => ({ loginReducer,appReducer })
+const mapDispatchToProps = { ...actions }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu))
 
+  
