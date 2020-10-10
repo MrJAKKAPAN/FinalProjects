@@ -107,7 +107,7 @@ class Expenditure extends Component {
         align: "center",
         render: (text, record) => (
           <Space>
-            <Button
+            {/* <Button
               type="primary"
               onClick={() =>
                 this.props.history.push(`/revenue-edit/${record.id}`)
@@ -118,7 +118,7 @@ class Expenditure extends Component {
               </a>
             </Button>
 
-            <span>|</span>
+            <span>|</span> */}
 
             <Popconfirm
               title="คุณต้องการลบข้อมูลหรือไม่"
@@ -140,11 +140,6 @@ class Expenditure extends Component {
         <div className="content">
           <div className="row">
             <div className="col-12">
-              <div class="card" style={{ marginTop: "1rem" }}>
-                <div class="card-body" style={{ textAlign:'center' }}>
-                  <text style={{ fontSize:'1.5rem' }}> --- &nbsp;&nbsp; รายจ่าย / Expenditure &nbsp;&nbsp; ---</text>
-                </div>
-              </div>
               <div className="card" style={{ top: "1%" }}>
                 <div className="card-body">
                   <Row>
@@ -165,7 +160,9 @@ class Expenditure extends Component {
                         เพิ่มรายจ่าย
                       </Button>
                     </Col>
-                    <Col span={12}></Col>
+                    <Col span={12}>
+                    <h4 style={{ fontSize:'1.5rem',textAlign:'center' }}>--- &nbsp;&nbsp; รายจ่าย / Expenditure &nbsp;&nbsp; ---</h4>
+                    </Col>
                     <Col span={8}>
                       <Search
                         placeholder="ค้นหารายการ"

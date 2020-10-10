@@ -62,13 +62,7 @@ class Revenue extends Component {
       await this.componentDidMount();
 };
 
-
-
-
-
   render() {
-    // console.log(this.state)
-
       const timeConverter = rawDate => moment(rawDate).format('L');
       const { pagination } = this.props;
       const columns = [
@@ -137,21 +131,6 @@ class Revenue extends Component {
           align:"center",
           render:(text, record) => (
             <Space>
-              <Button
-                type="primary"
-                onClick={() =>
-                  this.props.history.push(
-                    `/revenue-edit/${record.id}`
-                  )
-                }
-              >
-                <a style={{ color: "white" }}>
-                  <EditOutlined />
-                </a>
-              </Button>
-
-              <span>|</span>
-
               <Popconfirm
                 title="คุณต้องการลบข้อมูลหรือไม่"
                 onConfirm={() => this.onDelete(record.id)}
@@ -172,11 +151,6 @@ class Revenue extends Component {
         <div className="content">
           <div className="row">
             <div className="col-12">
-            {/* <div class="card" style={{ marginTop: "1rem"}}>
-                <div class="card-body" style={{ textAlign:'center' }}>
-                  <text style={{ fontSize:'1.5rem' }}>--- &nbsp;&nbsp; รายรับ / Revenue &nbsp;&nbsp; ---</text>
-                </div>
-              </div> */}
               <div className="card" style={{top:'1%'}}>
                 <div className="card-body">
                   <Row>
@@ -194,10 +168,12 @@ class Revenue extends Component {
                           width: "100px",
                         }}
                       >
-                        เพิ่มราย
+                        เพิ่มรายรับ
                       </Button>
                     </Col>
-                    <Col span={12}></Col>
+                    <Col span={12}>
+                        <h4 style={{ fontSize:'1.5rem',textAlign:'center' }}>--- &nbsp;&nbsp; รายรับ / Revenue &nbsp;&nbsp; ---</h4>
+                    </Col>
                     <Col span={8}>
                       <Search
                         placeholder="ค้นหาป้ายทะเบียนรถ"
@@ -208,7 +184,6 @@ class Revenue extends Component {
                     </Col>
                   </Row>
                   <Table
-                    // title={() => 'Header'}
                     bordered
                     dataSource={this.state.result}
                     columns={columns}
