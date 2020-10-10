@@ -158,11 +158,6 @@ class Member extends Component {
         <div className="content">
           <div className="row">
             <div className="col-12">
-            <div class="card" style={{ marginTop: "1rem"}}>
-                <div class="card-body" style={{ textAlign:'center' }}>
-                  <text style={{ fontSize:'1.5rem' }}> --- &nbsp;&nbsp; พนักงาน / Member &nbsp;&nbsp; --- </text>
-                </div>
-              </div>
               <div className="card">
                 <div className="card-body">
                   <Row>
@@ -183,7 +178,9 @@ class Member extends Component {
                         เพิ่ม
                       </Button>
                     </Col>
-                    <Col span={12}></Col>
+                    <Col span={12}>
+                    <h4 style={{ fontSize:'1.5rem',textAlign:'center' }}>--- &nbsp;&nbsp; พนักงาน / Member &nbsp;&nbsp; ---</h4>
+                    </Col>
                     <Col span={8}>
                       <Search
                         placeholder="ค้นหาชื่อพนักงาน "

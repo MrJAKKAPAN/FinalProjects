@@ -416,7 +416,7 @@ class Report extends Component {
                                       description={item.detail}
                                     />
                                     <div></div>
-                                    <dvi>{item.createAt}</dvi>
+                                    <div>{item.createAt}</div>
                                     <Tag style={{marginRight:'10rem', }} color={colorRevenue}>
                                       รายรับ
                                     </Tag>

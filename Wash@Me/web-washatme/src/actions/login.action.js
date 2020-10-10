@@ -11,16 +11,13 @@ import { httpClient } from "./../utils/HttpClient"
 export const setLoginStateToFetching  = () => ({
     type:HTTP_LOGIN_FETCHING,
 })
- 
 export const setLoginStateToSuccess = (payload) => ({
     type: HTTP_LOGIN_SUCCESS,
     payload
 })
 export const setLoginStateToFailed = () => ({
     type: HTTP_LOGIN_FAILED,
-    
 })
-
 
 export const autoLogin = (history) => {
     return () => {
@@ -39,12 +36,8 @@ export const login = (history, credential) => {
                     localStorage.setItem(server.LOGIN_PASSED,YES)
                     // login รีเฟรช 
                     getState().appReducer.app.forceUpdate();
-                    
                     history.push('/report')
-                    
                     dispatch(setLoginStateToSuccess(result.data));
-                    // console.log(result.data.data)
-                    
                 }else{
                     dispatch(setLoginStateToFailed());
                 }              
@@ -52,19 +45,4 @@ export const login = (history, credential) => {
     } 
 }
 
-export const getData = () => {
-    return dispatch => {
-        dispatch(setLoginStateToSuccess());
-        // doGetData(dispatch);
-    }
-} 
-
-const doGetData = (dispatch) => {
-    httpClient.get(server.LOGIN_URL).then(result => {
-        dispatch(setLoginStateToSuccess(result.data))
-    }).catch(error =>{
-        alert(JSON.stringify(error))
-        dispatch(setLoginStateToFailed())
-    })
-}
 

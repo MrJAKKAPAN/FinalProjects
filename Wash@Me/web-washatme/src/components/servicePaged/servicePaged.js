@@ -148,11 +148,6 @@ class ServicePaged extends Component {
         <div className="content">
           <div className="row">
             <div className="col-12">
-            <div class="card" style={{ marginTop: "1rem"}}>
-                <div class="card-body" style={{ textAlign:'center' }}> 
-                  <text style={{ fontSize:'1.5rem' }}> --- &nbsp;&nbsp; อัตราบริการ / Service &nbsp;&nbsp; ---</text>
-                </div>
-              </div>
               <div className="card" style={{top:'1%'}}>
                 <div className="card-body">
                   <Row >
@@ -170,11 +165,13 @@ class ServicePaged extends Component {
                           width: "100px",
                         }}
                       >
-                        เพิ่ม
+                        เพิ่มบริการ
                       </Button>
                     </Col>
 
-                    <Col span={12}></Col>
+                    <Col span={12}>
+                      <h4 style={{ fontSize:'1.5rem',textAlign:'center' }}>--- &nbsp;&nbsp; อัตราบริการ / Service &nbsp;&nbsp; ---</h4>
+                    </Col>
                     <Col span={8}>
                       <Search
                         placeholder="ค้นหา ชื่อรายการบริาการ"
