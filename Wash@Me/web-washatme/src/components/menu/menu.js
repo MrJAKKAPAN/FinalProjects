@@ -33,8 +33,6 @@ class Menu extends Component {
       console.log('เป็น', error)
     
 }}
-  
-  
 
   render() {
     console.log(this.state)
