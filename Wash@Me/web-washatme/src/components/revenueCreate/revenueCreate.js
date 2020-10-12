@@ -290,7 +290,13 @@ class RevenueCreate extends Component {
                     </Row>
                     <Row>
                       <Col span={12}>
-                        <Form.Item name="re_detail" label="บันทึกย่อ">
+                        <Form.Item name="re_detail" label="บันทึกย่อ"
+                        rules={[
+                          {
+                              required: true,
+                              message: "โปรดระบุบันทึกย่อ",
+                          },
+                          ]}>
                           <TextArea
                             placeholder="รายละเอียด"
                             autoSize
@@ -299,7 +305,13 @@ class RevenueCreate extends Component {
                         </Form.Item>
                       </Col>
                       <Col span={12}>
-                        <Form.Item name="cus_car_number" label="ป้ายทะเบียนรถ">
+                        <Form.Item name="cus_car_number" label="ป้ายทะเบียนรถ" rules={[
+                          {
+                              required: true,
+                              message: "โปรดระบุป้ายทะเบียนรถ",
+                          },
+                          ]}
+                        >
                           <Select
                             showSearch
                             style={{ width: 200 }}

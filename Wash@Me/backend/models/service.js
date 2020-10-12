@@ -10,7 +10,7 @@ const service = sequelize.define(
       primaryKey: true
     },
     name: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: false,
       // primaryKey: true
     },
@@ -27,7 +27,7 @@ const service = sequelize.define(
       allowNull: false,
     },
     type: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: false,
     },
   },

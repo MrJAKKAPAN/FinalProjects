@@ -76,10 +76,10 @@ class App extends Component {
           {isLoggedIn() && <Menu />}
           <Switch>
               {/* <Route component={NotFount} /> */}
-              <Route path="/stock" component={Stock} />
+              {/* <Route path="/stock" component={Stock} /> */}
               <Route path="/login" component={Login} />
               <Route path="/home" component={Home} />
-              <Route path="/stock-edit/:id" component={StockEdit} />
+              {/* <Route path="/stock-edit/:id" component={StockEdit} /> */}
               <SecuredRoute path="/report" component={Report} />
 
               <SecuredRoute path="/stock" component={Stock} />
@@ -109,7 +109,7 @@ class App extends Component {
               {/* <SecuredRoute path="/test" component={Test} /> */}
 
               {/* redirect to home */}
-              <Route exact={true} path="/" component={this.redirectToHome} />
+              <Route exact={true} path="/" component={Home} />
               <Route exact={true} path="*" component={this.redirectToHome} />
           </Switch>
           {/* {isLoggedIn() && <Footer />} */}

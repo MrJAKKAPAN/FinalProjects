@@ -94,12 +94,12 @@ class Expenditure extends Component {
         align: "center",
         width: "300",
       },
-      {
-        title: "พนักงานผู้บันทึก",
-        dataIndex: "re_ad_name",
-        align: "center",
-        width: "300",
-      },
+      // {
+      //   title: "พนักงานผู้บันทึก",
+      //   dataIndex: "re_ad_name",
+      //   align: "center",
+      //   width: "300",
+      // },
       {
         title: "Action",
         align: "center",

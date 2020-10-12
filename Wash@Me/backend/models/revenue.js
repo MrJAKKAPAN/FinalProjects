@@ -10,10 +10,10 @@ const revenue = sequelize.define(
       primaryKey: true,
     }, 
     car_number: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
     },
     type: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: true,
     },
     detail: {
@@ -21,7 +21,7 @@ const revenue = sequelize.define(
       allowNull: true,
     },
     name: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: true,
     },
     price: {
@@ -37,7 +37,7 @@ const revenue = sequelize.define(
       allowNull: true,
     },
     quantity: {
-      type: Sequelize.TEXT,
+      type: Sequelize.NUMBER,
       allowNull: true,
     },
     id: {
@@ -45,16 +45,13 @@ const revenue = sequelize.define(
       allowNull: true,
     },
     reference: {
-      type: Sequelize.NUMBER,
-      allowNull: true,
-    },
-    ad_name: {
       type: Sequelize.TEXT,
       allowNull: true,
     },
   },
   {
     // options
+    updatedAt: false,
   },
 );
 

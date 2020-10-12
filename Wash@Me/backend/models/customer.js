@@ -10,25 +10,23 @@ const customer = sequelize.define(
         primaryKey: true,
     },
     cus_fname: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false,
-      // primaryKey: true
     },
     cus_lname: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false,
-      // primaryKey: true
     },
     cus_tel: {
-        type: Sequelize.TEXT,
+        type: Sequelize.NUMBER,
         allowNull: false,
     },
     cus_car_number: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     cus_band: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     cus_email: {
@@ -41,7 +39,7 @@ const customer = sequelize.define(
     },
     },
     {
-    // options
+        timestamps: false,
     }
 );
 

@@ -10,9 +10,8 @@ const product = sequelize.define(
       primaryKey: true
     },
     name: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: false,
-      // primaryKey: true
     },
     original: {
       type: Sequelize.NUMBER,
