@@ -74,12 +74,6 @@ class Member extends Component {
         //   height: "30px",
         // },
         // {
-        //   title:"วันที่บันทึก",
-        //   dataIndex:"createdAt",
-        //   align:"center",
-        //   width:"200",
-        //   render: createdAt => timeConverter(createdAt)
-        // },
         {
           title:"ชื่อ",
           dataIndex:"u_fname",

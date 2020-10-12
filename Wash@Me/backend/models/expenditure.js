@@ -10,7 +10,7 @@ const expenditure = sequelize.define(
             primaryKey: true,
         },
         ex_name: {
-            type: Sequelize.TEXT,
+            type: Sequelize.STRING,
             allowNull:false,
         },
         ex_price: {
@@ -21,13 +21,10 @@ const expenditure = sequelize.define(
             type: Sequelize.TEXT,
             allowNull:false,
         },
-        ex_name_member: {
-            type: Sequelize.TEXT,
-            // allowNull:false,
-        },
     },
     {
 // options
+    updatedAt: false,
     }
 );
 (async () => {

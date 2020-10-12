@@ -10,20 +10,19 @@ const user = sequelize.define(
       primaryKey: true
     },
     username: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: false,
-      // primaryKey: true
     },
     password: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     u_fname: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     u_lname: {
-      type: Sequelize.TEXT,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     u_tel: {
@@ -48,7 +47,7 @@ const user = sequelize.define(
     },
   },
   {
-    //options
+    timestamps: false,
   }
 );
 
