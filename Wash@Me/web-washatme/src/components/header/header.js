@@ -17,7 +17,7 @@ class Header extends Component {
   nameData = () => {
     try {
       const { data, result } = this.props.loginReducer;
-      console.log(data, result )
+      // console.log(data, result )
       if(result.data.u_status === 1){
         return (
           "Super Admin" 

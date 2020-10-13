@@ -4,7 +4,7 @@ const sequelize = require("../db_instance");
 const revenue = sequelize.define(
   "revenue",
   {
-    re_id: {
+    id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -40,10 +40,10 @@ const revenue = sequelize.define(
       type: Sequelize.NUMBER,
       allowNull: true,
     },
-    id: {
-      type: Sequelize.NUMBER,
-      allowNull: true,
-    },
+      // id: {
+      //   type: Sequelize.NUMBER,
+      //   allowNull: true,
+      // },
     reference: {
       type: Sequelize.TEXT,
       allowNull: true,
