@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter, Link} from "react-router-dom";
 import { server } from "../../constants";
-import * as actions from "./../../actions/login.action"
+import * as action from "./../../actions/login.action"
 import {connect} from "react-redux";
 import image from "../images/logocarcare.png";
 
@@ -9,42 +9,50 @@ class Menu extends Component {
   constructor(props){
     super(props)
     this.state = {
-      // resultsssss: this.props.loginReducer
-    }
+
+    };
   }
+  componentDidMount(){
+    this.props.loadState(this.props.history);
+  }
+
   renderData = () => {
-    
     try {
-      const { results, isFetching } = this.props.loginReducer;
       const {pathname} = this.props.location;
-      return (
+      const { data, isFetching ,result } = this.props.loginReducer;
+       return (
         !isFetching &&
-        results.data.u_status === 1 ? 
+        result.data.u_status === 1 ? 
         (
           <li className={pathname === '/member' ? 'nav-item' : null}>
             <Link to="/member" className="nav-link">
                   <i className="nav-icon fas fa-user-circle" />
                   <p>&nbsp; พนักงาน / Member</p>
             </Link>  
+            
           </li>
         )
         : null 
       )
   } catch (error) {
-      console.log('เกิดข้อผิดพลาดเด้อหน้า หน้า MENU :', error)
-}}
+      {}
+}
+}
   render() {
       const {pathname} = this.props.location;
-
     return (
       <div style={{minHeight:'100hv'}}>
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
           {/* Brand Logo */}
-          <a href="index3.html" className="brand-link" style={{textAlign:'center', height:'auto'}}>
-            <span className="brand-text font-weight-light"><img src={image} width="120" height="40" /></span>
-          </a>
+          <Link to="/report" className="nav-link">
+            <a href="/report" className="brand-link" style={{textAlign:'center', height:'auto'}}>
+              <span className="brand-text font-weight-light"><img src={image} width="120" height="40" /></span>
+            </a>
+          </Link>
           {/* Sidebar */}
           <div className="sidebar" style={{height:'auto'}}>
+            {/* <button onClick={ () => this.setData()}>SetData</button> */}
+            {/* <button onClick={ () => this.getData()}>Get</button> */}
             <nav className="mt-2">
               <ul
                 className="nav nav-pills nav-sidebar flex-column"
@@ -52,7 +60,7 @@ class Menu extends Component {
                 role="menu"
                 data-accordion="false"
               >
-                 <li className={pathname === '/report' ? 'nav-item' : null}>
+              <li className={pathname === '/report' ? 'nav-item' : null}>
           <Link to="/report" className="nav-link">
             <i className="far fa-chart-bar" />
             <p>
@@ -99,7 +107,7 @@ class Menu extends Component {
           <li></li>
           <li></li>
 
-                <li className="nav-item" style={{marginTop:'55vh'}}>
+                {/* <li className="nav-item" style={{marginTop:'55vh'}}>
                   <div
                     onClick={() => {
                       this.props.history.push("/home")
@@ -114,7 +122,7 @@ class Menu extends Component {
                       <p>ออกจากระบบ</p>
                     </a>
                   </div>
-                </li>
+                </li> */}
               
               </ul>
             </nav>
@@ -128,8 +136,11 @@ class Menu extends Component {
 }
 
 // export default withRouter(Menu);
-const mapStateToProps = ({  loginReducer,appReducer }) => ({ loginReducer,appReducer })
-const mapDispatchToProps = { ...actions }
+const mapStateToProps = ({  loginReducer }) => ({ loginReducer })
+const mapDispatchToProps = { 
+  ...action
+  // loadState
+ }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu))
 
   

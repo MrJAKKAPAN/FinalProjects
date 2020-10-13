@@ -7,7 +7,7 @@ import {
 
 // rxre
 const initialState = {
-  results: null,
+  result: null,
   isFetching: false,
   isError: false,
 };
@@ -15,11 +15,11 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case HTTP_LOGIN_FETCHING:
-      return { ...state, results: null, isFetching: true, isError: false };
+      return { ...state, result: null, isFetching: true, isError: false };
     case HTTP_LOGIN_SUCCESS:
-      return { ...state, results: payload, isFetching: false, isError: false };
+      return { ...state, result: payload, isFetching: false, isError: false };
     case HTTP_LOGIN_FAILED:
-      return { ...state, results: null, isFetching: false, isError: true };
+      return { ...state, result: null, isFetching: false, isError: true };
       case HTTP_STOCK_EDIT_INITIALED:
         return { ...state, isInitialed: payload };
     default:

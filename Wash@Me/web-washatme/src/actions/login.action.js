@@ -21,8 +21,27 @@ export const setLoginStateToFailed = () => ({
 
 export const autoLogin = (history) => {
     return () => {
+        // let data = localStorage.getItem('newData')
+        //     data = JSON.parse(data);
+        //     console.log(data);
         if (localStorage.getItem(server.LOGIN_PASSED) === YES){
-            setTimeout(()=>history.push(`/report`),2000)
+            
+            setTimeout(()=>history.push(`/report`),3000)
+        }
+       
+    }
+}
+
+export const loadState = (history) => {
+    return  dispatch => {
+        setLoginStateToFetching()
+        if(localStorage.getItem('newData') !== null){
+            let data = localStorage.getItem('newData')
+            data = JSON.parse(data);
+            dispatch(setLoginStateToSuccess(data));
+            console.log('func loadState:',data);
+        }else{
+            dispatch(setLoginStateToFailed());
         }
     }
 }
@@ -32,15 +51,21 @@ export const login = (history, credential) => {
     return async (dispatch, getState) => {
             dispatch(setLoginStateToFetching());
                 let result = await httpClient.post(server.LOGIN_URL, credential);
-                if(result.data.result === OK){
-                    localStorage.setItem(server.LOGIN_PASSED,YES)
-                    // login รีเฟรช 
-                    getState().appReducer.app.forceUpdate();
-                    history.push('/report')
-                    dispatch(setLoginStateToSuccess(result.data));
-                }else{
-                    dispatch(setLoginStateToFailed());
-                }              
+                let obj = result.data
+                localStorage.setItem('newData', JSON.stringify(obj))
+                console.log(obj)
+              
+
+                    if(result.data.result === OK){
+                        localStorage.setItem(server.LOGIN_PASSED,YES)
+                        // login รีเฟรช 
+                        getState().appReducer.app.forceUpdate();
+                        history.push('/report')
+                        dispatch(setLoginStateToSuccess(result.data));
+                    }else{
+                        dispatch(setLoginStateToFailed());
+                    }    
+            // }          
                 
     } 
 }
