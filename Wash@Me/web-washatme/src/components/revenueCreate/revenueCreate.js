@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import ListService from "./cart/cartService/listCartService";
 import ListProduct from "./cart/cartProduct/listCartProduct";
+
+import { server } from "../../constants";
+import * as actions from "./../../actions/login.action"
+import {connect} from "react-redux";
+
 import Cart from "./cart/cart";
 import moment from "moment";
 import {
@@ -72,16 +77,23 @@ class RevenueCreate extends Component {
               .then((e) => this.setState({dataService: e.data}))
   };
 
+
+
   onFinish = async(values) => {
+    console.log(values)
     const { addedItems, total } = this.state;
+    // console.log(addedItems);
     values.re_total = total;
+    const { data, result } = this.props.loginReducer;
     await addedItems.forEach((doc) => {
       doc.car_number = values.cus_car_number;
       doc.reference = values.re_reference;
       doc.detail = values.re_detail;
+      doc.adName = result.data.u_fname;
       doc.total = doc.price * doc.quantity;
     });
-    await console.log(values, addedItems);
+    delete addedItems.id;
+    console.log(addedItems)
     await httpClient
             .post(`http://localhost:8085/api/v1/revenue/revenue`,{addedItems})
             .then((res) => {
@@ -98,15 +110,17 @@ class RevenueCreate extends Component {
 
   // cart
   addCart = (e, item) => {
-    console.log(item);
+    // console.log(item);
     const addedItems = this.state.addedItems.slice();
     const addedItem = addedItems.find(
       (cartItem) => item.name === cartItem.name
     );
     if (addedItem) {
       addedItem.quantity++;
+      // delete addedItems.id;
     } else {
       let new_item = item;
+      // delete addedItems.id;
       new_item.quantity = 1;
       addedItems.push(new_item);
     }
@@ -120,10 +134,13 @@ class RevenueCreate extends Component {
     );
     if (addedItem) {
       addedItem.quantity++;
+      // delete addedItems.id;
     } else {
       let new_item = item;
+      // delete addedItems.id;
       new_item.quantity = 1;
       addedItems.push(new_item);
+      
     }
     this.setState({ addedItems });
     this.setState((prevState) => ({
@@ -443,4 +460,7 @@ class RevenueCreate extends Component {
   }
 }
 
-export default RevenueCreate;
+// export default RevenueCreate;
+const mapStateToProps = ({ loginReducer }) => ({ loginReducer })
+const mapDispatchToProps = { ...actions }
+export default connect(mapStateToProps, mapDispatchToProps)(RevenueCreate)

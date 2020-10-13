@@ -21,6 +21,10 @@ const expenditure = sequelize.define(
             type: Sequelize.TEXT,
             allowNull:false,
         },
+        adName: {
+            type: Sequelize.STRING,
+            allowNull:false,
+        },
     },
     {
 // options

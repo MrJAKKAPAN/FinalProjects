@@ -11,14 +11,13 @@ class Header extends Component {
 
     };
   }
-// componentDidMount(){
-//     this.props.loadState(this.props.history);
-//   }
-
+  componentDidMount(){
+    this.props.loadState(this.props.history);
+  }
   nameData = () => {
     try {
-      const { data, isFetching ,result } = this.props.loginReducer;
-      console.log(data, isFetching ,result )
+      const { data, result } = this.props.loginReducer;
+      console.log(data, result )
       if(result.data.u_status === 1){
         return (
           "Super Admin" 
@@ -48,7 +47,7 @@ render() {
     <li className="nav-item">
       <div>
         <p style={{fontSize:'18px', paddingTop:'10px'}}>
-         --- &nbsp; {this.nameData()} &nbsp; ---
+         - &nbsp; {this.nameData()} &nbsp; -
         </p>
       </div>
     </li>
@@ -63,7 +62,7 @@ render() {
             localStorage.removeItem(server.LOGIN_PASSED);
             this.props.appReducer.app.forceUpdate();
             }}>
-      <a className="nav-link" data-widget="control-sidebar" data-slide="true" href="#" >
+      <a className="nav-link" data-widget="control-sidebar" data-slide="true" href="#" style={{color:'#EF5148'}}>
         ออกระบบ &nbsp;
         <i className="nav-icon fas fa-door-open" />
       </a>

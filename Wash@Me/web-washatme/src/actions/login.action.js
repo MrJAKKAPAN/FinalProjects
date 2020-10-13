@@ -22,7 +22,7 @@ export const setLoginStateToFailed = () => ({
 export const autoLogin = (history) => {
     return () => {
         if (localStorage.getItem(server.LOGIN_PASSED) === YES){
-            setTimeout(()=>history.push(`/report`),3000)
+            setTimeout(()=>history.push("/report"),3000)
         }
        
     }
@@ -35,7 +35,6 @@ export const loadState = (history) => {
             let data = localStorage.getItem('newData')
             data = JSON.parse(data);
             dispatch(setLoginStateToSuccess(data));
-            // console.log('func loadState:',data);
         }else{
             dispatch(setLoginStateToFailed());
         }
