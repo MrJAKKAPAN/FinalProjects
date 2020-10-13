@@ -38,6 +38,17 @@ class Menu extends Component {
       {}
 }
 }
+nameData = () => {
+  try {
+    const { data, isFetching ,result } = this.props.loginReducer;
+    console.log(data, isFetching ,result )
+    return (
+     "Hi" + " " + result.data.u_fname + "  " + result.data.u_lname
+    )
+  } catch (error) {
+    {}
+  }
+}
   render() {
       const {pathname} = this.props.location;
     return (
@@ -51,8 +62,11 @@ class Menu extends Component {
           </Link>
           {/* Sidebar */}
           <div className="sidebar" style={{height:'auto'}}>
-            {/* <button onClick={ () => this.setData()}>SetData</button> */}
-            {/* <button onClick={ () => this.getData()}>Get</button> */}
+          <div className="user-panel mt-1 pb-1 mb-1 " style={{fontSize:'18px',textAlign:'center'}} >
+            <div className="info" >
+              <a href="#" className="d-block" style={{fontSize:'18px',textAlign:'center'}}>{this.nameData()}</a>
+            </div>
+          </div>
             <nav className="mt-2">
               <ul
                 className="nav nav-pills nav-sidebar flex-column"
@@ -69,7 +83,7 @@ class Menu extends Component {
             </p>
           </Link>
         </li>
-        <li className={pathname === '/revenue' ? 'nav-item' : null}>
+        <li className={pathname === `/revenue/${'1111'}` ? 'nav-item' : null}>
           <Link to="/revenue" className="nav-link">
             <i className="nav-icon fas fa-th" />
             <p>&nbsp; รายรับ / Revenue</p>
@@ -103,11 +117,7 @@ class Menu extends Component {
           </Link>
           </li>
 
-          <li></li>
-          <li></li>
-          <li></li>
-
-                {/* <li className="nav-item" style={{marginTop:'55vh'}}>
+                {/* <li className="nav-item" style={{marginTop:'40vh'}}>
                   <div
                     onClick={() => {
                       this.props.history.push("/home")
@@ -122,8 +132,8 @@ class Menu extends Component {
                       <p>ออกจากระบบ</p>
                     </a>
                   </div>
-                </li> */}
-              
+                </li>
+               */}
               </ul>
             </nav>
             {/* /.sidebar-menu */}
@@ -136,7 +146,7 @@ class Menu extends Component {
 }
 
 // export default withRouter(Menu);
-const mapStateToProps = ({  loginReducer }) => ({ loginReducer })
+const mapStateToProps = ({  loginReducer,appReducer }) => ({ loginReducer,appReducer })
 const mapDispatchToProps = { 
   ...action
   // loadState

@@ -1,13 +1,42 @@
 import React, { Component } from 'react';
-import { withRouter, Link} from "react-router-dom";
+import { withRouter} from "react-router-dom";
 import { server } from "../../constants";
 import * as actions from "./../../actions/login.action"
 import {connect} from "react-redux";
 
 class Header extends Component {
-  render() {
-    return (
-    <div>
+  constructor(props){
+    super(props)
+    this.state = {
+
+    };
+  }
+// componentDidMount(){
+//     this.props.loadState(this.props.history);
+//   }
+
+  nameData = () => {
+    try {
+      const { data, isFetching ,result } = this.props.loginReducer;
+      console.log(data, isFetching ,result )
+      if(result.data.u_status === 1){
+        return (
+          "Super Admin" 
+        )
+      }else{
+        return (
+          "Admin" 
+        )
+      }
+      
+    } catch (error) {
+      {}
+    }
+  }
+
+render() {
+  return (
+  <div>
 <nav className="main-header navbar navbar-expand navbar-white navbar-light">
   {/* Left navbar links */}
   <ul className="navbar-nav">
@@ -15,10 +44,17 @@ class Header extends Component {
       <a className="nav-link" data-widget="pushmenu" href="#"><i className="fas fa-bars" /></a>
     </li>
   </ul>
-
+  <ul className="navbar-nav ml-auto">
+    <li className="nav-item">
+      <div>
+        <p style={{fontSize:'18px', paddingTop:'10px'}}>
+         --- &nbsp; {this.nameData()} &nbsp; ---
+        </p>
+      </div>
+    </li>
+  </ul>
   {/* Right navbar links */}
   <ul className="navbar-nav ml-auto">
-    {/* Messages Dropdown Menu */}
     <li className="nav-item">
     <div
         style={{cursor:'pointer'}}
@@ -39,6 +75,6 @@ class Header extends Component {
     );
   }
 }
-const mapStateToProps = ({  appReducer }) => ({ appReducer })
+const mapStateToProps = ({ loginReducer, appReducer }) => ({ loginReducer,appReducer })
 const mapDispatchToProps = { ...actions }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header))
