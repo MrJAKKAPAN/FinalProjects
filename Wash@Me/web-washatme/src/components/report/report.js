@@ -153,7 +153,6 @@ class Report extends Component {
 
 
   render() {
-      // console.log(this.state)
       // Revenue
       const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues, GetRevenue, GetRevenuing } = this.state;
       
@@ -367,7 +366,7 @@ class Report extends Component {
                     <p>ยอดรายรับทั้งหมด</p>
                   </div>
                   <div className="icon">
-                    <i className="ion ion-person-add" />
+                    <i className="ion ion-bag"></i>
                   </div>
                 </div>
               </div>

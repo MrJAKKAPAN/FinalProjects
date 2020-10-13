@@ -48,6 +48,10 @@ const revenue = sequelize.define(
       type: Sequelize.TEXT,
       allowNull: true,
     },
+    adName: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
   },
   {
     // options

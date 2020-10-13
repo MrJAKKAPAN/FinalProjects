@@ -17,6 +17,11 @@ import {
 import "antd/dist/antd.css";
 import { httpClient } from "../../utils/HttpClient";
 import "./expenditureCreate.css";
+
+import { server } from "../../constants";
+import * as actions from "./../../actions/login.action"
+import {connect} from "react-redux";
+
 import {
   UserOutlined,
   LaptopOutlined,
@@ -36,12 +41,11 @@ class ExpenditureCreate extends Component {
 
 
   onFinish = async(values) => {
-    // console.log(value);
     const result = {
       ex_name: values.ex_name,
       ex_price: values.ex_price,
       ex_detail: values.ex_detail,
-      // ex_name_member: values.ex_detail,
+      adName: this.nameData()
     }
     console.log(result);
     await httpClient.post(`http://localhost:8085/api/v1/expenditure/expenditure/`, result)
@@ -56,6 +60,18 @@ class ExpenditureCreate extends Component {
     } } ,100);
     await this.props.history.goBack();
   };
+
+  nameData = () => {
+    try {
+      const { data, result } = this.props.loginReducer;
+      console.log(data  ,result )
+      return (
+      result.data.u_fname 
+      )
+    } catch (error) {
+      {}
+    }
+  }
 
   render() {
     const dateFormat = 'DD/MM/YYYY';
@@ -159,4 +175,7 @@ class ExpenditureCreate extends Component {
   }
 }
 
-export default ExpenditureCreate;
+// export default ExpenditureCreate;
+const mapStateToProps = ({ loginReducer }) => ({ loginReducer })
+const mapDispatchToProps = { ...actions }
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenditureCreate)

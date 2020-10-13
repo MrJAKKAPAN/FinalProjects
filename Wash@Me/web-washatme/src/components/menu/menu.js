@@ -12,24 +12,22 @@ class Menu extends Component {
 
     };
   }
-  componentDidMount(){
+componentDidMount(){
     this.props.loadState(this.props.history);
-  }
+}
 
-  renderData = () => {
+renderData = () => {
     try {
       const {pathname} = this.props.location;
-      const { data, isFetching ,result } = this.props.loginReducer;
-       return (
-        !isFetching &&
+      const { data ,result } = this.props.loginReducer;
+      return (
         result.data.u_status === 1 ? 
         (
-          <li className={pathname === '/member' ? 'nav-item' : null}>
-            <Link to="/member" className="nav-link">
+          <li className={pathname === '/member' ? 'nav-item' : null} >
+            <Link to="/member" className="nav-link" style={{color:'#32A744'}}>
                   <i className="nav-icon fas fa-user-circle" />
                   <p>&nbsp; พนักงาน / Member</p>
             </Link>  
-            
           </li>
         )
         : null 
@@ -38,12 +36,13 @@ class Menu extends Component {
       {}
 }
 }
+
 nameData = () => {
   try {
-    const { data, isFetching ,result } = this.props.loginReducer;
-    console.log(data, isFetching ,result )
+    const { data, result } = this.props.loginReducer;
+    console.log(data  ,result )
     return (
-     "Hi" + " " + result.data.u_fname + "  " + result.data.u_lname
+    "Hi" + " " + result.data.u_fname + "  " + result.data.u_lname
     )
   } catch (error) {
     {}
@@ -110,30 +109,13 @@ nameData = () => {
           </li>
 
           {this.renderData()} 
+
           <li className={pathname === '/servicePaged' ? 'nav-item' : null}>
           <Link to="/servicePaged" className="nav-link" >
             <i className="nav-icon fas fa-money-check" />
             <p>&nbsp; อัตราบริการ / Service</p>
           </Link>
           </li>
-
-                {/* <li className="nav-item" style={{marginTop:'40vh'}}>
-                  <div
-                    onClick={() => {
-                      this.props.history.push("/home")
-                      localStorage.removeItem(server.LOGIN_PASSED);
-                      //func update
-                      this.props.appReducer.app.forceUpdate();
-                    }}
-                  >
-                    <a href="#" className="nav-link">
-                      <i className="nav-icon fas fa-door-open" />
-                      &nbsp;&nbsp;
-                      <p>ออกจากระบบ</p>
-                    </a>
-                  </div>
-                </li>
-               */}
               </ul>
             </nav>
             {/* /.sidebar-menu */}
@@ -145,12 +127,10 @@ nameData = () => {
   }
 }
 
-// export default withRouter(Menu);
-const mapStateToProps = ({  loginReducer,appReducer }) => ({ loginReducer,appReducer })
+const mapStateToProps = ({  loginReducer,appReducer }) => ({loginReducer, appReducer })
 const mapDispatchToProps = { 
   ...action
-  // loadState
- }
+}
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu))
 
   

@@ -54,13 +54,9 @@ const SecuredRoute = ({component: Component, ...rest}) => (
   />
 );
 
-//       window.location.reload(1);
-
 class App extends Component {
   componentDidMount = () => {
     this.props.setApp(this); 
-    // window.location.reload(1);
-    // this.forceUpdate();
     }
    
 
@@ -75,38 +71,27 @@ class App extends Component {
           {isLoggedIn() && <Header />}
           {isLoggedIn() && <Menu />}
           <Switch>
-              {/* <Route component={NotFount} /> */}
-              {/* <Route path="/stock" component={Stock} /> */}
               <Route path="/login" component={Login} />
               <Route path="/home" component={Home} />
-              {/* <Route path="/stock-edit/:id" component={StockEdit} /> */}
               <SecuredRoute path="/report" component={Report} />
-
               <SecuredRoute path="/stock" component={Stock} />
               <SecuredRoute path="/stock-create" component={StockCreate} />
               <SecuredRoute path="/stock-edit/:id" component={StockEdit} />
-
               <SecuredRoute path="/customer" component={Customer} />
               <SecuredRoute path="/customer-create" component={CustomerCreate} />
               <SecuredRoute path="/customer-edit/:id" component={CustomerEdit} />
-
               <SecuredRoute path="/servicePaged" component={servicePaged} />
               <SecuredRoute path="/service-create" component={ServiceCreate} />
               <SecuredRoute path="/service-edit/:id" component={ServiceEdit} />
-
               <SecuredRoute path="/revenue/" component={Revenue} />
               <SecuredRoute path="/revenue-create" component={RevenueCreate} />
               <SecuredRoute path="/revenue-edit/:id" component={RevenueEdit} />
-
               <SecuredRoute path="/expenditure" component={Expenditure} />
               <SecuredRoute path="/expenditure-create" component={ExpenditureCreate} />
               <SecuredRoute path="/expenditure-edit/:id" component={ExpenditureEdit} />
-
               <SecuredRoute path="/member" component={Member} />
               <SecuredRoute path="/member-create" component={MemberCreate} />
               <SecuredRoute path="/member-edit/:id" component={MemberEdit} />
-
-              {/* <SecuredRoute path="/test" component={Test} /> */}
 
               {/* redirect to home */}
               <Route exact={true} path="/" component={Home} />
