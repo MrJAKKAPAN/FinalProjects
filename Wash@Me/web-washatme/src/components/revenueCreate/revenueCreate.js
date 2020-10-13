@@ -85,17 +85,24 @@ class RevenueCreate extends Component {
     // console.log(addedItems);
     values.re_total = total;
     const { data, result } = this.props.loginReducer;
-    await addedItems.forEach((doc) => {
+    // await addedItems.forEach(({id,...doc}) => {
+    //   doc.car_number = values.cus_car_number;
+    //   doc.reference = values.re_reference;
+    //   doc.detail = values.re_detail;
+    //   doc.adName = result.data.u_fname;
+    //   doc.total = doc.price * doc.quantity;
+    // });
+    const mappedItems = addedItems.map(({id,...doc})=>{
       doc.car_number = values.cus_car_number;
       doc.reference = values.re_reference;
       doc.detail = values.re_detail;
-      doc.adName = result.data.u_fname;
       doc.total = doc.price * doc.quantity;
-    });
-    delete addedItems.id;
-    console.log(addedItems)
+      doc.adName = result.data.u_fname;
+    return doc;
+  })
+    console.log(mappedItems)
     await httpClient
-            .post(`http://localhost:8085/api/v1/revenue/revenue`,{addedItems})
+            .post(`http://localhost:8085/api/v1/revenue/revenue`,{addedItems: mappedItems})
             .then((res) => {
               console.log(res);
             })

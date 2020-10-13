@@ -40,7 +40,7 @@ renderData = () => {
 nameData = () => {
   try {
     const { data, result } = this.props.loginReducer;
-    console.log(data  ,result )
+    // console.log(data  ,result )
     return (
     "Hi" + " " + result.data.u_fname + "  " + result.data.u_lname
     )
