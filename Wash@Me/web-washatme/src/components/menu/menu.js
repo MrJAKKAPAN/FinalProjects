@@ -62,8 +62,6 @@ nameData = () => {
           </Link>
           {/* Sidebar */}
           <div className="sidebar" style={{height:'auto'}}>
-            
-                {/* Sidebar user panel (optional) */}
           <div className="user-panel mt-1 pb-1 mb-1 " style={{fontSize:'18px',textAlign:'center'}} >
             <div className="info" >
               <a href="#" className="d-block" style={{fontSize:'18px',textAlign:'center'}}>{this.nameData()}</a>
