@@ -21,11 +21,7 @@ export const setLoginStateToFailed = () => ({
 
 export const autoLogin = (history) => {
     return () => {
-        // let data = localStorage.getItem('newData')
-        //     data = JSON.parse(data);
-        //     console.log(data);
         if (localStorage.getItem(server.LOGIN_PASSED) === YES){
-            
             setTimeout(()=>history.push(`/report`),3000)
         }
        
@@ -39,7 +35,7 @@ export const loadState = (history) => {
             let data = localStorage.getItem('newData')
             data = JSON.parse(data);
             dispatch(setLoginStateToSuccess(data));
-            console.log('func loadState:',data);
+            // console.log('func loadState:',data);
         }else{
             dispatch(setLoginStateToFailed());
         }
@@ -53,8 +49,7 @@ export const login = (history, credential) => {
                 let result = await httpClient.post(server.LOGIN_URL, credential);
                 let obj = result.data
                 localStorage.setItem('newData', JSON.stringify(obj))
-                console.log(obj)
-              
+                // console.log(obj)
 
                     if(result.data.result === OK){
                         localStorage.setItem(server.LOGIN_PASSED,YES)
