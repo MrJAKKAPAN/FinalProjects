@@ -34,7 +34,7 @@ class Login extends Component {
         <h4>
           <i className="icon fa fa-ban" /> Error!
         </h4>
-        ไม่มีชื่อผู้ใช้นี้
+        โปรดตรวจสอบ Username และ Password ให้ถูกต้อง
       </div>
     );
   };

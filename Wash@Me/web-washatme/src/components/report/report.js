@@ -214,6 +214,7 @@ class Report extends Component {
       Expenditure.push(ExDecembers)
       
       
+    console.log(GetExpenditure, GetExpendituring)
     const data = {
       labels: [
         'January',
@@ -339,16 +340,12 @@ class Report extends Component {
     return (
       <div className="content-wrapper">
         <section className="content" style={{ marginTop: "1%" }}>
-          <div className="container-fluid">
-            {/* Small boxes (Stat box) */}
+          {/* <div className="container-fluid">
             <div className="row"> 
               <div className="col-lg-4 col-6">
                 <div className="small-box bg-success">
                   <div className="inner">
-                    <h3>
-                      ฿ {(GetRevenues - GetExpenditures)}
-                      {/* <sup style={{ fontSize: 20 }}>%</sup> */}
-                    </h3>
+                    <h3>฿ </h3>
                     <p>ยอดคงสุทธิ (ทั้งหมด)</p>
                   </div>
                   <div className="icon">
@@ -357,9 +354,7 @@ class Report extends Component {
                 </div>
               </div>
               {/* ./col */}
-
-              <div className="col-lg-4 col-6">
-                {/* small box */}
+              {/* <div className="col-lg-4 col-6">
                 <div className="small-box bg-warning">
                   <div className="inner">
                     <h3>฿ {GetRevenues.toFixed(2)}</h3>
@@ -382,12 +377,32 @@ class Report extends Component {
                 </div>
               </div>
             </div>
-          </div>
+         // </div>  */}
+
 
           {/* /.container-fluid */}
+          <div  className="overflow-auto" style={{height:'85vh'}}>
           <div className="container-fluid">
             <div className="row">
-              <div className="col-lg-5 col-12">
+              <div className="col-lg-12 col-12">
+                <div className="small-box bg">
+                  <div className="inner">
+                    <Bar
+                      data={data}
+                      width={100}
+                      height={45}
+                      options={chartConfig}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* </div> */}
+
+              <div className="container-fluid">
+            <div className="row">
+              <div className="col-lg-12 col-12">
                 <div className="small-box bg">
                   <div className="inner">
                   <Tabs
@@ -414,8 +429,7 @@ class Report extends Component {
                                       title={<a >{item.name} {item.type} {item.quantity}</a>}
                                       description={item.detail}
                                     />
-                                    <div></div>
-                                    <div>{item.createAt}</div>
+                                    <div style={{marginRight:'10rem', }}>{item.createdAt}</div>
                                     <Tag style={{marginRight:'10rem', }} color={colorRevenue}>
                                       รายรับ
                                     </Tag>
@@ -448,6 +462,7 @@ class Report extends Component {
                                       title={<a >{item.ex_name}</a>}
                                       description={item.ex_detail}
                                     />
+                                    <div style={{marginRight:'10rem', }}> {item.createdAt}</div>
                                     <Tag style={{marginRight:'10rem', }} color={color}>
                                       รายจ่าย
                                     </Tag>
@@ -464,21 +479,11 @@ class Report extends Component {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-7 col-12">
-                <div className="small-box bg">
-                  <div className="inner">
-                    <Bar
-                      data={data}
-                      width={100}
-                      height={56}
-                      options={chartConfig}
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
+          </div>
         </section>
+        
       </div>
     );
   }
