@@ -25,19 +25,14 @@ const expenditure = sequelize.define(
             type: Sequelize.STRING,
             allowNull:false,
         },
-    
-    createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    // type: 'TIMESTAMP',
-    // defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    // allowNull: false
-  },
+        createdAt: {
+        type: 'TIMESTAMP',
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        allowNull: false
+    },
     },
     {
 // options
-
 timestamps: false
     // updatedAt: false,
     // createdAt: {
