@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import ListService from "./cart/cartService/listCartService";
 import ListProduct from "./cart/cartProduct/listCartProduct";
-
 import { server } from "../../constants";
 import * as actions from "./../../actions/login.action"
 import {connect} from "react-redux";
-
 import Cart from "./cart/cart";
 import moment from "moment";
 import {
@@ -78,20 +76,13 @@ class RevenueCreate extends Component {
   };
 
 
-
   onFinish = async(values) => {
     console.log(values)
     const { addedItems, total } = this.state;
-    // console.log(addedItems);
-    values.re_total = total;
+    if(total !== 0 ) {
+      // console.log('มีค่า')
+      values.re_total = total;
     const { data, result } = this.props.loginReducer;
-    // await addedItems.forEach(({id,...doc}) => {
-    //   doc.car_number = values.cus_car_number;
-    //   doc.reference = values.re_reference;
-    //   doc.detail = values.re_detail;
-    //   doc.adName = result.data.u_fname;
-    //   doc.total = doc.price * doc.quantity;
-    // });
     const mappedItems = addedItems.map(({id,...doc})=>{
       doc.car_number = values.cus_car_number;
       doc.reference = values.re_reference;
@@ -101,6 +92,8 @@ class RevenueCreate extends Component {
     return doc;
   })
     console.log(mappedItems)
+    console.log(addedItems)
+    
     await httpClient
             .post(`http://localhost:8085/api/v1/revenue/revenue`,{addedItems: mappedItems})
             .then((res) => {
@@ -110,9 +103,24 @@ class RevenueCreate extends Component {
               console.log("Error :", error);
             })
     message.success({ content: 'บันทึกรายรับเรียบร้อย!', duration: 2, style: {
-      marginTop: '5vh',
+      marginTop: '7vh',
     }} ,100);
     await this.props.history.goBack();
+    }else{
+
+      // console.log('ไม่มีค่า')
+      message.warning({ content: 'โปรดเลือกบริการ!', duration: 2, style: {
+        marginTop: '7vh',
+      }} ,500);
+    }
+    console.log(addedItems);
+    
+    
+  //  }else{
+  //   message.warning({ content: 'โปรดเลือกบริการ', duration: 2, style: {
+  //     marginTop: '10vh',
+  //   }} ,100);
+  //  }
   };
 
   // cart
@@ -467,7 +475,6 @@ class RevenueCreate extends Component {
   }
 }
 
-// export default RevenueCreate;
 const mapStateToProps = ({ loginReducer }) => ({ loginReducer })
 const mapDispatchToProps = { ...actions }
 export default connect(mapStateToProps, mapDispatchToProps)(RevenueCreate)

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { httpClient } from "../../utils/HttpClient";
+
 import { Bar } from "react-chartjs-2";
 import moment from "moment";
 import {
@@ -62,6 +63,8 @@ class Report extends Component {
       await httpClient
         .get ("http://localhost:8085/api/v1/revenue/revenue")
         .then((e) => this.setState({GetRevenue: e.data}));
+        console.log(this.state)
+
       await httpClient
         .get ("http://localhost:8085/api/v1/revenue/revenuelimit/")
         .then((e) => this.setState({GetRevenuing: e.data}));
@@ -151,8 +154,11 @@ class Report extends Component {
   }
 
 
-
+  getYear() {
+    return new Date().getFullYear();
+}
   render() {
+    console.log(this.state)
       // Revenue
       const { January, February, March, April, May, June, July, August, September, October, November, December, Revenues, GetRevenue, GetRevenuing } = this.state;
       
@@ -182,6 +188,10 @@ class Report extends Component {
       Revenues.push(Octobers)
       Revenues.push(Novembers)
       Revenues.push(Decembers)
+
+    // const Dates = new Date(this.Revenues())
+    // console.log(Dates.getFullYear())
+
 
       // Expenditure
       const { ExJanuary, ExFebruary, ExMarch, ExApril, ExMay, ExJune, ExJuly, ExAugust, ExSeptember, ExOctober, ExNovember, ExDecember, Expenditure, GetExpenditure, GetExpendituring } = this.state;
@@ -337,49 +347,16 @@ class Report extends Component {
     const colorRevenue = 'green';
     const color = 'volcano';
     
+    // const  date = new Date(GetRevenuing);  
     return (
       <div className="content-wrapper">
+
+        <div>
+        {/* <span> */}
+      {this.getYear()} 
+      {/* </span> */}
+        </div>
         <section className="content" style={{ marginTop: "1%" }}>
-          {/* <div className="container-fluid">
-            <div className="row"> 
-              <div className="col-lg-4 col-6">
-                <div className="small-box bg-success">
-                  <div className="inner">
-                    <h3>฿ </h3>
-                    <p>ยอดคงสุทธิ (ทั้งหมด)</p>
-                  </div>
-                  <div className="icon">
-                    <i className="ion ion-stats-bars" />
-                  </div>
-                </div>
-              </div>
-              {/* ./col */}
-              {/* <div className="col-lg-4 col-6">
-                <div className="small-box bg-warning">
-                  <div className="inner">
-                    <h3>฿ {GetRevenues.toFixed(2)}</h3>
-                    <p>ยอดรายรับทั้งหมด</p>
-                  </div>
-                  <div className="icon">
-                    <i className="ion ion-bag"></i>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-4 col-6">
-                <div className="small-box bg-danger">
-                  <div className="inner">
-                    <h3>฿ {GetExpenditures.toFixed(2)}</h3>
-                    <p>ยอดรายจ่ายทั้งหมด</p>
-                  </div>
-                  <div className="icon">
-                    <i className="ion ion-pie-graph" />
-                  </div>
-                </div>
-              </div>
-            </div>
-         // </div>  */}
-
-
           {/* /.container-fluid */}
           <div  className="overflow-auto" style={{height:'85vh'}}>
           <div className="container-fluid">
@@ -429,7 +406,9 @@ class Report extends Component {
                                       title={<a >{item.name} {item.type} {item.quantity}</a>}
                                       description={item.detail}
                                     />
-                                    <div style={{marginRight:'10rem', }}>{item.createdAt}</div>
+                                    <div style={{marginRight:'10rem', }}>
+                                      {item.createdAt}
+                                    </div>
                                     <Tag style={{marginRight:'10rem', }} color={colorRevenue}>
                                       รายรับ
                                     </Tag>
@@ -448,10 +427,8 @@ class Report extends Component {
                               initialLoad={false}
                               pageStart={0}
                               useWindow={false}
-                              // style={{border:'2px solid red'}}
                             >
                               <List
-                              // style={{border:'2px solid red'}}
                                 dataSource={this.state.GetExpendituring}
                                 renderItem={item => (
                                   <List.Item 
