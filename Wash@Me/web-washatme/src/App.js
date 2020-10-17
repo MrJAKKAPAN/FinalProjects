@@ -35,6 +35,9 @@ import {
 import { server, YES } from "./constants";
 import { connect } from "react-redux";
 import { setApp } from "./actions/app.action";
+import { rest } from "lodash";
+import * as actions from "./actions/login.action"
+
 
 
 // function ถ้าไม่ login ให้ซ่อนบาง menu
@@ -53,6 +56,19 @@ const SecuredRoute = ({component: Component, ...rest}) => (
     }
   />
 );
+const SecuredReport = ({component: Component, ...rest}) => (
+  <Route
+    {...rest}
+    render = {props => isLoggedIn() === true ? (
+      <Component {...props} />
+    ) :(
+      <Redirect to="/home" />
+    )
+  }
+  />
+)
+
+
 
 class App extends Component {
   componentDidMount = () => {
@@ -61,7 +77,11 @@ class App extends Component {
    
 
   RedirectToLogin = () => {
-    return <Redirect to="/home" />;
+    if(isLoggedIn() === true) {
+      return <Redirect to="/report" />;
+    }else{
+      return <Redirect to="/homes" />;
+    }
   };
 
   render() {
@@ -72,7 +92,8 @@ class App extends Component {
           {isLoggedIn() && <Menu />}
           <Switch>
               <Route path="/login" component={Login} />
-              <Route path="/home" component={Home} />
+              <Route path="/homes" component={Home} />
+              
               <SecuredRoute path="/report" component={Report} />
               <SecuredRoute path="/stock" component={Stock} />
               <SecuredRoute path="/stock-create" component={StockCreate} />
@@ -94,8 +115,9 @@ class App extends Component {
               <SecuredRoute path="/member-edit/:id" component={MemberEdit} />
 
               {/* redirect to home */}
-              <Route exact={true} path="/" component={Home} />
-              <Route exact={true} path="*" component={this.redirectToHome} />
+              <Route exact={true} path="/" component={this.RedirectToLogin} />
+              <Route exact={true} path="/home" component={this.RedirectToLogin} />
+              <Route exact={true} path="*" component={this.RedirectToLogin} />
           </Switch>
           {/* {isLoggedIn() && <Footer />} */}
         </div>
@@ -106,10 +128,11 @@ class App extends Component {
 
 
 // export default App;
-const mapStateToProps = (state) => ({});
-
+const mapStateToProps = (state,  loginReducer, appReducer) => ({
+  loginReducer, appReducer
+});
 const mapDispatchToProps = {
-  // ...action
+  ...actions,
   setApp,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(App);

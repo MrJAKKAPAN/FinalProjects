@@ -22,11 +22,13 @@ export const setLoginStateToFailed = () => ({
 export const autoLogin = (history) => {
     return () => {
         if (localStorage.getItem(server.LOGIN_PASSED) === YES){
-            setTimeout(()=>history.push("/report"),3000)
+            setTimeout(()=>history.push("/report"),100)
         }
        
     }
 }
+
+
 
 export const loadState = (history) => {
     return  dispatch => {
