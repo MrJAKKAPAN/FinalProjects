@@ -346,20 +346,18 @@ class Report extends Component {
     ))
     const colorRevenue = 'green';
     const color = 'volcano';
-    
-    // const  date = new Date(GetRevenuing);  
+ 
     return (
       <div className="content-wrapper">
 
-        <div>
-        {/* <span> */}
+        {/* <div>
       {this.getYear()} 
-      {/* </span> */}
-        </div>
+        </div> */}
+
         <section className="content" style={{ marginTop: "1%" }}>
           {/* /.container-fluid */}
           <div  className="overflow-auto" style={{height:'85vh'}}>
-          <div className="container-fluid">
+          <div className="container-fluid" style={{ marginTop: "1%" }}>
             <div className="row">
               <div className="col-lg-12 col-12">
                 <div className="small-box bg">
