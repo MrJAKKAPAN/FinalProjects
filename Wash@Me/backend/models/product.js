@@ -21,7 +21,7 @@ const product = sequelize.define(
       type: Sequelize.NUMBER,
       allowNull: false,
     },
-    number: {
+    quantity: {
       type: Sequelize.NUMBER,
       allowNull: false,
     }

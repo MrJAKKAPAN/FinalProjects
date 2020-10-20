@@ -58,7 +58,7 @@ class stockEdit extends Component {
       price: values.price,
       original: values.original,
       name: values.name,
-      number: values.number,
+      quantity: values.quantity,
     };
     let result = await httpClient.put(
       "http://localhost:8085/api/v1/stock/product",
@@ -159,7 +159,7 @@ class stockEdit extends Component {
                       />
                     </Form.Item>
                     <Form.Item
-                      name="number"
+                      name="quantity"
                       label="จำนวน"
                       rules={[
                         {

@@ -30,7 +30,7 @@ class StockCreate extends Component {
     price: "",
     original: "",
     name: "",
-    number: "",
+    quantity: "",
   };
 
   onFinish = async(value) => {
@@ -38,7 +38,7 @@ class StockCreate extends Component {
       price : value.price,
       original : value.original,
       name : value.name,
-      number : value.number,
+      quantity : value.quantity,
     }
     console.log(product);
    await httpClient.post(`http://localhost:8085/api/v1/stock/product`,product)
@@ -131,7 +131,7 @@ class StockCreate extends Component {
                       />
                     </Form.Item>
                     <Form.Item
-                      name="number"
+                      name="quantity"
                       label="จำนวน"
                       rules={[
                         {
