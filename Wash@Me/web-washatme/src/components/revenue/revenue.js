@@ -148,6 +148,7 @@ class Revenue extends Component {
 
     return (
       <div className="content-wrapper">
+        {/* <div  className="overflow-auto" style={{height:'90vh'}}> */}
         <div className="content">
           <div className="row">
             <div className="col-12">
@@ -183,6 +184,7 @@ class Revenue extends Component {
                       />
                     </Col>
                   </Row>
+                  <div  className="overflow-auto" style={{height:'75vh'}}>
                   <Table
                     bordered
                     dataSource={this.state.result}
@@ -195,6 +197,7 @@ class Revenue extends Component {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     );

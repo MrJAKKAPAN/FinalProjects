@@ -172,6 +172,7 @@ class Expenditure extends Component {
                       />
                     </Col>
                   </Row>
+                  <div  className="overflow-auto" style={{height:'75vh'}}>
                   <Table
                     bordered
                     dataSource={this.state.result}
@@ -180,6 +181,7 @@ class Expenditure extends Component {
                     size="small"
                     style={{ marginTop: "10px" }}
                   />
+                  </div>
                 </div>
               </div>
             </div>
