@@ -88,6 +88,7 @@ class MemberCreate extends Component {
             title="พนักงาน"
             subTitle="บันทึกข้อมูลพนักงาน"
           />
+          <div  className="overflow-auto" style={{height:'80vh'}}>
           <div className="row">
             <div className="col-2"></div>
             <div className="col-8">
@@ -134,7 +135,9 @@ class MemberCreate extends Component {
               </div>
             </div>
           </div>
-        </section>
+       </div> 
+       </section>
+        
       </div>
     );
   }

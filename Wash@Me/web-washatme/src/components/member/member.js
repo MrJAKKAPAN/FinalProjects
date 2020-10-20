@@ -149,6 +149,7 @@ class Member extends Component {
 
     return (
       <div className="content-wrapper">
+        {/* <div  className="overflow-auto" style={{height:'90vh'}}> */}
         <div className="content">
           <div className="row">
             <div className="col-12">
@@ -184,6 +185,7 @@ class Member extends Component {
                       />
                     </Col>
                   </Row>
+                  <div  className="overflow-auto" style={{height:'75vh'}}>
                   <Table
                     // title={() => 'Header'}
                     bordered
@@ -198,7 +200,8 @@ class Member extends Component {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+       </div>
     );
   }
 }

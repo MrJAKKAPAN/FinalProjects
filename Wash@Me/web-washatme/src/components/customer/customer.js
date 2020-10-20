@@ -104,7 +104,7 @@ onDelete = async(id) => {
                       />
                     </Col>
                   </Row>
-
+                  <div  className="overflow-auto" style={{height:'75vh'}}>
                   <Table
                     bordered
                     // title={() => 'ตารางข้อมูลลูกค้า'}
@@ -187,6 +187,7 @@ onDelete = async(id) => {
                       )}
                     />
                   </Table>
+                  </div>
                 </div>
               </div>
             </div>

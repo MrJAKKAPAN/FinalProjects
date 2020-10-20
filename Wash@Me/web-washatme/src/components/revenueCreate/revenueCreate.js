@@ -68,52 +68,75 @@ class RevenueCreate extends Component {
       .get("http://localhost:8085/api/v1/customer/customer/")
       .then((e) => this.setState({ dataCustomer: e.data }));
     await httpClient
-              .get("http://localhost:8085/api/v1/stock/product/")
-              .then((e) => this.setState({dataProduct: e.data}))
+      .get("http://localhost:8085/api/v1/stock/product/")
+      .then((e) => this.setState({dataProduct: e.data}))
     await httpClient
-              .get("http://localhost:8085/api/v1/service/service/")
-              .then((e) => this.setState({dataService: e.data}))
+      .get("http://localhost:8085/api/v1/service/service/")
+      .then((e) => this.setState({dataService: e.data}))
   };
 
 
   onFinish = async(values) => {
     console.log(values)
     const { addedItems, total } = this.state;
+    // console.log(addedItems.data.name);
     if(total !== 0 ) {
-      // console.log('มีค่า')
       values.re_total = total;
-    const { data, result } = this.props.loginReducer;
-    const mappedItems = addedItems.map(({id,...doc})=>{
-      doc.car_number = values.cus_car_number;
-      doc.reference = values.re_reference;
-      doc.detail = values.re_detail;
-      doc.total = doc.price * doc.quantity;
-      doc.adName = result.data.u_fname;
-    return doc;
-  })
-    console.log(mappedItems)
-    console.log(addedItems)
-    
-    await httpClient
-            .post(`http://localhost:8085/api/v1/revenue/revenue`,{addedItems: mappedItems})
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((error) => {
-              console.log("Error :", error);
-            })
-    message.success({ content: 'บันทึกรายรับเรียบร้อย!', duration: 2, style: {
-      marginTop: '7vh',
-    }} ,100);
-    await this.props.history.goBack();
-    }else{
+      const { data, result } = this.props.loginReducer;
+      const mappedItems = addedItems.map(({id,...doc})=>{
+        doc.car_number = values.cus_car_number;
+        doc.reference = values.re_reference;
+        doc.detail = values.re_detail;
+        doc.total = doc.price * doc.quantity;
+        doc.adName = result.data.u_fname;
+      return doc;
+    })
+      await httpClient
+              .post(`http://localhost:8085/api/v1/revenue/revenue`,{addedItems: mappedItems})
+              .then((res) => {
+                console.log(res);                
+              }
+              )
+              .catch((error) => {
+                console.log("Error :", error);
+              }) 
+              console.log('mappedItems',mappedItems);
 
-      // console.log('ไม่มีค่า')
+        if(addedItems !== null){   
+          const dataBase = this.state.dataProduct;
+          const filters = addedItems.filter([{dataBase}])
+          console.log(filters)
+          // if( mappedItems.type === null && undefined && "" ) {
+
+          //     console.log('hello',mappedItems);
+          // }else{
+
+          //   console.log('No');
+          // }
+
+          // const result = addedItem.find(({name}) => name === dataBases.data.name);
+          // console.log('result :',result);
+        // console.log(mappedItems)
+        // console.log(addedItems.data.name);
+
+        // const setProduct = httpClient.get("").then(()=>{})
+        // console.log(setProduct)
+      }else{}
+
+
+
+
+
+      message.success({ content: 'บันทึกรายรับเรียบร้อย!', duration: 2, style: {
+        marginTop: '7vh',
+      }} ,100);
+      await this.props.history.goBack();
+    }else{
       message.warning({ content: 'โปรดเลือกบริการ!', duration: 2, style: {
         marginTop: '7vh',
       }} ,500);
     }
-    console.log(addedItems);
+    // console.log(addedItems);
     
     
   //  }else{
@@ -410,7 +433,7 @@ class RevenueCreate extends Component {
                           <Col span={12} offset={1}>
                             <div className="card" style={{ height: 230 }}>
                               <p style={{ textAlign: "center" }}>
-                                --- Order ---{" "}
+                                --- Order ---
                               </p>
 
                               <div className="card-body table-responsive p-0">

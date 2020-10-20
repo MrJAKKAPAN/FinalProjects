@@ -186,7 +186,7 @@ class ServicePaged extends Component {
                     to="/service-create"
                     style={{ float: "right", width: 100 }}
                   ></Link>
-
+                  <div  className="overflow-auto" style={{height:'75vh'}}>
                   <Table
                     bordered
                     // title={() => 'ตารางอัตรบริการ'}
@@ -196,6 +196,7 @@ class ServicePaged extends Component {
                     style={{ marginTop: "5px" }}
                     size="small"
                   />
+                  </div>
                 </div>
               </div>
             </div>
