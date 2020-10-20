@@ -58,8 +58,8 @@ onDelete = async(id) => {
         `http://localhost:8085/api/v1/customer/customer/${id}`
         );
         message.success({ content: 'ลบข้อมูลเรียบร้อย!', duration: 2,style: {
-          marginTop: '5vh',
-        } } ,100);
+          marginTop: '7vh',
+        } } ,200);
         await this.componentDidMount();
 };
 

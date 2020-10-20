@@ -17,6 +17,7 @@ import {
   Row,
   Col,
   Select,
+  message,
 } from "antd";
 
 
@@ -59,6 +60,9 @@ class Revenue extends Component {
   await httpClient.delete(
       `http://localhost:8085/api/v1/revenue/revenue/${id}`
       );
+      message.success({ content: 'ลบข้อมูลเรียบร้อย!', duration: 2,style: {
+        marginTop: '7vh',
+      } } ,200);
       await this.componentDidMount();
 };
 

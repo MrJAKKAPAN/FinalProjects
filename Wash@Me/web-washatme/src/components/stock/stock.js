@@ -105,7 +105,7 @@ class Revenue extends Component {
         },
         {
           title:"จำนวน",
-          dataIndex:"number",
+          dataIndex:"quantity",
           align:"center",
           width:"200",
           render: value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') //convert number monney
